@@ -8,6 +8,9 @@
   --color-white: #FFFFFF;
   --color-black: #000000;
 
+  /* ==== TEXT COLORS ==== */
+  --color-text-primary: #101828;
+
   /* ==== GRAY SCALE ==== */
   --color-gray-25:  #FCFCFD;
   --color-gray-50:  #F9FAFB;
@@ -47,6 +50,19 @@
   --color-secondary-800: #293056;
   --color-secondary-900: #101323;
 
+    /* ==== ACCENT ==== */
+  --color-accent-25:  #FDFCF5;
+  --color-accent-50:  #FBF8EB;
+  --color-accent-100: #F5F0CC;
+  --color-accent-200: #ECDF9C;
+  --color-accent-300: #E0C864;
+  --color-accent-400: #D6B139;
+  --color-accent-500: #D1A42E;
+  --color-accent-600: #AB7B23;
+  --color-accent-700: #895B1F;
+  --color-accent-800: #724921;
+  --color-accent-900: #623E21;
+
   /* ==== BRAND SHORTCUT ==== */
   --color-brand-primary: #4A3AFF;
 
@@ -58,7 +74,8 @@
   /* ==== FONTS ==== */
   --font-montserrat: "Montserrat", sans-serif;
   --font-karla: "Karla", sans-serif;
-  --font-body: "Karla", sans-serif;
+  --font-heading: "Montserrat", sans-serif;
+  --font-body  : "Karla", sans-serif;
 
 }
 
