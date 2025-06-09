@@ -1,26 +1,64 @@
+@import url('https://fonts.googleapis.com/css2?family=Karla:wght@400;500;600;700&family=Montserrat:wght@200;300;400;500;600;700;800&display=swap');
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+
+@theme {
+  /* 🎨 Кольори */
+  /* ==== BASE COLORS ==== */
+  --color-white: #FFFFFF;
+  --color-black: #000000;
+
+  /* ==== GRAY SCALE ==== */
+  --color-gray-25:  #FCFCFD;
+  --color-gray-50:  #F9FAFB;
+  --color-gray-100: #F2F4F7;
+  --color-gray-200: #EAECF0;
+  --color-gray-300: #D0D5DD;
+  --color-gray-400: #98A2B3;
+  --color-gray-500: #667085;
+  --color-gray-600: #475467;
+  --color-gray-700: #344054;
+  --color-gray-800: #1D2939;
+  --color-gray-900: #101828;
+
+  /* ==== PRIMARY ==== */
+  --color-primary-25:  #F8FCFC;
+  --color-primary-50:  #F2F8F9;
+  --color-primary-100: #DEEBEF;
+  --color-primary-200: #C1D9E0;
+  --color-primary-300: #96BECA;
+  --color-primary-400: #6EA1B2;
+  --color-primary-500: #487E92;
+  --color-primary-600: #3F697B;
+  --color-primary-700: #385766;
+  --color-primary-800: #344A56;
+  --color-primary-900: #2F404A;
+
+  /* ==== SECONDARY ==== */
+  --color-secondary-25:  #FCFCFD;
+  --color-secondary-50:  #F8F9FC;
+  --color-secondary-100: #EAECF5;
+  --color-secondary-200: #D5D9EB;
+  --color-secondary-300: #AFB5D9;
+  --color-secondary-400: #717BBC;
+  --color-secondary-500: #4E5BA6;
+  --color-secondary-600: #3E4784;
+  --color-secondary-700: #363F72;
+  --color-secondary-800: #293056;
+  --color-secondary-900: #101323;
+
+  /* ==== BRAND SHORTCUT ==== */
+  --color-brand-primary: #4A3AFF;
+
+  /* ==== FEEDBACK ==== */
+  --color-error-500:   #F04438;
+  --color-warning-500: #F79009;
+  --color-success-500: #12B76A;
+
+  /* ==== FONTS ==== */
+  --font-montserrat: "Montserrat", sans-serif;
+  --font-karla: "Karla", sans-serif;
+  --font-body: "Karla", sans-serif;
+
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
-}
