@@ -38,12 +38,12 @@ export default function HowItWorks() {
   return (
     <section className="bg-primary-50 py-16 px-4 sm:px-6 lg:px-8">
       <div className="max-w-5xl mx-auto text-center">
-        <h2 className="text-2xl font-bold font-heading  mb-4">
+        <h2 className="text-2xl font-bold font-montserrat  mb-4">
           How It Works
         </h2>
 
         {/* Tabs */}
-        <div className="flex justify-center text-base font-bold mb-8 font-heading">
+        <div className="flex justify-center text-base font-bold mb-8 font-montserrat">
           <button
             onClick={() => setActiveTab("find")}
             className={`pb-1 transition ${
@@ -69,10 +69,10 @@ export default function HowItWorks() {
         {/* Content */}
         {activeTab === "find" && (
           <>
-            <div className="grid gap-10 grid-cols-1 md:grid-cols-3 text-left font-body">
+            <div className="grid gap-10 grid-cols-1 md:grid-cols-3 text-left font-karla">
               {steps.map((step) => (
                 <div key={step.number} className="border-2 border-primary-200 rounded-lg p-10">
-                  <div className="text-primary-400 font-bold text-5xl font-heading mb-4 px-4">
+                  <div className="text-primary-400 font-bold text-5xl font-montserrat mb-4 px-4">
                     {step.number}.
                   </div>
                   <p className="text-xl font-semibold text-gray-800">
@@ -90,7 +90,7 @@ export default function HowItWorks() {
               ))}
             </div>
 
-            <div className="mt-12 font-body font-extrabold flex flex-col sm:flex-row items-center align-center justify-center gap-4">
+            <div className="mt-12 font-karla font-extrabold flex flex-col sm:flex-row items-center align-center justify-center gap-4">
               <p className="text-lg font-medium text-black">
                 Ready to find your next job?
               </p>

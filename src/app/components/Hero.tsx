@@ -13,12 +13,12 @@ export default function Hero() {
           </p>
         </div>
         
-        <div className="font-body text-sm text-white pb-10">
+        <div className="font-karla text-sm text-white pb-10">
           <p>Connecting Ukrainian professionals with opportunities across the UK.</p>
           <p>Join us in building bridges to meaningful employment.</p>
         </div>
 
-        <button className="font-body bg-primary-500 hover:bg-primary-700 text-white font-semibold py-3 px-6 rounded-lg transition duration-200">
+        <button className="font-karla bg-primary-500 hover:bg-primary-700 text-white font-semibold py-3 px-6 rounded-lg transition duration-200">
           <div className="flex items-center justify-center gap-2">
             <p>Register your interest</p>
             <ArrowRight className="w-5 h-5" />
@@ -39,7 +39,7 @@ function StatItem({ number, label }: { number: string; label: string }) {
   return (
     <div>
       <div className="text-xl font-bold text-white font-montserrat">{number}</div>
-      <div className="text-xs text-white font-body">{label}</div>
+      <div className="text-xs text-white font-karla">{label}</div>
     </div>
   );
 }
