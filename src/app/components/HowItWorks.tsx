@@ -49,7 +49,7 @@ export default function HowItWorks() {
             className={`pb-1 transition ${
               activeTab === "find"
                 ? "text-gray-900 border-b-3 border-accent-500 px-4"
-                : "text-primary-500 hover:text-brand-primary px-4"
+                : "text-primary-500 hover:text-primary-800 px-4"
             }`}
           >
             Find Work
@@ -59,7 +59,7 @@ export default function HowItWorks() {
             className={`pb-1 transition ${
               activeTab === "hire"
                 ? "text-gray-900 border-b-3 border-accent-500 px-4"
-                : "text-primary-500 hover:text-brand-primary px-4"
+                : "text-primary-500 hover:text-primary-800 px-4"
             }`}
           >
             Hire Talent
