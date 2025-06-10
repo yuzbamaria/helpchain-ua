@@ -78,9 +78,9 @@ export default function HowItWorks() {
                   <p className="text-xl font-semibold text-gray-800">
                     {step.title}
                   </p>
-                  <ul className="space-y-2 text-primary text-sm leading-relaxed pl-2">
+                  <ul className="space-y-2 text-primary-900 text-sm leading-relaxed pl-2">
                     {step.items.map((item, index) => (
-                      <li key={index} className="relative pl-4 text-primary text-sm leading-relaxed">
+                      <li key={index} className="relative pl-4 text-primary-900 text-sm leading-relaxed">
                         <span className="absolute left-0 top-2 w-2 h-2 bg-primary-400 rounded-full" />
                         {item}
                       </li>
