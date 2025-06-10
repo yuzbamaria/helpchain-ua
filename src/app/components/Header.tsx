@@ -44,7 +44,12 @@ export default function Header() {
                         <div className="flex flex-col gap-2">
                             <button 
                                 onClick={() => setShowDropdown((prev) => !prev)}
-                                className="flex items-center py-2.5 px-2.5 w-[236px] h-[44px] bg-base-white rounded-md border border-neutral-300 active:border-primary-300">
+                                className={`flex items-center py-2.5 px-2.5 w-[236px] h-[44px] bg-base-white rounded-md ${
+                                        showDropdown
+                                        ? "border-4 border-primary-300"
+                                        : "border border-neutral-300"
+                                }`}
+                            >
                                 <div className="flex gap-2 pr-5 font-karla">
                                     {selectedLang === "en" ? ukFlag : uaFlag}
                                     {selectedLang === "en" ? "En" : "Укр"}
@@ -113,13 +118,49 @@ export default function Header() {
                             </ul>
                         </div>
                         <div className="flex items-center gap-8 h-[48px]">
-                            <button className="flex items-center py-2.5 px-2.5 justify-between w-[120px] h-[44px] bg-base-white rounded-md border border-neutral-300">
-                                <div className="flex gap-2 font-karla font-bold">
-                                    {ukFlag}
-                                    En
-                                </div>
-                                {dropdownIcon}
-                            </button>
+                            {/* Dropdown language button */}
+                            <div className="relative">
+                                <button 
+                                    onClick={() => setShowDropdown((prev) => !prev)}
+                                    className={`flex items-center py-2.5 px-2.5 w-[120px] h-[44px] bg-base-white rounded-md ${
+                                        showDropdown
+                                        ? "border-4 border-primary-300"
+                                        : "border border-neutral-300"
+                                    }`}>
+                                    <div className="flex gap-2 pr-5 font-karla">
+                                        {selectedLang === "en" ? ukFlag : uaFlag}
+                                        {selectedLang === "en" ? "En" : "Укр"}
+                                    </div>
+                                    {dropdownIcon}
+                                </button>
+                                
+                                {showDropdown && (
+                                    <div className=" absolute top-full left-0 w-[120px] rounded-md border bg-base-white border-neutral-300" style={{ top: "calc(100% + 6px)" }}>
+                                        <div className="">
+                                        {/* Eng lang button */}
+                                        <button 
+                                            className="flex gap-2 px-2.5 py-2.5 font-karla font-bold"
+                                            onClick={() => handleSelectLang("en")}>
+                                            <div className="flex gap-3 pr-3">
+                                                {ukFlag}
+                                                En
+                                            </div>
+                                            {selectedLang === "en" && checkIcon2}
+                                        </button>
+                                        {/* Ukrainian lang button */}
+                                        <button 
+                                            className="flex items-center py-2.5 px-2.5 gap-2"
+                                            onClick={() => handleSelectLang("ukr")}>
+                                            <div className="flex gap-3 pr-3">
+                                                {uaFlag}
+                                                Укр
+                                            </div>
+                                            {selectedLang === "ukr" && checkIcon2}
+                                        </button>
+                                        </div>
+                                    </div>
+                                )}
+                            </div>
                             <button className="cursor-pointer text-base-white font-karla font-bold">Login</button>
                             <button className="cursor-pointer py-2 px-6 bg-accent-400 rounded-md w-[109px] h-[44px] text-lg font-karla font-bold text-base-white">Join us</button>
                         </div>
