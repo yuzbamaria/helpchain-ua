@@ -1,10 +1,18 @@
 "use client"
 import { useState } from "react";
+import { ukFlag, uaFlag } from "../../icons/Flags";
 
 export default function Header() {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
+    const [showDropdown, setShowDropdown] = useState(false); 
+    const [selectedLang, setSelectedLang] = useState("en"); 
 
     const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
+
+    const handleSelectLang = (lang: string) => {
+        setSelectedLang(lang);
+        setShowDropdown(false); 
+    };
 
     return (
         <header className="bg-base-white lg:bg-primary-600">
@@ -13,15 +21,13 @@ export default function Header() {
                     <div className="fixed top-0 left-0 w-full h-full z-25 bg-[#191B2366] lg:hidden">
                         <button 
                             onClick={() => setIsMenuOpen(false)}
-                            className="absolute top-4 right-4 z-50 p-2"
-                        >
+                            className="absolute top-4 right-4 z-50 p-2">
                             <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M15 1L1 15" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                                <path d="M1 1L15 15" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M15 1L1 15" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                                <path d="M1 1L15 15" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
                             </svg>
-
                         </button>
-                        <div className="flex flex-col items-center pt-[24px] gap-8 absolute top-0 left-0 w-[80%] h-full z-30 bg-base-white sm:w-[50%] md:w-[40%]">
+                        <div className="flex flex-col items-center pt-[24px] gap-8 absolute top-0 left-0 min-w-[300px] w-[60%] h-full z-30 bg-base-white sm:w-[30%] md:w-[40%]">
                             <div className="flex flex-col items-center">
                                 <ul className="flex flex-col items-center font-karla font-bold text-primary-500">
                                     <li className="cursor-pointer px-4 py-4">Find a job</li>
@@ -30,68 +36,70 @@ export default function Header() {
                                     <li className="cursor-pointer px-4 py-4">Contact</li>
                                 </ul>
                             </div>
-                            
-                        <button className="flex items-center py-2.5 px-2.5 w-[236px] h-[44px] bg-base-white rounded-md border border-neutral-300">
-                            <div className="flex gap-2 pr-5 font-karla font-bold">
+
+                        <div className="flex flex-col gap-2">
+                            <button 
+                                onClick={() => setShowDropdown((prev) => !prev)}
+                                className="flex items-center py-2.5 px-2.5 w-[236px] h-[44px] bg-base-white rounded-md border border-neutral-300 active:border-primary-300">
+                                <div className="flex gap-2 pr-5 font-karla">
+                                    {selectedLang === "en" ? ukFlag : uaFlag}
+                                    {selectedLang === "en" ? "En" : "Укр"}
+                                </div>
                                 <svg 
-                                    width="24" 
-                                    height="24" 
-                                    viewBox="0 0 24 24" 
+                                    className="cursor-pointer"
+                                    width="20" 
+                                    height="20" 
+                                    viewBox="0 0 20 20" 
                                     fill="none" 
                                     xmlns="http://www.w3.org/2000/svg"
                                 >
-                                    <g clipPath="url(#clip0_693_2401)">
-                                        <path d="M12 24C18.6274 24 24 18.6274 24 12C24 5.37258 18.6274 0 12 0C5.37258 0 0 5.37258 0 12C0 18.6274 5.37258 24 12 24Z" fill="#F0F0F0"/>
-                                        <path d="M2.48081 4.69299C1.5382 5.91938 0.827433 7.3329 0.413574 8.86848H6.65629L2.48081 4.69299Z" fill="#0052B4"/>
-                                        <path d="M23.5874 8.86855C23.1735 7.33302 22.4627 5.91951 21.5201 4.69312L17.3447 8.86855H23.5874Z" fill="#0052B4"/>
-                                        <path d="M0.413574 15.1302C0.827481 16.6658 1.53825 18.0793 2.48081 19.3056L6.65616 15.1302H0.413574Z" fill="#0052B4"/>
-                                        <path d="M19.3058 2.47976C18.0794 1.53715 16.666 0.826382 15.1304 0.412476V6.65515L19.3058 2.47976Z" fill="#0052B4"/>
-                                        <path d="M4.69385 21.5176C5.92024 22.4602 7.33376 23.171 8.86929 23.5849V17.3423L4.69385 21.5176Z" fill="#0052B4"/>
-                                        <path d="M8.86924 0.412476C7.33371 0.826382 5.92019 1.53715 4.69385 2.47971L8.86924 6.6551V0.412476Z" fill="#0052B4"/>
-                                        <path d="M15.1304 23.5849C16.6659 23.171 18.0794 22.4602 19.3058 21.5177L15.1304 17.3423V23.5849Z" fill="#0052B4"/>
-                                        <path d="M17.3447 15.1302L21.5201 19.3057C22.4627 18.0793 23.1735 16.6658 23.5874 15.1302H17.3447Z" fill="#0052B4"/>
-                                        <path d="M23.8984 10.4348H13.5653H13.5653V0.101578C13.0529 0.034875 12.5305 0 12 0C11.4694 0 10.9471 0.034875 10.4348 0.101578V10.4347V10.4347H0.101578C0.034875 10.9471 0 11.4695 0 12C0 12.5306 0.034875 13.0529 0.101578 13.5652H10.4347H10.4347V23.8984C10.9471 23.9651 11.4694 24 12 24C12.5305 24 13.0529 23.9652 13.5652 23.8984V13.5653V13.5653H23.8984C23.9651 13.0529 24 12.5306 24 12C24 11.4695 23.9651 10.9471 23.8984 10.4348Z" fill="#D80027"/>
-                                        <path d="M15.1304 15.1313L20.4852 20.4861C20.7315 20.2399 20.9664 19.9825 21.1906 19.7157L16.6061 15.1312H15.1304V15.1313Z" fill="#D80027"/>
-                                        <path d="M8.86951 15.1312H8.86941L3.51465 20.486C3.76084 20.7323 4.01823 20.9672 4.28504 21.1914L8.86951 16.6068V15.1312Z" fill="#D80027"/>
-                                        <path d="M8.86927 8.86911V8.86902L3.51446 3.51416C3.26818 3.76035 3.03324 4.01774 2.80908 4.28455L7.3936 8.86907H8.86927V8.86911Z" fill="#D80027"/>
-                                        <path d="M15.1304 8.87017L20.4852 3.51526C20.239 3.26898 19.9817 3.03405 19.7148 2.80994L15.1304 7.39445V8.87017Z" fill="#D80027"/>
-                                    </g>
-                                    <defs>
-                                        <clipPath id="clip0_693_2401">
-                                            <rect 
-                                                width="24" 
-                                                height="24" 
-                                                rx="12" 
-                                                fill="white"
-                                            />
-                                        </clipPath>
-                                    </defs>
+                                    <path 
+                                        d="M5 7.5L10 12.5L15 7.5" 
+                                        stroke="#667085" 
+                                        strokeWidth="1.66667" 
+                                        strokeLinecap="round" 
+                                        strokeLinejoin="round"
+                                    />
                                 </svg>
-                                    En
-                            </div>
-                            <svg 
-                                className="cursor-pointer"
-                                width="20" 
-                                height="20" 
-                                viewBox="0 0 20 20" 
-                                fill="none" 
-                                xmlns="http://www.w3.org/2000/svg"
-                            >
-                                <path 
-                                    d="M5 7.5L10 12.5L15 7.5" 
-                                    stroke="#667085" 
-                                    strokeWidth="1.66667" 
-                                    strokeLinecap="round" 
-                                    strokeLinejoin="round"
-                                />
-                            </svg>
-                        </button>
+                            </button>
+                            
+                            {showDropdown && (
+                                <div className="w-[236px] rounded-md border border-neutral-300">
+                                    {/* Eng lang button */}
+                                    <button 
+                                        className="flex gap-2 px-2.5 py-3.5 font-karla font-bold"
+                                        onClick={() => handleSelectLang("en")}>
+                                        {ukFlag}
+                                        En
+                                        {selectedLang === "en" && (
+                                           <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M16.6666 5L7.49992 14.1667L3.33325 10" stroke="#487E92" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                            </svg> 
+                                        )}
+                                    </button>
+                                    {/* Ukrainian lang button */}
+                                    <button 
+                                        className="flex items-center py-2.5 px-2.5 w-[236px] h-[44px] gap-2"
+                                        onClick={() => handleSelectLang("ukr")}>
+                                        <div className="flex gap-3">
+                                            {uaFlag}
+                                            <span>Укр</span>
+                                        </div>
+                                        {selectedLang === "ukr" && (
+                                            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M16.6666 5L7.49992 14.1667L3.33325 10" stroke="#487E92" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                                            </svg>
+                                        )}
+                                    </button>
+                                </div>
+                            )}
+                        </div> 
+                        
                         <div className="flex px-8 py-4 gap-8 text-lg font-karla font-bold">
                             <button className="cursor-pointer text-primary-500 font-karla font-bold">Login</button>
                             <button className="cursor-pointer py-2 px-6 bg-accent-400 rounded-md w-[135px] h-[44px] text-lg font-karla font-bold text-base-white">Join us</button>
                         </div>
                         </div>
-                        
                     </div>
                     
                 )
