@@ -1,7 +1,8 @@
 "use client"
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { ukFlag, uaFlag } from "../../icons/Flags";
-import { dropdownIcon } from "@/icons/Dropdown";
+import DownArrowIcon from "@/icons/DownArrow";
+import UpArrowIcon from "@/icons/UpArrow";
 import { checkIcon2 } from "@/icons/CheckIcon2";
 import { crossCloseIcon } from "@/icons/Cross";
 import { hamburger } from "@/icons/Hamburger";
@@ -10,8 +11,28 @@ import { logoLight } from "@/icons/LogoLight";
 
 export default function Header() {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
-    const [showDropdown, setShowDropdown] = useState(false); 
+    const [showDropdown, setShowDropdown] = useState(false);
+    const [showMobileDropdown, setShowMobileDropdown] = useState(false); 
     const [selectedLang, setSelectedLang] = useState("en"); 
+    const dropdownRef = useRef<HTMLDivElement>(null);
+    const mobileDropdownRef = useRef<HTMLDivElement>(null);
+
+    useEffect(() => {
+        const handleClickOutside = (event: MouseEvent) => {
+            if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+                setShowDropdown(false);
+            };
+            if (mobileDropdownRef.current && !mobileDropdownRef.current.contains(event.target as Node)) {
+                setShowMobileDropdown(false);
+            };
+        };
+
+    document.addEventListener("mousedown", handleClickOutside);
+
+    return () => {
+        document.removeEventListener("mousedown", handleClickOutside);
+        };
+    }, []); 
 
     const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
 
@@ -41,11 +62,11 @@ export default function Header() {
                             </div>
                         
                         {/* Dropdown language button */}
-                        <div className="flex flex-col gap-2">
+                        <div className="flex flex-col gap-2" ref={mobileDropdownRef}>
                             <button 
-                                onClick={() => setShowDropdown((prev) => !prev)}
+                                onClick={() => setShowMobileDropdown(prev => !prev)}
                                 className={`flex items-center py-2.5 px-2.5 w-[236px] h-[44px] bg-base-white rounded-md ${
-                                        showDropdown
+                                        showMobileDropdown
                                         ? "border-4 border-primary-300"
                                         : "border border-neutral-300"
                                 }`}
@@ -54,10 +75,10 @@ export default function Header() {
                                     {selectedLang === "en" ? ukFlag : uaFlag}
                                     {selectedLang === "en" ? "En" : "Укр"}
                                 </div>
-                                {dropdownIcon}
+                                {showMobileDropdown ? <UpArrowIcon /> : <DownArrowIcon />}
                             </button>
                             
-                            {showDropdown && (
+                            {showMobileDropdown && (
                                 <div className="w-[236px] rounded-md border border-neutral-300">
                                     {/* Eng lang button */}
                                     <button 
@@ -69,6 +90,7 @@ export default function Header() {
                                         </div>
                                         {selectedLang === "en" && checkIcon2}
                                     </button>
+
                                     {/* Ukrainian lang button */}
                                     <button 
                                         className="flex items-center py-2.5 px-2.5 w-[236px] h-[44px] gap-2"
@@ -119,19 +141,20 @@ export default function Header() {
                         </div>
                         <div className="flex items-center gap-8 h-[48px]">
                             {/* Dropdown language button */}
-                            <div className="relative">
+                            <div className="relative" ref={dropdownRef}>
                                 <button 
                                     onClick={() => setShowDropdown((prev) => !prev)}
                                     className={`flex items-center py-2.5 px-2.5 w-[120px] h-[44px] bg-base-white rounded-md ${
                                         showDropdown
                                         ? "border-4 border-primary-300"
                                         : "border border-neutral-300"
-                                    }`}>
+                                    }`}
+                                >
                                     <div className="flex gap-2 pr-5 font-karla">
                                         {selectedLang === "en" ? ukFlag : uaFlag}
                                         {selectedLang === "en" ? "En" : "Укр"}
                                     </div>
-                                    {dropdownIcon}
+                                    {showDropdown ? <UpArrowIcon /> : <DownArrowIcon />}
                                 </button>
                                 
                                 {showDropdown && (
@@ -147,6 +170,7 @@ export default function Header() {
                                             </div>
                                             {selectedLang === "en" && checkIcon2}
                                         </button>
+
                                         {/* Ukrainian lang button */}
                                         <button 
                                             className="flex items-center py-2.5 px-2.5 gap-2"
