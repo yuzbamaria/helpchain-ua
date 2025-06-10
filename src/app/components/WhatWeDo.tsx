@@ -73,7 +73,7 @@ export default function WhatWeDo() {
                 <p className="text-lg font-karla font-semibold text-black">{card.subtitle}</p>
                 <ul className="space-y-2 mb-6">
                   {card.items.map((item, i) => (
-                    <li key={i} className="flex items-start gap-2 font-karla">
+                    <li key={i} className="flex items-center gap-2 font-karla ">
                       <CheckIcon className="w-4 h-4 text-accent-500 mt-1" />
                       <span className="text-sm text-black">{item}</span>
                     </li>
