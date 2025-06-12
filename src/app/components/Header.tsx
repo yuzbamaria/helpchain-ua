@@ -27,12 +27,24 @@ export default function Header() {
             };
         };
 
-    document.addEventListener("mousedown", handleClickOutside);
+        document.addEventListener("mousedown", handleClickOutside);
 
-    return () => {
-        document.removeEventListener("mousedown", handleClickOutside);
-        };
+        return () => {
+            document.removeEventListener("mousedown", handleClickOutside);
+            };
     }, []); 
+
+    useEffect(() => {
+        if (isMenuOpen) {
+            document.body.style.overflow = "hidden";
+        } else {
+            document.body.style.overflow = "auto";
+        }
+
+        return () => {
+            document.body.style.overflow = "auto"; // Cleanup in case component unmounts
+        };
+    }, [isMenuOpen]);
 
     const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
 
@@ -42,7 +54,7 @@ export default function Header() {
     };
 
     return (
-        <header className="bg-base-white lg:bg-primary-600">
+        <header className="bg-white lg:bg-primary-600">
 
             {isMenuOpen && (
                     <div className="fixed top-0 left-0 w-full h-full z-25 bg-[#191B2366] lg:hidden">
@@ -51,7 +63,7 @@ export default function Header() {
                             className="absolute top-4 right-4 z-50 p-2">
                             {crossCloseIcon}
                         </button>
-                        <div className="flex flex-col items-center pt-[24px] gap-8 absolute top-0 left-0 min-w-[300px] w-[60%] h-full z-30 bg-base-white sm:w-[30%] md:w-[40%]">
+                        <div className="flex flex-col items-center pt-[24px] gap-8 absolute top-0 left-0 min-w-[300px] w-[60%] h-full z-30 bg-white sm:w-[30%] md:w-[40%]">
                             <div className="flex flex-col items-center">
                                 <ul className="flex flex-col items-center font-karla font-bold text-primary-500">
                                     <li className="cursor-pointer px-4 py-4">Find a job</li>
@@ -61,25 +73,25 @@ export default function Header() {
                                 </ul>
                             </div>
                         
-                        {/* Dropdown language button */}
-                        <div className="flex flex-col gap-2" ref={mobileDropdownRef}>
-                            <button 
-                                onClick={() => setShowMobileDropdown(prev => !prev)}
-                                className={`flex items-center py-2.5 px-2.5 w-[236px] h-[44px] bg-base-white rounded-md ${
-                                        showMobileDropdown
-                                        ? "border-4 border-primary-300"
-                                        : "border border-neutral-300"
-                                }`}
-                            >
-                                <div className="flex gap-2 pr-5 font-karla">
-                                    {selectedLang === "en" ? ukFlag : uaFlag}
-                                    {selectedLang === "en" ? "En" : "Укр"}
-                                </div>
-                                {showMobileDropdown ? <UpArrowIcon /> : <DownArrowIcon />}
-                            </button>
-                            
+                            {/* Dropdown language button */}
+                            <div className="flex flex-col gap-2" ref={mobileDropdownRef}>
+                                <button 
+                                    onClick={() => setShowMobileDropdown(prev => !prev)}
+                                    className={`flex items-center py-2.5 px-2.5 w-[236px] h-[44px] bg-white rounded-md ${
+                                            showMobileDropdown
+                                            ? "border-4 border-primary-300"
+                                            : "border border-neutral-300"
+                                    }`}
+                                >
+                                    <div className="flex gap-2 pr-5 font-karla">
+                                        {selectedLang === "en" ? ukFlag : uaFlag}
+                                        {selectedLang === "en" ? "En" : "Укр"}
+                                    </div>
+                                    {showMobileDropdown ? <UpArrowIcon /> : <DownArrowIcon />}
+                                </button>
+                                
                             {showMobileDropdown && (
-                                <div className="w-[236px] rounded-md border border-neutral-300">
+                                <div className="w-[236px] rounded-md border border-neutral-300  bg-white">
                                     {/* Eng lang button */}
                                     <button 
                                         className="flex gap-2 px-2.5 py-2.5 font-karla font-bold"
@@ -107,7 +119,7 @@ export default function Header() {
                         
                         <div className="flex px-8 py-4 gap-8 text-lg font-karla font-bold">
                             <button className="cursor-pointer text-primary-500 font-karla font-bold">Login</button>
-                            <button className="cursor-pointer py-2 px-6 bg-accent-400 rounded-md w-[135px] h-[44px] text-lg font-karla font-bold text-base-white">Join us</button>
+                            <button className="cursor-pointer py-2 px-6 bg-accent-400 rounded-md w-[135px] h-[44px] text-lg font-karla font-bold text-white">Join us</button>
                         </div>
                         </div>
                     </div>
@@ -122,7 +134,7 @@ export default function Header() {
                         <div>{hamburger}</div>
                     </button>
                     {logoDark}
-                    <button className="cursor-pointer py-2 px-6 bg-accent-400 rounded-md w-[109px] h-[44px] text-lg font-karla font-bold text-base-white">Join us</button>
+                    <button className="cursor-pointer py-2 px-6 bg-accent-400 rounded-md w-[109px] h-[44px] text-lg font-karla font-bold text-white">Join us</button>
             </div>
             
 
@@ -132,7 +144,7 @@ export default function Header() {
                     <nav className="flex justify-between items-center max-w-[1200px] h-[52px] lg:gap-x-12 2xl:w-1200px">
                         <div className="flex items-center lg:gap-x-7">
                             {logoLight}
-                            <ul className="flex items-center gap-4 h-[48px] font-karla font-bold text-base-white">
+                            <ul className="flex items-center gap-4 h-[48px] font-karla font-bold text-white">
                                 <li className="cursor-pointer px-[10px] py-[10px]">Find a job</li>
                                 <li className="cursor-pointer px-[10px] py-[10px]">Hire Talent</li>
                                 <li className="cursor-pointer px-[10px] py-[10px]">Projects</li>
@@ -144,7 +156,7 @@ export default function Header() {
                             <div className="relative" ref={dropdownRef}>
                                 <button 
                                     onClick={() => setShowDropdown((prev) => !prev)}
-                                    className={`flex items-center py-2.5 px-2.5 w-[120px] h-[44px] bg-base-white rounded-md ${
+                                    className={`flex items-center py-2.5 px-2.5 w-[120px] h-[44px] bg-white rounded-md ${
                                         showDropdown
                                         ? "border-4 border-primary-300"
                                         : "border border-neutral-300"
@@ -158,7 +170,7 @@ export default function Header() {
                                 </button>
                                 
                                 {showDropdown && (
-                                    <div className=" absolute top-full left-0 w-[120px] rounded-md border bg-base-white border-neutral-300" style={{ top: "calc(100% + 6px)" }}>
+                                    <div className=" absolute top-full left-0 w-[120px] rounded-md border bg-white border-neutral-300" style={{ top: "calc(100% + 6px)" }}>
                                         <div className="">
                                         {/* Eng lang button */}
                                         <button 
@@ -185,8 +197,8 @@ export default function Header() {
                                     </div>
                                 )}
                             </div>
-                            <button className="cursor-pointer text-base-white font-karla font-bold">Login</button>
-                            <button className="cursor-pointer py-2 px-6 bg-accent-400 rounded-md w-[109px] h-[44px] text-lg font-karla font-bold text-base-white">Join us</button>
+                            <button className="cursor-pointer text-white font-karla font-bold">Login</button>
+                            <button className="cursor-pointer py-2 px-6 bg-accent-400 rounded-md w-[109px] h-[44px] text-lg font-karla font-bold text-white">Join us</button>
                         </div>
                     </nav>
                 </div>
