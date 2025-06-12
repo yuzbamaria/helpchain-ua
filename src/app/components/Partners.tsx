@@ -19,7 +19,7 @@ export default function Partners() {
     return (
         <section className="pt-12">
             <div className="flex flex-col items-center py-10 gap-12">
-                <h2 className="font-montserrat text-[22px] font-bold px-5 sm:text-3xl lg:text-4xl">Trusted by 100+ companies</h2>
+                <h2 className="font-montserrat text-[22px] font-bold px-5 max-w-[1120px] sm:text-2xl">Trusted by 100+ companies</h2>
                 <ul className="grid 
                     grid-cols-2 
                     justify-items-center
@@ -36,7 +36,6 @@ export default function Partners() {
                     ))}
                 </ul>
             </div>
-            
         </section>
     );
 };
