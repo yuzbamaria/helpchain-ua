@@ -41,7 +41,7 @@ The **HelpChain** initiative exists to:
 
 > HelpChain is currently under active development. You can help us build and test it!
 
-To run the platform locally:
+To the project:
 
 ```bash
 git clone https://github.com/helpchain-ua/helpchain-ua.git
