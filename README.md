@@ -1,4 +1,4 @@
-<img width="392" alt="logo_helpchain2" src="https://github.com/user-attachments/assets/f731856c-9d96-47db-933a-45e49da1040d" />
+<img width="292" alt="logo_helpchain2" src="https://github.com/user-attachments/assets/f731856c-9d96-47db-933a-45e49da1040d" />
 
 
 # "HelpChain" - Ukrainian Employment Integration Portal
