@@ -1,6 +1,6 @@
 # "HelpChain" - Ukrainian Employment Integration Portal
 
-**HelpChain** is an open-source web platform dedicated to empowering Ukrainian refugees in the United Kingdom through professional, legal, and economic integration.
+**HelpChain** is an open-source web platform dedicated to empowering Ukrainians in the United Kingdom through professional, legal, and economic integration.
 
 This project is part of a broader initiative to help Ukrainians rebuild their lives, contribute to the UK economy, and preserve their cultural heritage. Our platform offers pathways to employment, business creation, education, and community support — all driven by collaboration and inclusion.
 
