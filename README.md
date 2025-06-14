@@ -1,36 +1,50 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# "HelpChain" - Ukrainian Employment Integration (UEI) 2025–2026
+
+**UEI** is an open-source web platform dedicated to empowering **Ukrainian refugees in the United Kingdom** through professional, legal, and economic integration.
+
+This project is part of a broader initiative to help Ukrainians rebuild their lives, contribute to the UK economy, and preserve their cultural heritage. Our platform offers pathways to employment, business creation, education, and community support — all driven by collaboration and inclusion.
+
+---
+
+## Who is it for?
+
+- **Ukrainian professionals** seeking jobs in the UK across industries like IT, healthcare, construction, law, and more  
+- **Entrepreneurs** wanting to start or grow businesses in the UK  
+- **Ukrainian artists and heritage professionals** looking to integrate into the UK cultural landscape  
+- **Volunteers, NGOs, and professionals** who want to support Ukrainian integration  
+
+---
+
+## Our Mission
+
+The **UEI 2025–2026** initiative exists to:
+
+- Connect Ukrainians to meaningful **employment opportunities**
+- Empower business creation and growth through **entrepreneurial support**
+- Offer access to **language training**, UK-recognized **qualifications**, and **certifications**
+- Support **cultural preservation** and financial independence for artists and restorers
+- Foster **community building**, mentorship, and long-term integration
+
+---
+
+## Core Values
+
+- **Empowerment** – Tools and opportunities for career success and self-sufficiency  
+- **Inclusivity** – Support for all professionals, regardless of background or field  
+- **Collaboration** – Strong partnerships with UK government, educators, NGOs, and businesses  
+- **Resilience** – Embracing and preserving Ukrainian identity through new opportunities  
+- **Impact** – Measuring success through real outcomes: job placements, business launches, and education achievements  
+
+---
 
 ## Getting Started
 
-First, run the development server:
+> UEI is currently under active development. You can help us build and test it!
+
+To run the platform locally:
 
 ```bash
+git clone https://github.com/your-org/uei.git
+cd uei
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
-
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
