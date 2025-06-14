@@ -1,6 +1,6 @@
-# "HelpChain" - Ukrainian Employment Integration (UEI) 2025–2026
+# "HelpChain" - Ukrainian Employment Integration Portal
 
-**UEI** is an open-source web platform dedicated to empowering **Ukrainian refugees in the United Kingdom** through professional, legal, and economic integration.
+**HelpChain** is an open-source web platform dedicated to empowering **Ukrainian refugees in the United Kingdom** through professional, legal, and economic integration.
 
 This project is part of a broader initiative to help Ukrainians rebuild their lives, contribute to the UK economy, and preserve their cultural heritage. Our platform offers pathways to employment, business creation, education, and community support — all driven by collaboration and inclusion.
 
@@ -11,13 +11,13 @@ This project is part of a broader initiative to help Ukrainians rebuild their li
 - **Ukrainian professionals** seeking jobs in the UK across industries like IT, healthcare, construction, law, and more  
 - **Entrepreneurs** wanting to start or grow businesses in the UK  
 - **Ukrainian artists and heritage professionals** looking to integrate into the UK cultural landscape  
-- **Volunteers, NGOs, and professionals** who want to support Ukrainian integration  
+- **Volunteers, сharities, and professionals** who want to support Ukrainian integration  
 
 ---
 
 ## Our Mission
 
-The **UEI 2025–2026** initiative exists to:
+The **HelpChain** initiative exists to:
 
 - Connect Ukrainians to meaningful **employment opportunities**
 - Empower business creation and growth through **entrepreneurial support**
@@ -39,7 +39,7 @@ The **UEI 2025–2026** initiative exists to:
 
 ## Getting Started
 
-> UEI is currently under active development. You can help us build and test it!
+> HelpChain is currently under active development. You can help us build and test it!
 
 To run the platform locally:
 
