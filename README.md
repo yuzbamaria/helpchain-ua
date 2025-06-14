@@ -44,7 +44,5 @@ The **HelpChain** initiative exists to:
 To run the platform locally:
 
 ```bash
-git clone https://github.com/your-org/uei.git
-cd uei
-npm install
-npm run dev
+git clone https://github.com/helpchain-ua/helpchain-ua.git
+
