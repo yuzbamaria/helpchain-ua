@@ -1,3 +1,6 @@
+<img width="392" alt="logo_helpchain2" src="https://github.com/user-attachments/assets/f731856c-9d96-47db-933a-45e49da1040d" />
+
+
 # "HelpChain" - Ukrainian Employment Integration Portal
 
 **HelpChain** is an open-source web platform dedicated to empowering Ukrainians in the United Kingdom through professional, legal, and economic integration.
