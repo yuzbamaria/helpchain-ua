@@ -13,7 +13,7 @@ This project is part of a broader initiative to help Ukrainians rebuild their li
 
 - Ukrainian professionals seeking jobs in the UK across industries like IT, healthcare, construction, law, and more  
 - Entrepreneurs wanting to start or grow businesses in the UK  
-- Ukrainian artists and heritage professionals** looking to integrate into the UK cultural landscape  
+- Ukrainian artists and heritage professionals looking to integrate into the UK cultural landscape  
 - Volunteers, сharities, and professionals** who want to support Ukrainian integration  
 
 ---
