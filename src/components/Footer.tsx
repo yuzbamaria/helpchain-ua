@@ -1,9 +1,13 @@
+"use client";
+
 import { logoLight } from "@/icons/LogoLight"
 import { youtube } from "@/icons/Youtube";
 import { instagram } from "@/icons/Instagram";
 import { xIcon } from "@/icons/X";
 import { facebook } from "@/icons/Facebook";
 import { linkedin } from "@/icons/Linkedin";
+
+import Link from "next/link";
 
 const usefulLinks = ["About Us", "Contact Us", "Careers", "Blog Posts", "Support Center"];
 const connectWithUs = ["Newsletter", "Events", "Resources", "Community", "FAQs"];
@@ -62,7 +66,9 @@ export default function Footer() {
                                 <p className="text-base font-semibold">Useful Links</p>
                                 <ul className="flex flex-col gap-3">
                                     {usefulLinks.map((link, index) => (
-                                        <li key={index} className="font-normal text-sm py-2">{link}</li>
+                                        <li key={index} className="font-normal text-sm py-2">
+                                            <Link href="/some-where">{link}</Link>
+                                        </li>
                                     ))}
                                 </ul>
                             </div>
@@ -70,7 +76,9 @@ export default function Footer() {
                                 <p className="text-base font-semibold">Connect With Us</p>
                                 <ul className="flex flex-col gap-3">
                                     {connectWithUs.map((link, index) => (
-                                        <li key={index} className="font-normal text-sm py-2">{link}</li>
+                                        <li key={index} className="font-normal text-sm py-2">
+                                            <Link href="/some-where">{link}</Link>
+                                        </li>
                                     ))}
                                 </ul>
                             </div>
@@ -92,9 +100,9 @@ export default function Footer() {
                             <p className="text-3.5 font-karla">© 2024 Relume. All rights reserved.</p>
                         </div>
                         <ul className="flex gap-6">
-                            <li>Privacy Policy</li>
-                            <li>Terms of Service</li>
-                            <li>Cookie Settings</li>
+                            <li><Link href="/some-where">Privacy Policy</Link></li>
+                            <li><Link href="/some-where">Terms of Service</Link></li>
+                            <li><Link href="/some-where">Cookie Settings</Link></li>
                         </ul>
                     </div>
                 </div>
@@ -129,7 +137,9 @@ export default function Footer() {
                                 <p className="text-base font-semibold">Useful Links</p>
                                 <ul className="flex flex-col gap-3">
                                     {usefulLinks.map((link, index) => (
-                                        <li key={index} className="font-normal text-sm py-2">{link}</li>
+                                        <li key={index} className="font-normal text-sm py-2">
+                                            <Link href="/some-where">{link}</Link>
+                                        </li>
                                     ))}
                                 </ul>
                             </div>
@@ -137,7 +147,9 @@ export default function Footer() {
                                 <p className="text-base font-semibold">Connect With Us</p>
                                 <ul className="flex flex-col gap-3">
                                     {connectWithUs.map((link, index) => (
-                                        <li key={index} className="font-normal text-sm py-2">{link}</li>
+                                        <li key={index} className="font-normal text-sm py-2">
+                                            <Link href="/some-where">{link}</Link>
+                                        </li>
                                     ))}
                                 </ul>
                             </div>
@@ -159,9 +171,9 @@ export default function Footer() {
                             <p className="text-3.5 font-karla">© 2024 Relume. All rights reserved.</p>
                         </div>
                         <ul className="flex gap-6">
-                            <li>Privacy Policy</li>
-                            <li>Terms of Service</li>
-                            <li>Cookie Settings</li>
+                            <li><Link href="/some-where">Privacy Policy</Link></li>
+                            <li><Link href="/some-where">Terms of Service</Link></li>
+                            <li><Link href="/some-where">Cookie Settings</Link></li>
                         </ul>
                     </div>
                 </div>
@@ -195,25 +207,25 @@ export default function Footer() {
                             <div className="flex flex-col gap-4">
                                 <p className="text-base font-semibold">Useful Links</p>
                                 <ul className="flex flex-col gap-1 font-normal text-sm">
-                                    <li className="py-1">About Us</li>
-                                    <li className="py-1">Contact Us</li>
-                                    <li className="py-1">Careers</li>
-                                    <li className="py-1">Blog Posts</li>
-                                    <li className="py-1">Support Center</li>
-                                    <li className="py-1">Privacy Policy</li>
-                                    <li className="py-1">Terms of Service</li>
-                                    <li className="py-1">Cookie Settings</li>
+                                    <li className="py-1"><Link href="/some-where">About Us</Link></li>
+                                    <li className="py-1"><Link href="/some-where">Contact Us</Link></li>
+                                    <li className="py-1"><Link href="/some-where">Careers</Link></li>
+                                    <li className="py-1"><Link href="/some-where">Blog Posts</Link></li>
+                                    <li className="py-1"><Link href="/some-where">Support Center</Link></li>
+                                    <li className="py-1"><Link href="/some-where">Privacy Policy</Link></li>
+                                    <li className="py-1"><Link href="/some-where">Terms of Service</Link></li>
+                                    <li className="py-1"><Link href="/some-where">Cookie Settings</Link></li>
                                 </ul>
                             </div>
                             <div className="flex flex-col gap-4">
                                 <p className="text-base font-semibold">Connect With Us</p>
                                 <ul className="flex flex-col gap-1">
                                     {connectWithUs.map((link, index) => (
-                                        <li key={index} className="font-normal text-sm py-1">{link}</li>
+                                        <li key={index} className="font-normal text-sm py-1">
+                                            <Link href="/some-where">{link}</Link>
+                                        </li>
                                     ))}
                                 </ul>
-                                <ul className="flex gap-6">
-                        </ul>
                             </div>
                         </div>
                     </div>
@@ -260,21 +272,23 @@ export default function Footer() {
                             <div className="flex flex-col gap-4">
                                 <p className="text-base font-semibold">Useful Links</p>
                                 <ul className="flex flex-col gap-1 font-normal text-sm">
-                                    <li className="py-1">About Us</li>
-                                    <li className="py-1">Contact Us</li>
-                                    <li className="py-1">Careers</li>
-                                    <li className="py-1">Blog Posts</li>
-                                    <li className="py-1">Support Center</li>
-                                    <li className="py-1">Privacy Policy</li>
-                                    <li className="py-1">Terms of Service</li>
-                                    <li className="py-1">Cookie Settings</li>
+                                    <li className="py-1"><Link href="/some-where">About Us</Link></li>
+                                    <li className="py-1"><Link href="/some-where">Contact Us</Link></li>
+                                    <li className="py-1"><Link href="/some-where">Careers</Link></li>
+                                    <li className="py-1"><Link href="/some-where">Blog Posts</Link></li>
+                                    <li className="py-1"><Link href="/some-where">Support Center</Link></li>
+                                    <li className="py-1"><Link href="/some-where">Privacy Policy</Link></li>
+                                    <li className="py-1"><Link href="/some-where">Terms of Service</Link></li>
+                                    <li className="py-1"><Link href="/some-where">Cookie Settings</Link></li>
                                 </ul>
                             </div>
                             <div className="flex flex-col gap-4">
                                 <p className="text-base font-semibold">Connect With Us</p>
                                 <ul className="flex flex-col gap-1">
                                     {connectWithUs.map((link, index) => (
-                                        <li key={index} className="font-normal text-sm py-1">{link}</li>
+                                        <li key={index} className="font-normal text-sm py-2">
+                                            <Link href="/some-where">{link}</Link>
+                                        </li>
                                     ))}
                                 </ul>
                                 <ul className="flex gap-6">
