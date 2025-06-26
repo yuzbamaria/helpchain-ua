@@ -105,7 +105,7 @@ export default function HowItWorks() {
 
         {activeTab === "hire" && (
           <div className="text-gray-500 mt-8">
-            <p>Content for "Hire Talent" will be added soon...</p>
+            <p>Content for &quot;Hire Talent&quot; will be added soon...</p>
           </div>
         )}
       </div>
