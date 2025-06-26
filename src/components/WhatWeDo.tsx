@@ -3,6 +3,7 @@ import HeartIcon from "@/icons/HeartIcon";
 import CheckIcon from "@/icons/CheckIcon";
 
 import Link from "next/link";
+import Image from "next/image";
 import { ArrowRight } from 'lucide-react';
 
 const cards = [
@@ -58,7 +59,7 @@ export default function WhatWeDo() {
           {cards.map((card, index) => (
             <div key={index} className="flex flex-col justify-between h-full overflow-hidden p-4">
               <div className="relative h-48">
-                <img
+                <Image
                   src={`${card.image}`}
                   alt={card.title}
                   className="w-full h-full object-cover rounded-lg "
