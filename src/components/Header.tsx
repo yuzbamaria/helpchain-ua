@@ -8,6 +8,7 @@ import { crossCloseIcon } from "@/icons/Cross";
 import { hamburger } from "@/icons/Hamburger";
 import { logoDark } from "@/icons/LogoDark";
 import { logoLight } from "@/icons/LogoLight";
+import Link from "next/link";
 
 export default function Header() {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -118,7 +119,11 @@ export default function Header() {
                         </div> 
                         
                         <div className="flex px-8 py-4 gap-8 text-lg font-karla font-bold">
-                            <button className="cursor-pointer text-primary-500 font-karla font-bold">Login</button>
+                            {/* <button className="cursor-pointer text-primary-500 font-karla font-bold">Login</button> */}
+                            <Link className="cursor-pointer text-primary-500 font-karla font-bold" href="/signin">
+                                Login
+                            </Link>
+                            
                             <button className="cursor-pointer py-2 px-6 bg-accent-400 rounded-md w-[135px] h-[44px] text-lg font-karla font-bold text-white">Join us</button>
                         </div>
                         </div>
@@ -197,7 +202,10 @@ export default function Header() {
                                     </div>
                                 )}
                             </div>
-                            <button className="cursor-pointer text-white font-karla font-bold">Login</button>
+                            {/* <button className="cursor-pointer text-white font-karla font-bold">Login</button> */}
+                            <Link className="cursor-pointer text-white font-karla font-bold" href="/signin">
+                                Login
+                            </Link>
                             <button className="cursor-pointer py-2 px-6 bg-accent-400 rounded-md w-[109px] h-[44px] text-lg font-karla font-bold text-white">Join us</button>
                         </div>
                     </nav>

@@ -71,7 +71,10 @@ export default function HowItWorks() {
           <>
             <div className="grid gap-10 grid-cols-1 md:grid-cols-3 text-left font-karla">
               {steps.map((step) => (
-                <div key={step.number} className="border-2 border-primary-200 rounded-lg p-10">
+                <div
+                  key={step.number}
+                  className="border-2 border-primary-200 rounded-lg p-10"
+                >
                   <div className="text-primary-400 font-bold text-5xl font-montserrat mb-4 px-4">
                     {step.number}.
                   </div>
@@ -80,7 +83,10 @@ export default function HowItWorks() {
                   </p>
                   <ul className="space-y-2 text-primary-900 text-sm leading-relaxed pl-2">
                     {step.items.map((item, index) => (
-                      <li key={index} className="relative pl-4 text-primary-900 text-sm leading-relaxed">
+                      <li
+                        key={index}
+                        className="relative pl-4 text-primary-900 text-sm leading-relaxed"
+                      >
                         <span className="absolute left-0 top-2 w-2 h-2 bg-primary-400 rounded-full" />
                         {item}
                       </li>
@@ -94,7 +100,7 @@ export default function HowItWorks() {
               <p className="text-lg font-medium text-black">
                 Ready to find your next job?
               </p>
-              <Link href="/sign-up">
+              <Link href="/signup">
                 <button className="bg-accent-400 hover:bg-accent-600 text-white font-semibold py-3 px-6 rounded-lg transition duration-200">
                   Sign Up Now
                 </button>
