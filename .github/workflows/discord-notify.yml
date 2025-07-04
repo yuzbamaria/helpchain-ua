@@ -1,3 +1,4 @@
+# test
 name: Notify Discord on Issues and PR Merges
 
 on:
