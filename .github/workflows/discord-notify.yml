@@ -102,4 +102,4 @@ jobs:
           webhook: ${{ secrets.DISCORD_WEBHOOK_URL }}
           message-title: |
             📌 Push to main by ${{ github.actor }}
-            Commit: ${{ github.event.head_commit.message }}
+            Commit: ${{ github.event.head_commit && github.event.head_commit.message || 'No commit message found.' }}
