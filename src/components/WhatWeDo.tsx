@@ -4,7 +4,7 @@ import CheckIcon from "@/icons/CheckIcon";
 
 import Link from "next/link";
 import Image from "next/image";
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight } from "lucide-react";
 
 const cards = [
   {
@@ -51,18 +51,23 @@ export default function WhatWeDo() {
         </p>
         <p className="max-w-2xl mx-auto text-center justify-center font-karla mb-3 text-primary-900">
           We are a dedicated platform helping Ukrainians find employment,
-          training, and business opportunities in the UK. Whether you are looking for a job, offering employment, or want to
-          support our initiative, we connect people to the right resources.
+          training, and business opportunities in the UK. Whether you are
+          looking for a job, offering employment, or want to support our
+          initiative, we connect people to the right resources.
         </p>
 
         <div className="grid gap-8 md:grid-cols-3 text-left">
           {cards.map((card, index) => (
-            <div key={index} className="flex flex-col justify-between h-full overflow-hidden p-4">
-              <div className="relative h-48">
+            <div
+              key={index}
+              className="flex flex-col justify-between h-full overflow-hidden p-4"
+            >
+              <div className="relative w-full h-48">
                 <Image
                   src={`${card.image}`}
                   alt={card.title}
-                  className="w-full h-full object-cover rounded-lg "
+                  className="object-cover rounded-lg "
+                  fill
                 />
                 <div className="absolute bottom-3 left-3 bg-white text-primary-400 p-2 rounded flex items-center gap-1 text-sm font-extrabold font-montserrat">
                   <HeartIcon className="w-4 h-4 text-accent-500" />
@@ -71,7 +76,9 @@ export default function WhatWeDo() {
               </div>
 
               <div className="pt-6">
-                <p className="text-lg font-karla font-semibold text-black">{card.subtitle}</p>
+                <p className="text-lg font-karla font-semibold text-black">
+                  {card.subtitle}
+                </p>
                 <ul className="space-y-2 mb-6">
                   {card.items.map((item, i) => (
                     <li key={i} className="flex items-center gap-2 font-karla ">
@@ -79,7 +86,7 @@ export default function WhatWeDo() {
                       <span className="text-sm text-black">{item}</span>
                     </li>
                   ))}
-                </ul>          
+                </ul>
               </div>
 
               <Link

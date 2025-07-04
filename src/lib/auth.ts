@@ -36,11 +36,14 @@ export const authOptions: NextAuthOptions = {
         if (!isValid) return null;
 
         return {
-          id: user.id,
-          name: user.name,
-          email: user.email,
-          image: user.image,
-          onboardingStep: user.onboardingStep,
+          ...user,
+          id: String(user.id),
+        } satisfies {
+          id: string;
+          name: string | null;
+          email: string;
+          image: string | null;
+          onboardingStep: number;
         };
       },
     }),
@@ -55,7 +58,6 @@ export const authOptions: NextAuthOptions = {
     async jwt({ token, user }) {
       if (user) {
         token.onboardingStep = user.onboardingStep;
-        console.log("from auth.ts - JWT callback (login):", token);
       } else if (token?.email) {
         // 🔄 Re-fetch user if already logged in
         const dbUser = await prisma.user.findUnique({
@@ -63,7 +65,6 @@ export const authOptions: NextAuthOptions = {
         });
         if (dbUser) {
           token.onboardingStep = dbUser.onboardingStep;
-          console.log("from auth.ts - JWT callback (refetch):", token);
         }
       }
       return token;
@@ -73,7 +74,6 @@ export const authOptions: NextAuthOptions = {
         session.user.id = token.sub!;
         session.user.onboardingStep = token.onboardingStep;
       }
-      console.log("from auth.ts - Session callback:", session);
       return session;
     },
   },
