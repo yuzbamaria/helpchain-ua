@@ -19,7 +19,7 @@ jobs:
     steps:
       - name: Issue opened
         if: github.event_name == 'issues' && github.event.action == 'opened'
-        uses: dawidd6/action-discord@v3
+        uses: dawidd6/action-discord@v2
         with:
           webhook_url: ${{ secrets.DISCORD_WEBHOOK_URL }}
           message: |
@@ -29,7 +29,7 @@ jobs:
 
       - name: Issue comment
         if: github.event_name == 'issue_comment'
-        uses: dawidd6/action-discord@v3
+        uses: dawidd6/action-discord@v2
         with:
           webhook_url: ${{ secrets.DISCORD_WEBHOOK_URL }}
           message: |
@@ -39,7 +39,7 @@ jobs:
 
       - name: PR opened
         if: github.event_name == 'pull_request' && github.event.action == 'opened'
-        uses: dawidd6/action-discord@v3
+        uses: dawidd6/action-discord@v2
         with:
           webhook_url: ${{ secrets.DISCORD_WEBHOOK_URL }}
           message: |
@@ -49,7 +49,7 @@ jobs:
 
       - name: PR merged
         if: github.event_name == 'pull_request' && github.event.action == 'closed' && github.event.pull_request.merged == true
-        uses: dawidd6/action-discord@v3
+        uses: dawidd6/action-discord@v2
         with:
           webhook_url: ${{ secrets.DISCORD_WEBHOOK_URL }}
           message: |
@@ -59,7 +59,7 @@ jobs:
 
       - name: PR review submitted
         if: github.event_name == 'pull_request_review'
-        uses: dawidd6/action-discord@v3
+        uses: dawidd6/action-discord@v2
         with:
           webhook_url: ${{ secrets.DISCORD_WEBHOOK_URL }}
           message: |
@@ -69,7 +69,7 @@ jobs:
 
       - name: Push to main
         if: github.event_name == 'push'
-        uses: dawidd6/action-discord@v3
+        uses: dawidd6/action-discord@v2
         with:
           webhook_url: ${{ secrets.DISCORD_WEBHOOK_URL }}
           message: |
