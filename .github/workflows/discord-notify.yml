@@ -1,10 +1,6 @@
 name: Discord Notification
 
 on:
-  issues:
-    types: [opened, labeled]
-  issue_comment:
-    types: [created]
   pull_request:
     types: [opened, closed, labeled]
   pull_request_review:
@@ -14,39 +10,6 @@ on:
       - main
 
 jobs:
-  issue-opened:
-    if: github.event_name == 'issues' && github.event.action == 'opened'
-    runs-on: ubuntu-latest
-    steps:
-      - uses: fateyan/action-discord-notifier@v1
-        with:
-          webhook: ${{ secrets.DISCORD_WEBHOOK_URL }}
-          message-title: |
-            🆕 Issue #${{ github.event.issue.number }}: ${{ github.event.issue.title }}
-            By: ${{ github.event.issue.user.login }}
-            🔗 ${{ github.event.issue.html_url }}
-
-  issue-labeled:
-    if: github.event_name == 'issues' && github.event.action == 'labeled'
-    runs-on: ubuntu-latest
-    steps:
-      - uses: fateyan/action-discord-notifier@v1
-        with:
-          webhook: ${{ secrets.DISCORD_WEBHOOK_URL }}
-          message-title: |
-            🏷️ Issue #${{ github.event.issue.number }} labeled with "${{ github.event.label.name }}"
-
-  issue-comment:
-    if: github.event_name == 'issue_comment'
-    runs-on: ubuntu-latest
-    steps:
-      - uses: fateyan/action-discord-notifier@v1
-        with:
-          webhook: ${{ secrets.DISCORD_WEBHOOK_URL }}
-          message-title: |
-            💬 New comment on Issue #${{ github.event.issue.number }} by ${{ github.event.comment.user.login }}:
-            ${{ github.event.comment.body }}
-
   pr-opened:
     if: github.event_name == 'pull_request' && github.event.action == 'opened'
     runs-on: ubuntu-latest

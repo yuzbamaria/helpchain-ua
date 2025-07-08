@@ -1,0 +1,59 @@
+name: new issue
+description: add a new issue for the backlog.
+
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ## Prerequisites
+        Please ensure the following steps are completed, as they help us effectively manage the volume of Issues in our backlog.
+
+        - [x] I’ve verified that there are no duplicate Issues already reported in the board.
+        - [x] This Issue aligns with the MVP scope and avoids introducing unnecessary complexity.
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected Behavior
+      description: Briefly describe the expected behavior of the code after this issue has been resolved.
+      placeholder: The codebase should ...
+    validations:
+      required: true
+
+  - type: textarea
+    id: acceptance-criteria
+    attributes:
+      label: Acceptance Criteria
+      description: Specify the conditions that must be satisfied for this issue to be considered complete.
+      placeholder: -[x] Criteria 1
+                   -[x] Criteria 2
+    validations:
+      required: true
+
+  - type: textarea
+    id: actual
+    attributes:
+      label: Current Behavior
+      description: Demonstrate the current behavior of the code as it stands.
+      placeholder: Currently, the situation is that ...
+    validations:
+      required: true
+
+  - type: textarea
+    id: aon
+    attributes:
+      label: Any other notes
+      description: Include any additional details or context that may be helpful for understanding this Issue.
+      placeholder: It’s essential to highlight that ...
+    validations:
+      required: false
+
+  - type: dropdown
+    id: self-assign
+    attributes:
+      label: Assignment
+      description: Please indicate if you would like to take ownership of this Issue.
+      options:
+        - This issue is open and available for anyone to pick up
+        - I’m interested in working on this Issue personally
+      default: 0
