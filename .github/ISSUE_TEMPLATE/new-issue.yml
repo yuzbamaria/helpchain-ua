@@ -8,8 +8,8 @@ body:
         ## Prerequisites
         Please ensure the following steps are completed, as they help us effectively manage the volume of Issues in our backlog.
 
-        - [x] I’ve verified that there are no duplicate Issues already reported in the board.
-        - [x] This Issue aligns with the MVP scope and avoids introducing unnecessary complexity.
+        - [] I’ve verified that there are no duplicate Issues already reported in the board.
+        - [] This Issue aligns with the MVP scope and avoids introducing unnecessary complexity.
 
   - type: textarea
     id: expected
