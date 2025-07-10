@@ -14,6 +14,10 @@ export async function GET() {
         where: { id : parseInt(session.user.id) }
     });
 
-    console.log(user)
-    return NextResponse.json({ user });
+    return NextResponse.json({ 
+        isLoggedIn: true,
+        firstName: user?.firstName,
+        lastName: user?.lastName,
+        onboardingStep: user?.onboardingStep,
+     });
 }
