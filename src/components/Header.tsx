@@ -14,6 +14,7 @@ import { useState, useRef, useEffect } from "react";
 import Link from "next/link";
 import { UserData } from "@/types/user";
 import { useRouter } from "next/navigation";
+import { signOut } from "next-auth/react";
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -24,7 +25,7 @@ export default function Header() {
 
   const dropdownRef = useRef<HTMLDivElement>(null);
   const mobileDropdownRef = useRef<HTMLDivElement>(null);
-  
+
   const router = useRouter();
 
   useEffect(() => {
@@ -85,6 +86,8 @@ export default function Header() {
   const handleUserNameClick = () => {
     router.push("/profiles/job-seeker");
   };
+
+  const handleSignOutClick = () => {};
 
   return (
     <header className="bg-white lg:bg-primary-600">
@@ -211,7 +214,7 @@ export default function Header() {
               <div className="relative" ref={dropdownRef}>
                 <button
                   onClick={() => setShowDropdown((prev) => !prev)}
-                  className={`flex items-center py-2.5 px-2.5 w-[120px] h-[44px] bg-white rounded-md ${
+                  className={`cursor-pointer flex items-center py-2.5 px-2.5 w-[120px] h-[44px] bg-white rounded-md ${
                     showDropdown
                       ? "border-4 border-primary-300"
                       : "border border-neutral-300"
@@ -232,7 +235,7 @@ export default function Header() {
                     <div className="">
                       {/* Eng lang button */}
                       <button
-                        className="flex gap-2 px-2.5 py-2.5 font-karla font-bold"
+                        className="cursor-pointer flex gap-2 px-2.5 py-2.5 font-karla font-bold"
                         onClick={() => handleSelectLang("en")}
                       >
                         <div className="flex gap-3 pr-3">
@@ -244,7 +247,7 @@ export default function Header() {
 
                       {/* Ukrainian lang button */}
                       <button
-                        className="flex items-center py-2.5 px-2.5 gap-2"
+                        className="cursor-pointer flex items-center py-2.5 px-2.5 gap-2"
                         onClick={() => handleSelectLang("ukr")}
                       >
                         <div className="flex gap-3 pr-3">
@@ -260,15 +263,23 @@ export default function Header() {
               {user?.isLoggedIn &&
               user?.onboardingStep &&
               Number(user.onboardingStep) > 10 ? (
-                <button 
-                    className="pl-8 font-karla font-bold text-primary-500 text-base"
+                <div className="flex gap-8">
+                  <button
+                    className="cursor-pointer font-karla font-bold text-primary-500 text-base"
                     onClick={handleUserNameClick}
-                >
-                  <div className="flex gap-2 items-center">
-                    {user?.firstName} {user?.lastName}
-                    {dropDownIcon}
-                  </div>
-                </button>
+                  >
+                    <div className="flex gap-2 items-center">
+                      {user?.firstName} {user?.lastName}
+                      {dropDownIcon}
+                    </div>
+                  </button>
+                  <button
+                    onClick={() => signOut({ callbackUrl: "/" })}
+                    className="cursor-pointer py-2 px-6 bg-accent-400 rounded-md text-lg font-karla font-bold text-white"
+                  >
+                    Sign out
+                  </button>
+                </div>
               ) : (
                 <>
                   <Link
