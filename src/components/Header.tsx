@@ -1,5 +1,6 @@
 "use client";
-import { useState, useRef, useEffect } from "react";
+
+import { dropDownIcon } from "@/icons/DropDownIcon";
 import { ukFlag, uaFlag } from "../icons/Flags";
 import DownArrowIcon from "@/icons/DownArrow";
 import UpArrowIcon from "@/icons/UpArrow";
@@ -8,18 +9,23 @@ import { crossCloseIcon } from "@/icons/Cross";
 import { hamburger } from "@/icons/Hamburger";
 import { logoDark } from "@/icons/LogoDark";
 import { logoLight } from "@/icons/LogoLight";
+
+import { useState, useRef, useEffect } from "react";
 import Link from "next/link";
 import { UserData } from "@/types/user";
-import { dropDownIcon } from "@/icons/DropDownIcon";
+import { useRouter } from "next/navigation";
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [showDropdown, setShowDropdown] = useState(false);
   const [showMobileDropdown, setShowMobileDropdown] = useState(false);
   const [selectedLang, setSelectedLang] = useState("en");
+  const [user, setUser] = useState<UserData | null>(null);
+
   const dropdownRef = useRef<HTMLDivElement>(null);
   const mobileDropdownRef = useRef<HTMLDivElement>(null);
-  const [user, setUser] = useState<UserData | null>(null);
+  
+  const router = useRouter();
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -59,7 +65,7 @@ export default function Header() {
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        const response = await fetch("api/profiles/job-seeker");
+        const response = await fetch("/api/profiles/job-seeker");
         const data: UserData = await response.json();
         setUser(data);
       } catch (error) {
@@ -68,12 +74,16 @@ export default function Header() {
     };
     fetchUser();
   }, []);
-  
+
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
 
   const handleSelectLang = (lang: string) => {
     setSelectedLang(lang);
     setShowDropdown(false);
+  };
+
+  const handleUserNameClick = () => {
+    router.push("/profiles/job-seeker");
   };
 
   return (
@@ -250,12 +260,14 @@ export default function Header() {
               {user?.isLoggedIn &&
               user?.onboardingStep &&
               Number(user.onboardingStep) > 10 ? (
-                <button className="pl-8 font-karla font-bold text-primary-500 text-base">
-                    <div className="flex gap-2 items-center">
-                        {user?.firstName} {user?.lastName}
-                        {dropDownIcon}
-                    </div>
-
+                <button 
+                    className="pl-8 font-karla font-bold text-primary-500 text-base"
+                    onClick={handleUserNameClick}
+                >
+                  <div className="flex gap-2 items-center">
+                    {user?.firstName} {user?.lastName}
+                    {dropDownIcon}
+                  </div>
                 </button>
               ) : (
                 <>
