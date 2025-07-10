@@ -9,6 +9,10 @@ export default function ThankYouPage() {
     router.push("/"); // Можеш змінити маршрут при потребі
   };
 
+  const handleViewProfile = () => {
+    router.push("/profiles/job-seeker")
+  };
+
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col justify-center items-center px-4 py-10">
       <div className="bg-white max-w-xl w-full p-8 rounded-lg shadow">
@@ -39,12 +43,18 @@ export default function ThankYouPage() {
           to stay updated on jobs, training, and support for Ukrainians in the
           UK.
         </p>
-        <div className="pt-4 border-t border-gray-200">
+        <div className="flex gap-4 pt-4 border-t border-gray-200">
           <button
             onClick={handleContinue}
             className="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition"
           >
             Continue
+          </button>
+          <button
+            onClick={handleViewProfile}
+            className="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition"
+          >
+            View my profile
           </button>
         </div>
       </div>
