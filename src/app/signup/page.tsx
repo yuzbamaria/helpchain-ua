@@ -3,24 +3,31 @@
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import Link from "next/link";
+import { eyeOn } from "@/icons/EyeOn";
+import { eyeOff } from "@/icons/EyeOff";
+import { googleIcon } from "@/icons/GoogleIcon";
+import { facebookIcon } from "@/icons/FacebookIcon";
+import { checkmark } from "@/icons/CheckMark";
 
 export default function RegisterPage() {
   const router = useRouter();
 
   const [email, setEmail] = useState("");
-  const [name, setName] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+  const [passwordConfirmed, setPasswordConfirmed] = useState("");
+  const [showPasswordConfirmed, setShowPasswordConfirmed] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError("");
-    console.log("Submitting registration:", { email, name, password });
+    console.log("Submitting registration:", { email, password });
 
     const res = await fetch("/api/auth/register", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email, name, password }),
+      body: JSON.stringify({ email, password }),
     });
 
     if (res.status === 201) {
@@ -31,71 +38,160 @@ export default function RegisterPage() {
     }
   };
 
-  return (
-    <div className="flex min-h-screen items-center justify-center bg-gray-50 px-4">
-      <form
-        onSubmit={handleSubmit}
-        className="w-full max-w-md space-y-6 rounded-xl bg-white p-8 shadow-lg"
-      >
-        <h1 className="text-2xl font-bold text-center text-gray-900">
-          Create Account
-        </h1>
+  const handleShowPassword = () => {
+    setShowPassword((prev) => !prev);
+  };
 
+  const handleShowPasswordConfirmed = () => {
+    setShowPasswordConfirmed((prev) => !prev);
+  };
+
+  return (
+    <div className="flex flex-col py-12 px-4 items-center justify-center bg-primary-50">
+      <div className="flex flex-col gap-4 pb-12">
+        <h1 className="text-2xl font-extrabold font-montserrat text-center tracking-[0.1em]">
+          Create Your Account
+        </h1>
+        <p className="font-karla font-normal text-center text-base text-gray-700 ">
+          Use your email or sign up with Google or Facebook.
+        </p>
+      </div>
+
+      <form onSubmit={handleSubmit} className="flex flex-col gap-4 w-[624px]">
         {error && (
           <p className="rounded-md bg-red-100 p-2 text-center text-red-700">
             {error}
           </p>
         )}
 
-        <div>
-          <label className="block text-sm font-medium text-gray-700">
-            Full name
-          </label>
-          <input
-            type="text"
-            required
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            className="mt-1 w-full rounded-md border border-gray-300 px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-          />
+        <div className="flex flex-col gap-4">
+          <div className="flex flex-col gap-1.5">
+            <label className="font-karla font-normal text-base text-gray-700">
+              Email
+            </label>
+            <input
+              type="email"
+              required
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              className="w-full rounded-lg border border-gray-300 px-4 py-3 bg-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+            />
+          </div>
+
+          <div className="flex flex-col gap-1.5">
+            <label className="font-karla font-normal text-base text-gray-700">
+              Password
+            </label>
+            <div className="relative">
+              <input
+                type={showPassword ? "text" : "password"}
+                required
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                className="w-full rounded-lg border font-karla font-medium text-base text-gray-500 border-gray-300 px-4 py-3 bg-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+              />
+              <button
+                type="button"
+                onClick={handleShowPassword}
+                className="absolute right-4 top-4 text-gray-500"
+              >
+                {showPassword ? eyeOn : eyeOff}
+              </button>
+            </div>
+            <p className="font-karla text-sm text-gray-500">
+              Enter at least 8 characters
+            </p>
+          </div>
+
+          <div className="flex flex-col gap-1.5">
+            <label className="font-karla font-normal text-base text-gray-700">
+              Confirm Password
+            </label>
+            <div className="relative">
+              <input
+                type={showPasswordConfirmed ? "text" : "password"}
+                required
+                value={passwordConfirmed}
+                onChange={(e) => setPasswordConfirmed(e.target.value)}
+                className="w-full rounded-lg border border-gray-300 px-4 py-3 bg-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+              />
+              <button
+                type="button"
+                onClick={handleShowPasswordConfirmed}
+                className="absolute right-4 top-4 text-gray-500"
+              >
+                {showPasswordConfirmed ? eyeOn : eyeOff}
+              </button>
+            </div>
+            <p className="font-karla text-sm text-gray-500">
+              Make sure it matches your password above
+            </p>
+          </div>
         </div>
 
-        <div>
-          <label className="block text-sm font-medium text-gray-700">
-            Email address
-          </label>
-          <input
-            type="email"
-            required
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            className="mt-1 w-full rounded-md border border-gray-300 px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-          />
-        </div>
+        <div className="flex flex-col gap-4">
+          <div className="flex gap-3">
+            <label className="relative">
+              <input
+                type="checkbox"
+                className="peer cursor-pointer w-5 h-5 bg-white rounded-md border border-gray-300 appearance-none focus:ring-2 focus:ring-primary-300 checked:bg-primary-500"
+              />
+              <span className="pointer-events-none absolute top-1 left-1 hidden peer-checked:block">
+                {checkmark}
+              </span>
+            </label>
 
-        <div>
-          <label className="block text-sm font-medium text-gray-700">
-            Password
-          </label>
-          <input
-            type="password"
-            required
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            className="mt-1 w-full rounded-md border border-gray-300 px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-          />
+            <label className="font-karla text-sm font-normal text-gray-500">
+              I'd like to receive emails relating to job search and updates
+              about new features.
+            </label>
+          </div>
+
+          <div className="flex justify-center font-karla text-sm font-normal text-gray-500">
+            By signing up you agree to our Privacy Policy and Terms & Conditions
+            for Candidates.
+          </div>
+          <div className="flex justify-center font-karla text-base font-normal gray-900">
+            OR
+          </div>
         </div>
 
         <button
           type="submit"
-          className="w-full rounded-md bg-blue-600 py-2 text-white hover:bg-blue-700 transition"
+          className="w-full h-[46px] rounded-md bg-primary-500 py-2.5 px-3 font-karla font-bold text-white hover:bg-blue-700 transition"
         >
           Create Account
         </button>
 
-        <p className="text-center text-sm text-gray-600">
+        <div className="flex flex-col gap-3">
+          <button
+            type="button"
+            // onClick={() => signIn("google")}
+            className="w-full rounded-lg border border-gray-300 bg-white py-2.5 px-3 text-gray-700 hover:bg-gray-50"
+          >
+            <div className="flex justify-center gap-3">
+              <div>{googleIcon}</div>
+              <div className="font-karla font-bold">Sign in with Google</div>
+            </div>
+          </button>
+          <button
+            type="button"
+            // onClick={() => signIn("facebook")}
+            className="w-full rounded-lg border border-gray-300 bg-white py-2.5 px-3 text-gray-700 hover:bg-gray-50"
+          >
+            <div className="flex justify-center gap-3">
+              <div>{facebookIcon}</div>
+              <div className="font-karla font-bold">Sign in with Facebook</div>
+            </div>
+          </button>
+        </div>
+
+        <p className="pt-8 text-center font-karla text-base text-gray-700">
           Already have an account?{" "}
-          <Link href="/signin" className="text-blue-600 hover:underline">
+          <Link
+            href="/signin"
+            className="font-bold text-brand-primary hover:underline"
+          >
             Sign In
           </Link>
         </p>
