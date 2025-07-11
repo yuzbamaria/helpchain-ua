@@ -87,8 +87,6 @@ export default function Header() {
     router.push("/profiles/job-seeker");
   };
 
-  const handleSignOutClick = () => {};
-
   return (
     <header className="bg-white lg:bg-primary-600">
       {isMenuOpen && (
