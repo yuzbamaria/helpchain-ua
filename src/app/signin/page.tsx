@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import Link from "next/link";
 import { Eye, EyeOff } from "lucide-react";
+import SocialAuthButtons from "@/components/SocialAuthButtons";
 
 export default function SignInPage() {
   const router = useRouter();
@@ -25,7 +26,7 @@ export default function SignInPage() {
     console.log("SignIn response:", res);
 
     if (res?.ok) {
-      router.push("/api/redirect-after-auth");
+      router.push("/redirect-after-auth"); // use page here instead of route 
     } else {
       setError("Invalid credentials");
     }
@@ -92,20 +93,7 @@ export default function SignInPage() {
         <div className="text-center text-sm text-gray-600">OR</div>
 
         <div className="space-y-2">
-          <button
-            type="button"
-            onClick={() => signIn("google")}
-            className="w-full rounded-md border border-gray-300 bg-white py-2 text-gray-700 hover:bg-gray-50"
-          >
-            Sign in with Google
-          </button>
-          <button
-            type="button"
-            onClick={() => signIn("facebook")}
-            className="w-full rounded-md border border-gray-300 bg-white py-2 text-gray-700 hover:bg-gray-50"
-          >
-            Sign in with Facebook
-          </button>
+          <SocialAuthButtons />
         </div>
 
         <p className="text-center text-sm text-gray-600">

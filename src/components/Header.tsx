@@ -107,7 +107,7 @@ export default function Header() {
               </ul>
             </div>
 
-            {/* Dropdown language button */}
+            {/* ======= Dropdown language button ======= */}
             <div className="flex flex-col gap-2" ref={mobileDropdownRef}>
               <button
                 onClick={() => setShowMobileDropdown((prev) => !prev)}
@@ -126,7 +126,7 @@ export default function Header() {
 
               {showMobileDropdown && (
                 <div className="w-[236px] rounded-md border border-neutral-300  bg-white">
-                  {/* Eng lang button */}
+                  {/* ======= Eng lang button ======= */}
                   <button
                     className="flex gap-2 px-2.5 py-2.5 font-karla font-bold"
                     onClick={() => handleSelectLang("en")}
@@ -138,7 +138,7 @@ export default function Header() {
                     {selectedLang === "en" && checkIcon2}
                   </button>
 
-                  {/* Ukrainian lang button */}
+                  {/* ======= Ukrainian lang button ======= */}
                   <button
                     className="flex items-center py-2.5 px-2.5 w-[236px] h-[44px] gap-2"
                     onClick={() => handleSelectLang("ukr")}
@@ -154,7 +154,6 @@ export default function Header() {
             </div>
 
             <div className="flex px-8 py-4 gap-8 text-lg font-karla font-bold">
-              {/* <button className="cursor-pointer text-primary-500 font-karla font-bold">Login</button> */}
               <Link
                 className="cursor-pointer text-primary-500 font-karla font-bold"
                 href="/signin"
@@ -169,7 +168,8 @@ export default function Header() {
           </div>
         </div>
       )}
-      {/* Mobile / Tablet container: visible up to 1024px */}
+
+      {/* =======> Mobile / Tablet container: visible up to 1024px <======= */}
       <div className="lg:hidden flex justify-between items-center px-3 py-6 sm:px-12 md:px-18">
         <button
           className="cursor-pointer"
@@ -178,20 +178,25 @@ export default function Header() {
         >
           <div>{hamburger}</div>
         </button>
-        {logoDark}
+        <Link href="/" aria-label="Go to homepage">
+          {logoDark}
+        </Link>
         <button className="cursor-pointer py-2 px-6 bg-accent-400 rounded-md w-[109px] h-[44px] text-lg font-karla font-bold text-white">
           Join us
         </button>
       </div>
 
-      {/* Desktop container: visible above 1024px */}
+      {/* =======> Desktop container: visible above 1024px <======= */}
       <div
         className={`flex justify-center ${user?.isLoggedIn ? "bg-white" : ""}`}
       >
         <div className="hidden lg:block px-10 py-7 xl:w-6xl 2xl:w-7xl">
           <nav className="flex justify-between items-center max-w-[1200px] h-[52px] lg:gap-x-12 2xl:w-1200px">
             <div className="flex items-center lg:gap-x-7">
-              {user?.isLoggedIn ? logoDark : logoLight}
+              {/* change logo color based on auth user */}
+              <Link href="/" aria-label="Go to homepage">
+                {user?.isLoggedIn ? logoDark : logoLight}
+              </Link>
               <ul
                 className={`flex items-center gap-4 h-[48px] font-karla font-bold ${
                   user?.isLoggedIn ? "text-primary-500" : "text-white"

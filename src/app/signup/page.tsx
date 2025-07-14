@@ -5,9 +5,8 @@ import { useState } from "react";
 import Link from "next/link";
 import { eyeOn } from "@/icons/EyeOn";
 import { eyeOff } from "@/icons/EyeOff";
-import { googleIcon } from "@/icons/GoogleIcon";
-import { facebookIcon } from "@/icons/FacebookIcon";
 import { checkmark } from "@/icons/CheckMark";
+import SocialAuthButtons from "@/components/SocialAuthButtons";
 
 export default function RegisterPage() {
   const router = useRouter();
@@ -51,8 +50,6 @@ export default function RegisterPage() {
     setShowPasswordConfirmed((prev) => !prev);
   };
 
-  const isFormValid =
-    email && password && passwordConfirmed && password === passwordConfirmed;
 
   return (
     <div className="flex flex-col py-12 px-4 items-center justify-center bg-primary-50">
@@ -166,36 +163,13 @@ export default function RegisterPage() {
 
         <button
           type="submit"
-          // disabled={!isFormValid}
           className={`w-full h-[46px] rounded-md bg-primary-500 py-2.5 px-3 font-karla font-bold text-white transition
-           
           `}
         >
           Create Account
         </button>
 
-        <div className="flex flex-col gap-3">
-          <button
-            type="button"
-            // onClick={() => signIn("google")}
-            className="w-full rounded-lg border border-gray-300 bg-white py-2.5 px-3 text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-4 focus:ring-gray-200 focus:bg-white focus:shadow-social-button"
-          >
-            <div className="flex justify-center gap-3">
-              <div>{googleIcon}</div>
-              <div className="font-karla font-bold">Sign in with Google</div>
-            </div>
-          </button>
-          <button
-            type="button"
-            // onClick={() => signIn("facebook")}
-            className="w-full rounded-lg border border-gray-300 bg-white py-2.5 px-3 text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-3 focus:ring-gray-200 focus:bg-white focus:shadow-social-button"
-          >
-            <div className="flex justify-center gap-3">
-              <div>{facebookIcon}</div>
-              <div className="font-karla font-bold">Sign in with Facebook</div>
-            </div>
-          </button>
-        </div>
+        <SocialAuthButtons />
 
         <p className="pt-8 text-center font-karla text-base text-gray-700">
           Already have an account?{" "}
