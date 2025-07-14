@@ -1,17 +1,14 @@
-// src/app/api/redirect-after-auth/route.ts
-import { NextResponse } from "next/server";
+import { redirect } from "next/navigation";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 
-export async function GET() {
-  const baseUrl = process.env.NEXTAUTH_URL || "http://localhost:3000";
-
+export default async function RedirectAfterAuthPage() {
   const session = await getServerSession(authOptions);
 
   if (!session?.user?.id) {
-    return NextResponse.redirect(`${baseUrl}/signin`);
-  }
+    return redirect("/signin");
+  };
 
   const user = await prisma.user.findUnique({
     where: { id: parseInt(session.user.id) },
@@ -19,7 +16,7 @@ export async function GET() {
   });
 
   if (!user) {
-    return NextResponse.redirect(`${baseUrl}/signin`);
+    return redirect("/signin");
   }
 
   const stepToPathMap: Record<number, string> = {
@@ -32,12 +29,15 @@ export async function GET() {
     10: "/onboarding/preferred-language",
   };
 
-  // ✅ Якщо користувач вже завершив onboarding (тобто крок більше ніж останній)
-  if (user.onboardingStep > 10) {
-    return NextResponse.redirect(`${baseUrl}/`);
+  const onboardingStep = user.onboardingStep;
+
+  // If onboarding is completed, send to home page
+  if (onboardingStep > 10) {
+    return redirect("/");
   }
 
-  const nextPath = stepToPathMap[user.onboardingStep] || "/";
+  // Otherwise, send to the correct onboarding step
+  const nextPath = stepToPathMap[onboardingStep] || "/";
+  return redirect(nextPath);
+};
 
-  return NextResponse.redirect(`${baseUrl}${nextPath}`);
-}
