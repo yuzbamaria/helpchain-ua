@@ -66,6 +66,11 @@ body {
   --color-accent-800: #724921;
   --color-accent-900: #623E21;
 
+    /* ==== SUCCESS ==== */
+  --color-custom-success-50:  #ECFDF3;
+  --color-custom-success-100: #D1FADF;
+  --color-custom-success-500: #027A48; 
+
   /* ==== BRAND SHORTCUT ==== */
   --color-brand-primary: #4A3AFF;
 

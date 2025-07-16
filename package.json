@@ -12,7 +12,9 @@
   "dependencies": {
     "@auth/prisma-adapter": "^2.10.0",
     "@prisma/client": "^6.10.0",
+    "axios": "^1.10.0",
     "bcrypt": "^6.0.0",
+    "jsonwebtoken": "^9.0.2",
     "lucide-react": "^0.513.0",
     "next": "15.3.3",
     "next-auth": "^4.24.11",
