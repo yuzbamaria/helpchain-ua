@@ -82,6 +82,13 @@ export default function SignInPage() {
             </button>
           </div>
         </div>
+        <div>
+          <Link 
+            href="/forgot-password"
+          >
+            Forgotten password?
+          </Link>
+        </div>
 
         <button
           type="submit"

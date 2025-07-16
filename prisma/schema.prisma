@@ -18,6 +18,8 @@ model User {
   onboardingStep     Int       @default(1)
   image              String?
   createdAt          DateTime  @default(now())
+  resetPasswordToken String?  @unique
+  resetPasswordTokenExpiry DateTime?
 
   // Profile fields
   firstName          String?
