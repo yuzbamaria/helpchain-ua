@@ -3,7 +3,12 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
-import { HelpCircle, XCircle } from "lucide-react";
+import { XIcon } from "lucide-react";
+import ProgressBar from "@/components/ProgressBar";
+import ArrowRight from "@/icons/ArrowRight";
+import ArrowLeft from "@/icons/ArrowLeft";
+import TooltipIcon from "@/components/TooltipIcon";
+import Input from "@/components/Input";
 
 export default function ProfessionPage() {
   const router = useRouter();
@@ -19,6 +24,8 @@ export default function ProfessionPage() {
     "yes" | "no" | null
   >(null);
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [showSkills, setShowSkills] = useState(false);
 
   const availableSkills = [
     "Communication",
@@ -50,6 +57,18 @@ export default function ProfessionPage() {
     fetchData();
   }, []);
 
+  useEffect(() => {
+    if (showSkills) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "auto";
+    }
+
+    return () => {
+      document.body.style.overflow = "auto";
+    };
+  }, [showSkills]);
+
   const toggleSkill = (skill: string) => {
     setSelectedSkills((prev) =>
       prev.includes(skill) ? prev.filter((s) => s !== skill) : [...prev, skill]
@@ -58,6 +77,7 @@ export default function ProfessionPage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setLoading(true);
     try {
       const res = await fetch("/api/onboarding/profession", {
         method: "POST",
@@ -75,188 +95,237 @@ export default function ProfessionPage() {
 
       await update();
       router.push("/onboarding/upload-cv");
+      setLoading(false);
     } catch {
       setError("Something went wrong. Please try again.");
+      setLoading(false);
     }
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 px-4 py-10 flex flex-col items-center">
-      <div className="w-full max-w-xl mb-8">
-        <div className="mb-2 text-sm text-gray-600">Step 6 of 10</div>
-        <div className="w-full h-2 bg-blue-100 rounded">
-          <div
-            className="h-2 bg-blue-600 rounded"
-            style={{ width: "60%" }}
-          ></div>
-        </div>
-      </div>
-
-      <form
-        onSubmit={handleSubmit}
-        className="w-full max-w-xl bg-white p-8 rounded-lg shadow space-y-6"
-      >
-        <h1 className="text-2xl font-bold mb-4">Profession & Skills</h1>
-
+    <div className="min-h-[calc(100vh-100px)] flex flex-col  bg-primary-50">
+      <ProgressBar percent={60} stepInfo="Step 6 of 10" />
+      <main className="flex-1 flex flex-col gap-4 items-center justify-center px-6">
         {error && (
           <p className="text-sm text-red-600 bg-red-100 p-2 rounded">{error}</p>
         )}
+        <h1 className="text-2xl font-bold mb-4 font-montserrat">
+          Profession & Skills
+        </h1>
+        <div className="font-karla pb-8 text-center">
+          <p>
+            Tell us about your profession, skills, and what you’re looking for.
+          </p>
+        </div>
 
-        {/* Current Role */}
-        <div>
-          <label className="flex justify-between items-center text-sm font-medium text-gray-700 mb-1">
-            Current Role
-            <HelpCircle size={16} className="text-gray-400 cursor-pointer" />
-          </label>
-          <input
+        <form
+          id="onbord-profession-form"
+          onSubmit={handleSubmit}
+          className="w-full md:w-2xl lg:w-3xl space-y-4 text-gray-300 font-semibold font-karla mb-20"
+        >
+          <Input
+            label="Current Role"
+            placeholder="e.g. Waiter, Builder"
+            name="currentRole"
             type="text"
             value={currentRole}
             onChange={(e) => setCurrentRole(e.target.value)}
-            placeholder="e.g. Waiter, Builder"
-            className="w-full px-4 py-2 border border-gray-300 rounded-md"
+            inputIcon={
+              <TooltipIcon
+                message="Used to recommend opportunities and training relevant for you."
+                position="left"
+              />
+            }
           />
-        </div>
 
-        {/* Desired Role */}
-        <div>
-          <label className="flex justify-between items-center text-sm font-medium text-gray-700 mb-1">
-            Desired Role
-            <HelpCircle size={16} className="text-gray-400 cursor-pointer" />
-          </label>
-          <input
+          <Input
+            label="Desired Role"
+            placeholder="e.g. Supervisor, Plumber"
+            name="desiredRole"
             type="text"
             value={desiredRole}
             onChange={(e) => setDesiredRole(e.target.value)}
-            placeholder="e.g. Supervisor, Plumber"
-            className="w-full px-4 py-2 border border-gray-300 rounded-md"
+            inputIcon={
+              <TooltipIcon
+                message="Used to recommend opportunities and training relevant for you."
+                position="left"
+              />
+            }
           />
-        </div>
 
-        {/* Skills */}
-        <div>
-          <label className="flex justify-between items-center text-sm font-medium text-gray-700 mb-1">
-            Skills
-            <HelpCircle size={16} className="text-gray-400 cursor-pointer" />
-          </label>
-          <details className="w-full rounded border border-gray-300 px-4 py-2 bg-white">
-            <summary className="cursor-pointer text-sm text-gray-700">
-              {selectedSkills.length
-                ? `Selected (${selectedSkills.length})`
-                : "Click to choose skills"}
-            </summary>
-            <div className="mt-2 flex flex-wrap gap-2">
-              {availableSkills.map((skill) => (
-                <button
-                  type="button"
+          {/* Skills */}
+          <div>
+            <label className="flex justify-left gap-4 items-center text-base font-bold text-gray-900 mb-1">
+              Skills
+              <TooltipIcon
+                message="Used to recommend opportunities and training relevant for you."
+                position="right"
+              />
+            </label>
+            {/* Selected skills shown as chips */}
+            <div className="mt-1 flex flex-wrap gap-2 bg-white p-4 rounded border border-gray-300 mb-2">
+              {selectedSkills.map((skill) => (
+                <span
                   key={skill}
-                  onClick={() => toggleSkill(skill)}
-                  className={`px-3 py-1 text-sm rounded-full border ${
-                    selectedSkills.includes(skill)
-                      ? "bg-blue-600 text-white"
-                      : "bg-white text-gray-700 border-gray-300"
-                  }`}
+                  className="flex items-center gap-1 bg-primary-100 text-primary-700 px-3 py-1 rounded-full text-base"
                 >
                   {skill}
-                </button>
+                  <XIcon
+                    size={15}
+                    className="cursor-pointer hover:text-primary-200"
+                    onClick={() => toggleSkill(skill)}
+                  />
+                </span>
               ))}
             </div>
-          </details>
-
-          {/* Selected skills shown as chips */}
-          <div className="mt-2 flex flex-wrap gap-2">
-            {selectedSkills.map((skill) => (
-              <span
-                key={skill}
-                className="flex items-center gap-1 bg-blue-100 text-blue-700 px-2 py-1 rounded-full text-sm"
+            {/* Choose Skills */}
+            <button
+              type="button"
+              onClick={() => setShowSkills(true)}
+              className="px-3 py-1 bg-primary-200 hover:bg-primary-500  hover:text-white text-primary-800 rounded"
+            >
+              {selectedSkills.length
+                ? `Click to choose skills (${selectedSkills.length})`
+                : "Click to choose skills"}
+            </button>
+            <div
+              className={`fixed inset-0 backdrop-blur-sm flex justify-center items-center z-50 transition-opacity duration-300 ${
+                showSkills
+                  ? "opacity-100 pointer-events-auto"
+                  : "opacity-0 pointer-events-none"
+              }`}
+            >
+              <div
+                className={`bg-white rounded-lg p-6 w-[90%] max-w-md shadow-lg relative transition-transform duration-300 ${
+                  showSkills ? "scale-100" : "scale-95"
+                }`}
               >
-                {skill}
-                <XCircle
-                  size={16}
-                  className="cursor-pointer hover:text-red-500"
-                  onClick={() => toggleSkill(skill)}
+                <button
+                  type="button"
+                  className="absolute top-2 right-2 text-gray-500 hover:text-black text-xl"
+                  onClick={() => setShowSkills(false)}
+                >
+                  ✕
+                </button>
+                <h2 className="text-xl text-primary-800 font-bold mb-4">
+                  Choose Skills
+                </h2>
+                <div className="flex flex-wrap gap-2">
+                  {availableSkills.map((skill) => (
+                    <button
+                      type="button"
+                      key={skill}
+                      onClick={() => toggleSkill(skill)}
+                      className={`px-3 py-1 text-sm rounded-full border ${
+                        selectedSkills.includes(skill)
+                          ? "bg-primary-200 text-primary-700"
+                          : "bg-primary-50 text-primary-700 border-gray-300"
+                      }`}
+                    >
+                      {skill}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Willing to retrain */}
+          <div>
+            <label className="flex justify-left items-center text-base font-bold gap-2 text-gray-900 mb-1">
+              Willing to retrain?
+              <TooltipIcon
+                message="Are you open to learning new skills or switching professions?"
+                position="top"
+              />
+            </label>
+            <div className="flex gap-10 mt-2 text-gray-700">
+              <label className="flex items-center gap-2">
+                <input
+                  type="radio"
+                  name="retrain"
+                  value="yes"
+                  checked={willingToTrain === "yes"}
+                  onChange={() => setWillingToTrain("yes")}
+                  className="h-5 w-5"
                 />
-              </span>
-            ))}
+                Yes
+              </label>
+              <label className="flex items-center gap-2">
+                <input
+                  type="radio"
+                  name="retrain"
+                  value="no"
+                  checked={willingToTrain === "no"}
+                  onChange={() => setWillingToTrain("no")}
+                  className="h-5 w-5"
+                />
+                No
+              </label>
+            </div>
           </div>
-        </div>
 
-        {/* Willing to retrain */}
-        <div>
-          <label className="flex justify-between items-center text-sm font-medium text-gray-700 mb-1">
-            Willing to retrain?
-            <HelpCircle size={16} className="text-gray-400 cursor-pointer" />
-          </label>
-          <div className="flex gap-4 mt-2">
-            <label className="flex items-center gap-2">
-              <input
-                type="radio"
-                name="retrain"
-                value="yes"
-                checked={willingToTrain === "yes"}
-                onChange={() => setWillingToTrain("yes")}
-              />
-              Yes
+          {/* Willing to relocate */}
+          <div>
+            <label className="flex justify-left items-center text-base font-bold gap-2 text-gray-900 mb-1">
+              Willing to relocate?
             </label>
-            <label className="flex items-center gap-2">
-              <input
-                type="radio"
-                name="retrain"
-                value="no"
-                checked={willingToTrain === "no"}
-                onChange={() => setWillingToTrain("no")}
-              />
-              No
-            </label>
+            <div className="flex gap-10 mt-2 text-gray-700">
+              <label className="flex items-center gap-2">
+                <input
+                  type="radio"
+                  name="relocate"
+                  value="yes"
+                  checked={willingToRelocate === "yes"}
+                  onChange={() => setWillingToRelocate("yes")}
+                  className="h-5 w-5"
+                />
+                Yes
+              </label>
+              <label className="flex items-center gap-2">
+                <input
+                  type="radio"
+                  name="relocate"
+                  value="no"
+                  checked={willingToRelocate === "no"}
+                  onChange={() => setWillingToRelocate("no")}
+                  className="h-5 w-5"
+                />
+                No
+              </label>
+            </div>
           </div>
-        </div>
-
-        {/* Willing to relocate */}
-        <div>
-          <label className="flex justify-between items-center text-sm font-medium text-gray-700 mb-1">
-            Willing to relocate?
-            <HelpCircle size={16} className="text-gray-400 cursor-pointer" />
-          </label>
-          <div className="flex gap-4 mt-2">
-            <label className="flex items-center gap-2">
-              <input
-                type="radio"
-                name="relocate"
-                value="yes"
-                checked={willingToRelocate === "yes"}
-                onChange={() => setWillingToRelocate("yes")}
-              />
-              Yes
-            </label>
-            <label className="flex items-center gap-2">
-              <input
-                type="radio"
-                name="relocate"
-                value="no"
-                checked={willingToRelocate === "no"}
-                onChange={() => setWillingToRelocate("no")}
-              />
-              No
-            </label>
-          </div>
-        </div>
-
-        {/* Buttons */}
-        <div className="flex justify-between pt-4">
+        </form>
+      </main>
+      <footer className="bg-white border-t-2 border-primary-300 py-4 px-4 item-center">
+        <div className="max-w-xl mx-auto flex justify-center font-karla gap-4">
           <button
             type="button"
-            onClick={() => router.back()}
-            className="px-4 py-2 rounded-md bg-gray-300 text-gray-800 hover:bg-gray-400 transition"
+            onClick={() => router.push("/onboarding/profile")}
+            className="px-4 py-2 rounded bg-white hover:bg-primary-200 text-primary-500 font-bold"
           >
-            Back
+            <div className="flex items-center gap-2 font-bold">
+              <ArrowLeft className="w-5 h-5" />
+              Back
+            </div>
           </button>
           <button
             type="submit"
-            className="px-4 py-2 rounded-md bg-blue-600 text-white hover:bg-blue-700 transition"
+            form="onbord-profession-form"
+            className="w-auto rounded-md bg-primary-500 py-2 px-5 text-gray-25 hover:bg-primary-700 transition"
+            disabled={loading}
           >
-            Continue
+            {loading ? (
+              "Saving..."
+            ) : (
+              <div className="flex items-center gap-2 font-bold">
+                Continue
+                <ArrowRight className="w-5 h-5" />
+              </div>
+            )}
           </button>
         </div>
-      </form>
+      </footer>
     </div>
   );
 }
