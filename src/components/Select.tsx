@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
-import TooltipIcon from "./TooltipIcon";
+// import TooltipIcon from "./TooltipIcon";
 import DownArrowIcon from "@/icons/DownArrow";
 import UpArrowIcon from "@/icons/UpArrow";
 
@@ -117,7 +117,7 @@ const Select: React.FC<SelectProps> = ({
             {options.map((option) => (
               <div
                 key={option.value}
-                onClick={(e) => {
+                onClick={() => {
                   const fakeEvent = {
                     target: { name, value: option.value },
                   } as React.ChangeEvent<HTMLSelectElement>;

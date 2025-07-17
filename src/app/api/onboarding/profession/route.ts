@@ -39,7 +39,7 @@ export async function POST(req: Request) {
     willingToRelocate,
   } = await req.json();
 
-  const user = await prisma.user.update({
+  await prisma.user.update({
     where: { id: parseInt(session.user.id) },
     data: {
       currentRole,

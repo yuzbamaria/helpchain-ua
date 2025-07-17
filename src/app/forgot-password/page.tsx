@@ -21,17 +21,28 @@ export default function ForgotPasswordPage() {
     try {
       const res = await axios.post("/api/forgot-password", { email });
       if (res.status === 200) {
-        console.log("res data", res.data)
-        setMessage(res.data.message || "Check your email for reset link. You can close this page now."); // message from API route
+        console.log("res data", res.data);
+        setMessage(
+          res.data.message ||
+            "Check your email for reset link. You can close this page now."
+        ); // message from API route
         setEmail(""); // clear input
       } else {
         setError(res.data.message || "Something went wrong.");
       }
-    } catch (err: any) {
+    } catch (err: unknown) {
+      if (axios.isAxiosError(err)) {
+        // axios error has response and data
         setError(
-        err?.response?.data?.message || "Failed to send request. Try again."
-      );
-    };
+          err.response?.data?.message || "Failed to send request. Try again."
+        );
+      } else if (err instanceof Error) {
+        // generic JS error
+        setError(err.message);
+      } else {
+        setError("Failed to send request. Try again.");
+      }
+    }
   };
 
   return (
@@ -73,11 +84,13 @@ export default function ForgotPasswordPage() {
         </button>
       </form>
 
-       {message && 
+      {message && (
         <div className="p-6">
-                <p className="p-2 font-karla font-semibold rounded-md bg-custom-success-50 text-custom-success-500">{message}</p>
+          <p className="p-2 font-karla font-semibold rounded-md bg-custom-success-50 text-custom-success-500">
+            {message}
+          </p>
         </div>
-        }
+      )}
     </main>
   );
 }

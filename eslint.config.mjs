@@ -10,6 +10,17 @@ const compat = new FlatCompat({
 });
 
 const eslintConfig = [
+  {
+    ignores: [
+      "./src/generated/prisma/**", 
+      "./src/icons/AlertIcon.tsx",
+      "./src/icons/ArrowRight.tsx",
+      "./src/icons/ArrowLeft.tsx",
+      "./src/icons/HelpIcon.tsx",
+      "./src/icons/LocationIcon.tsx",
+      "./src/types/next-auth.d.ts"
+    ],
+  },
   ...compat.extends("next/core-web-vitals", "next/typescript"),
 ];
 

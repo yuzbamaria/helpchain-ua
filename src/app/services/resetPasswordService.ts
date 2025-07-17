@@ -1,15 +1,19 @@
 import { prisma } from "@/lib/prisma";
-import jwt from "jsonwebtoken";
+import jwt, { JwtPayload } from "jsonwebtoken";
 import bcrypt from "bcrypt";
 
 export async function resetPasswordService(token: string, newPassword: string) {
-  let decoded: any;
-
+  let decoded: JwtPayload;
+  
   try {
-    decoded = jwt.verify(token, process.env.NEXTAUTH_SECRET!);
-  } catch (err) {
+    const result = jwt.verify(token, process.env.NEXTAUTH_SECRET!);
+    if (typeof result === "string" || !("email" in result)) {
+      throw new Error("Invalid token payload");
+    }
+    decoded = result as JwtPayload;
+  } catch {
     throw new Error("Invalid or expired token");
-  };
+  }
 
   const user = await prisma.user.findUnique({
     where: { email: decoded.email },
@@ -33,5 +37,4 @@ export async function resetPasswordService(token: string, newPassword: string) {
       resetPasswordTokenExpiry: null,
     },
   });
-
 }
