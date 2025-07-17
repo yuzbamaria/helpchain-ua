@@ -3,8 +3,7 @@
 import { useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import { rightArrow } from "@/icons/RightArrow";
-import LocationIcon from "@/icons/LocationIcon";
+import ArrowRight from "@/icons/ArrowRight";
 import AlertIcon from "@/icons/AlertIcon";
 import CitySelect from "@/components/CitySelect";
 import ProgressBar from "@/components/ProgressBar";
@@ -121,7 +120,7 @@ export default function LocationPage() {
         </div>
       </main>
       <footer className="bg-white border-t-2 border-primary-300 py-4 px-4">
-        <div className="max-w-xl mx-auto flex justify-center font-karla">
+        <div className="max-w-xl mx-auto flex justify-center font-karla  gap-4">
           <button
             type="submit"
             form="location-form"
@@ -133,7 +132,7 @@ export default function LocationPage() {
             ) : (
               <div className="flex items-center gap-2 font-bold">
                 Continue
-                {rightArrow}
+                <ArrowRight className="w-5 h-5" />
               </div>
             )}
           </button>
