@@ -30,12 +30,12 @@ export default function ResetPasswordPage() {
     if (!token) {
       setError("Invalid or missing token.");
       return;
-    };
+    }
 
     if (confirmedNewPassword !== newPassword) {
       setError("Passwords don't match.");
       return;
-    };
+    }
 
     try {
       const res = await axios.post("/api/reset-password", {
