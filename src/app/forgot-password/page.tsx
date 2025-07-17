@@ -1,3 +1,4 @@
+//asks user for email
 "use client";
 
 import { useState } from "react";

@@ -1,4 +1,5 @@
-// the route handles the HTTP request & response: sending the reset email with the token 
+// the route handles the HTTP request & response: sending the reset email with the token:
+// find user by email, generate a reset token, store token in DB, emails reset link (/reset-password?token=...)
 
 import { passwordResetController } from "@/app/controllers/forgotPasswordControlle";
 import { NextResponse } from "next/server";
