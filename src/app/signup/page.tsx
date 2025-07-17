@@ -21,7 +21,7 @@ export default function RegisterPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError("");
-    console.log("Submitting registration:", { email, password });
+    // console.log("Submitting registration:", { email, password });
 
     if (passwordConfirmed !== password) {
       setError("Passwords don't match.");
@@ -49,7 +49,6 @@ export default function RegisterPage() {
   const handleShowPasswordConfirmed = () => {
     setShowPasswordConfirmed((prev) => !prev);
   };
-
 
   return (
     <div className="flex flex-col py-12 px-4 items-center justify-center bg-primary-50">
@@ -163,8 +162,7 @@ export default function RegisterPage() {
 
         <button
           type="submit"
-          className={`w-full h-[46px] rounded-md bg-primary-500 py-2.5 px-3 font-karla font-bold text-white transition
-          `}
+          className="w-full h-[46px] rounded-md bg-primary-500 py-2.5 px-3 font-karla font-bold text-white transition"
         >
           Create Account
         </button>
