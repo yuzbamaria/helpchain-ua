@@ -7,6 +7,7 @@ import { useSearchParams } from "next/navigation";
 import axios from "axios";
 import { eyeOn } from "@/icons/EyeOn";
 import { eyeOff } from "@/icons/EyeOff";
+import Link from "next/link";
 
 export default function ResetPasswordPage() {
   const searchParams = useSearchParams();
@@ -19,6 +20,7 @@ export default function ResetPasswordPage() {
     useState(false);
   const [error, setError] = useState("");
   const [message, setMessage] = useState("");
+  const [signIn, setSignIn] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -28,7 +30,7 @@ export default function ResetPasswordPage() {
     if (!token) {
       setError("Invalid or missing token.");
       return;
-    }
+    };
 
     if (confirmedNewPassword !== newPassword) {
       setError("Passwords don't match.");
@@ -41,11 +43,11 @@ export default function ResetPasswordPage() {
         token,
       });
 
-      console.log("newPass, token", newPassword, token);
-
       if (res.status === 200) {
         setMessage(res.data.message);
         setNewPassword("");
+        setConfirmedNewPassword("");
+        setSignIn(true);
       } else {
         setError(res.data.message);
       }
@@ -63,13 +65,22 @@ export default function ResetPasswordPage() {
   };
 
   return (
-    <main className="flex flex-col py-12 px-4 items-center justify-center bg-primary-50">
-      <form onSubmit={handleSubmit} className="flex flex-col gap-4 w-[624px]">
-        {error && (
+    <main className="flex flex-col gap-4 min-h-screen py-20 px-4 items-center justify-start bg-primary-50">
+      
+      <h1 className="text-2xl font-extrabold font-montserrat text-center tracking-[0.1em]">
+          Reset Password
+        </h1>
+        <p className="font-karla font-normal text-center text-base text-gray-700 ">
+          Enter your new password.
+        </p>
+
+         {error && (
           <p className="rounded-md bg-red-100 p-2 text-center text-red-700">
             {error}
           </p>
         )}
+      
+      <form onSubmit={handleSubmit} className="flex flex-col gap-4 w-[624px]">
         <div className="flex flex-col gap-4">
           <div className="flex flex-col gap-1.5">
             <label className="font-karla font-normal text-base text-gray-700">
@@ -116,13 +127,14 @@ export default function ResetPasswordPage() {
           </div>
         </div>
 
-        <button
-          type="submit"
-          className={`w-full h-[46px] rounded-md bg-primary-500 py-2.5 px-3 font-karla font-bold text-white transition
-          `}
-        >
-          Save new password
-        </button>
+        <div className="py-3">
+          <button
+            type="submit"
+            className="w-full h-[46px] rounded-md bg-primary-500 py-2.5 px-3 font-karla font-bold text-white transition"
+          >
+            Save new password
+          </button>
+        </div>
       </form>
 
       {message && (
@@ -131,6 +143,11 @@ export default function ResetPasswordPage() {
             {message}
           </p>
         </div>
+      )}
+      {signIn && (
+        <button className="w-[109px] rounded-md bg-accent-400 py-2.5 px-3 font-karla font-bold text-white transition">
+          <Link href="/signin">Sign In</Link>
+        </button>
       )}
     </main>
   );

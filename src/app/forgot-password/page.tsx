@@ -22,7 +22,7 @@ export default function ForgotPasswordPage() {
       const res = await axios.post("/api/forgot-password", { email });
       if (res.status === 200) {
         console.log("res data", res.data)
-        setMessage(res.data.message || "Check your email for reset link."); // message from API route
+        setMessage(res.data.message || "Check your email for reset link. You can close this page now."); // message from API route
         setEmail(""); // clear input
       } else {
         setError(res.data.message || "Something went wrong.");
@@ -35,7 +35,7 @@ export default function ForgotPasswordPage() {
   };
 
   return (
-    <main className="flex flex-col py-12 px-4 items-center justify-center bg-primary-50">
+    <main className="flex flex-col min-h-screen py-20 px-4 items-center justify-start bg-primary-50">
       <div className="flex flex-col gap-4 pb-12">
         <h1 className="text-2xl font-extrabold font-montserrat text-center tracking-[0.1em]">
           Forgot Password
@@ -45,7 +45,7 @@ export default function ForgotPasswordPage() {
         </p>
       </div>
 
-      <form onSubmit={handleSubmit} className="flex flex-col gap-4 w-[624px]">
+      <form onSubmit={handleSubmit} className="flex flex-col gap-6 w-[624px]">
         {error && (
           <p className="rounded-md bg-red-100 p-2 text-center text-red-700">
             {error}
@@ -67,8 +67,7 @@ export default function ForgotPasswordPage() {
 
         <button
           type="submit"
-          className={`w-full h-[46px] rounded-md bg-primary-500 py-2.5 px-3 font-karla font-bold text-white transition
-          `}
+          className="w-full h-[46px] rounded-md bg-primary-500 py-2.5 px-3 font-karla font-bold text-white transition"
         >
           Send Reset Link
         </button>

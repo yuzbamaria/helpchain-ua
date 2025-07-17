@@ -82,11 +82,11 @@ export default function SignInPage() {
             </button>
           </div>
         </div>
-        <div className="text-center font-karla text-base text-blue-600 hover:underline">
+        <div className="py-4 text-center font-karla text-base text-blue-600 hover:underline">
           <Link 
             href="/forgot-password"
           >
-            Forgotten password?
+            Forgot your password?
           </Link>
         </div>
 

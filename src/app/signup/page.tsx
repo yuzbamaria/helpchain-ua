@@ -162,8 +162,7 @@ export default function RegisterPage() {
 
         <button
           type="submit"
-          className={`w-full h-[46px] rounded-md bg-primary-500 py-2.5 px-3 font-karla font-bold text-white transition
-          `}
+          className="w-full h-[46px] rounded-md bg-primary-500 py-2.5 px-3 font-karla font-bold text-white transition"
         >
           Create Account
         </button>
