@@ -2,13 +2,13 @@
 
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { useSession } from "next-auth/react";
+// import { useSession } from "next-auth/react";
 
 const levels = ["Basic", "Intermediate", "Fluent", "Native"];
 
 export default function LanguagePage() {
   const router = useRouter();
-  const { data: session } = useSession();
+  // const { data: session } = useSession();
 
   const [englishSelected, setEnglishSelected] = useState(false);
   const [ukrainianSelected, setUkrainianSelected] = useState(false);

@@ -146,8 +146,8 @@ export default function RegisterPage() {
             </label>
 
             <label className="font-karla text-sm font-normal text-gray-500">
-              I'd like to receive emails relating to job search and updates
-              about new features.
+              {`I'd like to receive emails relating to job search and updates
+              about new features.`}
             </label>
           </div>
 
@@ -170,7 +170,7 @@ export default function RegisterPage() {
         <SocialAuthButtons />
 
         <p className="pt-8 text-center font-karla text-base text-gray-700">
-          Already have an account?{" "}
+          {"Already have an account?"}{" "}
           <Link
             href="/signin"
             className="font-bold text-brand-primary hover:underline"

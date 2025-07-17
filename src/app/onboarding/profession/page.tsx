@@ -43,7 +43,7 @@ export default function ProfessionPage() {
           setWillingToTrain(data.willingToRetrain ? "yes" : "no");
           setWillingToRelocate(data.willingToRelocate ? "yes" : "no");
         }
-      } catch (err) {
+      } catch {
         console.error("Failed to load profession data");
       }
     };
