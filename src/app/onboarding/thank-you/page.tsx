@@ -1,29 +1,27 @@
 "use client";
 
 import { useRouter } from "next/navigation";
+import ProgressBar from "@/components/ProgressBar";
+import ArrowRight from "@/icons/ArrowRight";
+import ArrowLeft from "@/icons/ArrowLeft";
+import SuccessIcon from "@/icons/SuccessIcon";
 
 export default function ThankYouPage() {
   const router = useRouter();
 
-  const handleContinue = () => {
-    router.push("/"); // Можеш змінити маршрут при потребі
-  };
-
-  const handleViewProfile = () => {
-    router.push("/profiles/job-seeker")
-  };
-
   return (
-    <div className="min-h-screen bg-gray-50 flex flex-col justify-center items-center px-4 py-10">
-      <div className="bg-white max-w-xl w-full p-8 rounded-lg shadow">
-        <h1 className="text-2xl font-bold text-center text-gray-900 mb-4">
+    <div className="min-h-[calc(100vh-100px)] flex flex-col  bg-primary-50">
+      <ProgressBar percent={100} stepInfo="Step 10 of 10" />
+      <main className="flex-1 flex flex-col gap-8 items-center justify-center p-6 max-w-2xl m-auto">
+        <SuccessIcon />
+        <h1 className="text-4xl text-black font-bold mb-4 font-montserrat text-center">
           Thank you – your profile has been submitted!
         </h1>
-        <p className="text-gray-700 text-center mb-4">
+        <p className="font-karla text-center">
           We’ve received your information. Our team will review your profile and
           contact you if any suitable opportunities match your skills.
         </p>
-        <p className="text-gray-700 text-center mb-6">
+        <p className="font-karla text-center">
           In the meantime, you can follow us on{" "}
           <a
             href="https://www.facebook.com"
@@ -43,21 +41,33 @@ export default function ThankYouPage() {
           to stay updated on jobs, training, and support for Ukrainians in the
           UK.
         </p>
-        <div className="flex gap-4 pt-4 border-t border-gray-200">
+      </main>
+
+      <footer className="bg-white border-t-2 border-primary-300 py-4 px-4 item-center">
+        <div className="max-w-xl mx-auto flex justify-center font-karla gap-4">
           <button
-            onClick={handleContinue}
-            className="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition"
+            type="button"
+            onClick={() => router.push("/onboarding/salary")}
+            className="px-4 py-2 rounded bg-white hover:bg-primary-200 text-primary-500 font-bold"
           >
-            Continue
+            <div className="flex items-center gap-2 font-bold">
+              <ArrowLeft className="w-5 h-5" />
+              Back
+            </div>
           </button>
           <button
-            onClick={handleViewProfile}
-            className="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition"
+            type="submit"
+            form="onbord-upload-cv-form"
+            className="w-auto rounded-md bg-primary-500 py-2 px-5 text-gray-25 hover:bg-primary-700 transition"
+            onClick={() => router.push("/")}
           >
-            View my profile
+            <div className="flex items-center gap-2 font-bold">
+              Continue
+              <ArrowRight className="w-5 h-5" />
+            </div>
           </button>
         </div>
-      </div>
+      </footer>
     </div>
   );
 }
