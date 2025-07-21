@@ -8,6 +8,30 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model Language {
+  id       Int    @id @default(autoincrement())
+  name     String
+  users    UserLangLevel[]
+}
+
+model LanguageLevel {
+  id       Int    @id @default(autoincrement())
+  name     String
+  users    UserLangLevel[]
+}
+
+model UserLangLevel {
+  userId     Int
+  languageId Int
+  levelId    Int
+
+  user       User          @relation(fields: [userId], references: [id])
+  language   Language      @relation(fields: [languageId], references: [id])
+  level      LanguageLevel @relation(fields: [levelId], references: [id])
+
+  @@id([userId, languageId]) // композитний ключ
+}
+
 model User {
   id                 Int       @id @default(autoincrement())
   name               String?
@@ -38,7 +62,8 @@ model User {
 
   accounts           Account[]
   sessions           Session[]
-  cvs                Cv[]  
+  cvs                Cv[]
+  languages          UserLangLevel[]
 }
 
 model Account {
@@ -84,4 +109,3 @@ model Cv {
   fileUrl   String   // link to file (can be local or S3)
   createdAt DateTime @default(now())
 }
-
