@@ -1,15 +1,42 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
+import ProgressBar from "@/components/ProgressBar";
+import ArrowRight from "@/icons/ArrowRight";
+import ArrowLeft from "@/icons/ArrowLeft";
+import UploadCloudIcon from "@/icons/UploadCloudIcon";
 
 export default function UploadCVPage() {
   const [file, setFile] = useState<File | null>(null);
+  const [uploadedFileName, setUploadedFileName] = useState<string | null>(null);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const router = useRouter();
   const { update } = useSession();
+
+  function getDisplayFileName(fileUrl: string): string {
+    const parts = fileUrl.split("-");
+    if (parts.length < 2) return fileUrl;
+    return "..." + parts.slice(1).join("-");
+  }
+
+  useEffect(() => {
+    const fetchCV = async () => {
+      try {
+        const res = await fetch("/api/user/cv");
+        const data = await res.json();
+        if (data.fileUrl) {
+          setUploadedFileName(data.fileUrl);
+        }
+      } catch (err) {
+        console.error("Error fetching CV", err);
+      }
+    };
+
+    fetchCV();
+  }, []);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const selected = e.target.files?.[0];
@@ -25,6 +52,7 @@ export default function UploadCVPage() {
       return;
     }
     setError("");
+    setUploadedFileName(null);
     setFile(selected || null);
   };
 
@@ -61,82 +89,121 @@ export default function UploadCVPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 px-4 py-10 flex justify-center items-center">
-      <form
-        onSubmit={handleSubmit}
-        className="w-full max-w-xl bg-white p-8 rounded-lg shadow space-y-6"
-      >
-        {/* Step progress */}
-        <div>
-          <div className="text-sm text-gray-600 mb-1">Step 7 of 10</div>
-          <div className="h-2 bg-blue-100 rounded-full">
-            <div className="h-2 bg-blue-600 rounded-full w-[70%]" />
-          </div>
-        </div>
-
-        <h1 className="text-2xl font-bold">Upload your CV</h1>
-        <p className="text-gray-600">
+    <div className="min-h-[calc(100vh-100px)] flex flex-col  bg-primary-50">
+      <ProgressBar percent={70} stepInfo="Step 7 of 10" />
+      <main className="flex-1 flex flex-col gap-4 items-center justify-center px-6">
+        <h1 className="text-2xl text-black font-bold mb-4 font-montserrat text-center">
+          Upload your CV
+        </h1>
+        <p className="font-karla pb-8 text-center">
           Attach your most recent CV to help us match you with jobs.
         </p>
-
-        {error && (
-          <p className="text-red-600 bg-red-100 p-2 rounded text-sm">{error}</p>
-        )}
-
-        {/* File input */}
-        <label
-          htmlFor="cv-upload"
-          className="w-full border-2 border-dashed border-gray-300 rounded-lg p-6 text-center cursor-pointer hover:border-blue-400"
+        <form
+          id="onbord-upload-cv-form"
+          onSubmit={handleSubmit}
+          className="flex flex-col justify-center item-center w-full max-w-xl bg-white p-2 border-2 border-dashed border-gray-300 rounded-lg space-y-6"
         >
-          <input
-            id="cv-upload"
-            type="file"
-            accept=".pdf,.doc,.docx"
-            onChange={handleFileChange}
-            className="hidden"
-          />
-          {file ? (
-            <span className="text-blue-600 font-medium">{file.name}</span>
-          ) : (
-            <span className="text-gray-600">
-              Click to upload or drag and drop
-              <br />
-              <span className="text-sm text-gray-400">
-                Supported formats: PDF, DOC
-              </span>
-            </span>
+          {error && (
+            <p className="text-red-600 bg-red-100 p-2 rounded text-sm text-center">
+              {error}
+            </p>
           )}
-        </label>
+          <div className="w-full flex justify-center m-0">
+            <UploadCloudIcon className="w-15 h-15" />
+          </div>
 
-        {/* Skip link */}
+          {/* File input */}
+          <label
+            htmlFor="cv-upload"
+            className="w-full p-2 text-center cursor-pointer hover:border-blue-400"
+          >
+            <input
+              id="cv-upload"
+              type="file"
+              accept=".pdf,.doc,.docx"
+              onChange={handleFileChange}
+              className="hidden"
+            />
+            {file ? (
+              <span className="text-primary-500 font-medium font-montserrat">
+                {file.name}
+              </span>
+            ) : uploadedFileName ? (
+              <span className="text-primary-500 font-medium font-montserrat">
+                {getDisplayFileName(uploadedFileName)}
+                <div className="text-gray-600 text-center font-montserrat mt-5">
+                  <p className="text-primary-600 font-semibold">
+                    Click to upload another file
+                  </p>
+                  <p className="text-sm text-gray-600">
+                    Supported formats: PDF, DOC
+                  </p>
+                </div>
+              </span>
+            ) : (
+              <div className="text-gray-600 text-center font-montserrat">
+                <p className="text-primary-600 font-semibold">
+                  Click to upload
+                </p>
+                <p className="text-sm text-gray-600">
+                  Supported formats: PDF, DOC
+                </p>
+              </div>
+            )}
+          </label>
+        </form>
         <div className="text-right">
           <button
             type="button"
             onClick={handleSkip}
-            className="text-sm text-blue-600 hover:underline"
+            className="text-base text-primary-500 font-bold hover:underline font-karla"
           >
             Skip for now
           </button>
         </div>
-
-        {/* Actions */}
-        <div className="flex justify-between pt-4">
+      </main>
+      <footer className="bg-white border-t-2 border-primary-300 py-4 px-4 item-center">
+        <div className="max-w-xl mx-auto flex justify-center font-karla gap-4">
           <button
             type="button"
-            onClick={() => router.back()}
-            className="px-4 py-2 rounded bg-gray-300 text-gray-800 hover:bg-gray-400"
+            onClick={() => router.push("/onboarding/profession")}
+            className="px-4 py-2 rounded bg-white hover:bg-primary-200 text-primary-500 font-bold"
           >
-            Back
+            <div className="flex items-center gap-2 font-bold">
+              <ArrowLeft className="w-5 h-5" />
+              Back
+            </div>
           </button>
-          <button
-            type="submit"
-            disabled={loading}
-            className="px-4 py-2 rounded bg-blue-600 text-white hover:bg-blue-700"
-          >
-            {loading ? "Uploading..." : "Upload and continue"}
-          </button>
+          {uploadedFileName ? (
+            <button
+              type="button"
+              className="w-auto rounded-md bg-primary-500 py-2 px-5 text-gray-25 hover:bg-primary-700 transition"
+              onClick={handleSkip}
+            >
+              <div className="flex items-center gap-2 font-bold">
+                Continue
+                <ArrowRight className="w-5 h-5" />
+              </div>
+            </button>
+          ) : (
+            <button
+              type="submit"
+              form="onbord-upload-cv-form"
+              className="w-auto rounded-md bg-primary-500 py-2 px-5 text-gray-25 hover:bg-primary-700 transition"
+              disabled={loading}
+            >
+              {loading ? (
+                "Uploading..."
+              ) : (
+                <div className="flex items-center gap-2 font-bold">
+                  Upload and continue
+                  <ArrowRight className="w-5 h-5" />
+                </div>
+              )}
+            </button>
+          )}
         </div>
-      </form>
+      </footer>
     </div>
   );
 }
