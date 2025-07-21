@@ -2,152 +2,211 @@
 
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-// import { useSession } from "next-auth/react";
+import ArrowRight from "@/icons/ArrowRight";
+import ArrowLeft from "@/icons/ArrowLeft";
+import ProgressBar from "@/components/ProgressBar";
+import Select from "@/components/Select";
+import { XIcon } from "lucide-react";
 
-const levels = ["Basic", "Intermediate", "Fluent", "Native"];
+type LanguageSkill = {
+  languageId: string;
+  levelId: string;
+};
+
+// const languageOptions = [
+//   { label: "English", value: "1" },
+//   { label: "Ukrainian", value: "2" },
+//   { label: "German", value: "3" },
+//   { label: "Spanish", value: "4" },
+//   { label: "French", value: "5" },
+// ];
+
+// const levelOptions = [
+//   { label: "Basic", value: "1" },
+//   { label: "Intermediate", value: "2" },
+//   { label: "Advanced", value: "3" },
+//   { label: "Fluent", value: "4" },
+// ];
 
 export default function LanguagePage() {
   const router = useRouter();
-  // const { data: session } = useSession();
-
-  const [englishSelected, setEnglishSelected] = useState(false);
-  const [ukrainianSelected, setUkrainianSelected] = useState(false);
-  const [englishLevel, setEnglishLevel] = useState("");
-  const [ukrainianLevel, setUkrainianLevel] = useState("");
+  const [languageSkills, setLanguageSkills] = useState<LanguageSkill[]>([
+    { languageId: "", levelId: "" },
+  ]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+  const [languageOptions, setLanguageOptions] = useState<
+    { label: string; value: string }[]
+  >([]);
+  const [levelOptions, setLevelOptions] = useState<
+    { label: string; value: string }[]
+  >([]);
 
   useEffect(() => {
     const fetchData = async () => {
-      const res = await fetch("/api/onboarding/language");
-      const data = await res.json();
-      if (data?.languageSkills) {
-        const { english, ukrainian } = data.languageSkills;
-        if (english) {
-          setEnglishSelected(true);
-          setEnglishLevel(english);
+      try {
+        const [langRes, levelRes, skillsRes] = await Promise.all([
+          fetch("/api/meta/languages"),
+          fetch("/api/meta/levels"),
+          fetch("/api/onboarding/language"),
+        ]);
+
+        const langData = await langRes.json();
+        const levelData = await levelRes.json();
+        const savedData = await skillsRes.json();
+
+        setLanguageOptions(langData.options || []);
+        setLevelOptions(levelData.options || []);
+
+        const saved = savedData.languageSkills || [];
+        if (saved.length > 0) {
+          setLanguageSkills([
+            ...saved.map((s: any) => ({
+              languageId: String(s.languageId),
+              levelId: String(s.levelId),
+            })),
+            { languageId: "", levelId: "" },
+          ]);
         }
-        if (ukrainian) {
-          setUkrainianSelected(true);
-          setUkrainianLevel(ukrainian);
-        }
+      } catch (error) {
+        console.error("Failed to fetch language data", error);
       }
     };
+
     fetchData();
   }, []);
 
+  const handleChange = (
+    index: number,
+    field: keyof LanguageSkill,
+    value: string
+  ) => {
+    const updated = [...languageSkills];
+    updated[index][field] = value;
+    setLanguageSkills(updated);
+
+    const isLast = index === updated.length - 1;
+    const isFilled = updated[index].languageId && updated[index].levelId;
+    const hasEmpty = updated.some((s) => !s.languageId || !s.levelId);
+
+    if (isLast && isFilled && !hasEmpty) {
+      setLanguageSkills([...updated, { languageId: "", levelId: "" }]);
+    }
+  };
+
+  const handleDelete = (index: number) => {
+    const updated = [...languageSkills];
+    const removed = updated.splice(index, 1);
+    setLanguageSkills(updated);
+
+    const languageId = removed[0].languageId;
+    if (languageId) {
+      fetch("/api/onboarding/language", {
+        method: "DELETE",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ languageId: Number(languageId) }),
+      });
+    }
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setLoading(true);
+    setError("");
 
-    const payload = {
-      english: englishSelected ? englishLevel : null,
-      ukrainian: ukrainianSelected ? ukrainianLevel : null,
-    };
+    const valid = languageSkills.filter((s) => s.languageId && s.levelId);
 
     const res = await fetch("/api/onboarding/language", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(payload),
+      body: JSON.stringify({ languageSkills: valid }),
     });
 
     if (res.ok) {
       router.push("/onboarding/salary");
+    } else {
+      setError("Something went wrong");
     }
+
+    setLoading(false);
   };
 
   return (
-    <div className="min-h-screen bg-blue-50 flex flex-col">
-      <div className="max-w-xl mx-auto w-full p-6">
-        <div className="mb-4">
-          <div className="h-2 bg-blue-100 rounded-full">
-            <div className="h-2 bg-blue-600 rounded-full w-[80%]" />
-          </div>
-          <p className="mt-2 text-sm text-gray-600">Step 8 of 10</p>
-        </div>
+    <div className="min-h-[calc(100vh-100px)] flex flex-col bg-primary-50">
+      <ProgressBar percent={80} stepInfo="Step 8 of 10" />
 
-        <h1 className="text-xl font-bold text-gray-900 mb-2">
+      <main className="flex-1 flex flex-col items-center justify-center px-4 mb-10">
+        <h1 className="text-2xl font-bold mb-4 font-montserrat text-center">
           Languages you can work in
         </h1>
-        <p className="text-sm text-gray-600 mb-6">
+        <p className="font-karla mb-10 text-center max-w-lg">
           We’ll use this to match you with jobs requiring language skills.
         </p>
+        {error && <p className="text-red-600">{error}</p>}
 
-        <form onSubmit={handleSubmit} className="space-y-6">
-          {/* English */}
-          <div>
-            <label className="flex items-center gap-2 mb-2">
-              <input
-                type="checkbox"
-                checked={englishSelected}
-                onChange={() => setEnglishSelected((prev) => !prev)}
+        <form
+          onSubmit={handleSubmit}
+          className="space-y-6 w-auto sm:w-xl font-karla"
+        >
+          {languageSkills.map((skill, index) => (
+            <div key={index} className="flex flex-row wrap gap-2 items-center">
+              <Select
+                name={`language-${index}`}
+                value={skill.languageId}
+                onChange={(e) =>
+                  handleChange(index, "languageId", e.target.value)
+                }
+                placeholder="Select language"
+                options={languageOptions}
               />
-              <span className="text-sm font-medium text-gray-800">English</span>
-            </label>
-            {englishSelected && (
-              <select
-                value={englishLevel}
-                onChange={(e) => setEnglishLevel(e.target.value)}
-                className="w-full border px-3 py-2 rounded-md"
-                required
-              >
-                <option value="">Select proficiency</option>
-                {levels.map((lvl) => (
-                  <option key={lvl} value={lvl}>
-                    {lvl}
-                  </option>
-                ))}
-              </select>
-            )}
-          </div>
-
-          {/* Ukrainian */}
-          <div>
-            <label className="flex items-center gap-2 mb-2">
-              <input
-                type="checkbox"
-                checked={ukrainianSelected}
-                onChange={() => setUkrainianSelected((prev) => !prev)}
+              <Select
+                name={`level-${index}`}
+                value={skill.levelId}
+                onChange={(e) => handleChange(index, "levelId", e.target.value)}
+                placeholder="Select level"
+                options={levelOptions}
               />
-              <span className="text-sm font-medium text-gray-800">
-                Ukrainian
-              </span>
-            </label>
-            {ukrainianSelected && (
-              <select
-                value={ukrainianLevel}
-                onChange={(e) => setUkrainianLevel(e.target.value)}
-                className="w-full border px-3 py-2 rounded-md"
-                required
-              >
-                <option value="">Select proficiency</option>
-                {levels.map((lvl) => (
-                  <option key={lvl} value={lvl}>
-                    {lvl}
-                  </option>
-                ))}
-              </select>
-            )}
-          </div>
-
-          <div className="h-10" />
+              {languageSkills.length > 1 && (
+                <XIcon
+                  size={45}
+                  className="cursor-pointer hover:text-primary-700  text-primary-300"
+                  onClick={() => handleDelete(index)}
+                />
+              )}
+            </div>
+          ))}
         </form>
-      </div>
+      </main>
 
-      {/* Footer with buttons */}
-      <div className="w-full border-t bg-white px-6 py-4 mt-auto">
-        <div className="max-w-xl mx-auto flex justify-between">
+      <footer className="bg-white border-t-2 border-primary-300 py-4 px-4">
+        <div className="max-w-xl mx-auto flex justify-center font-karla gap-4">
           <button
-            onClick={() => router.back()}
-            className="px-4 py-2 rounded-md bg-gray-200 text-gray-800 hover:bg-gray-300"
+            type="button"
+            onClick={() => router.push("/onboarding/upload-cv")}
+            className="px-4 py-2 rounded bg-white hover:bg-primary-200 text-primary-500 font-bold"
           >
-            Back
+            <div className="flex items-center gap-2 font-bold">
+              <ArrowLeft className="w-5 h-5" />
+              Back
+            </div>
           </button>
           <button
+            type="submit"
             onClick={handleSubmit}
-            className="px-4 py-2 rounded-md bg-blue-600 text-white hover:bg-blue-700"
+            className="w-auto rounded-md bg-primary-500 py-2 px-5 text-gray-25 hover:bg-primary-700 transition"
+            disabled={loading}
           >
-            Continue
+            {loading ? (
+              "Saving..."
+            ) : (
+              <div className="flex items-center gap-2 font-bold">
+                Continue
+                <ArrowRight className="w-5 h-5" />
+              </div>
+            )}
           </button>
         </div>
-      </div>
+      </footer>
     </div>
   );
 }
