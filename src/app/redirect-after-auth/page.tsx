@@ -8,7 +8,7 @@ export default async function RedirectAfterAuthPage() {
 
   if (!session?.user?.id) {
     return redirect("/signin");
-  };
+  }
 
   const user = await prisma.user.findUnique({
     where: { id: parseInt(session.user.id) },
@@ -26,18 +26,17 @@ export default async function RedirectAfterAuthPage() {
     7: "/onboarding/upload-cv",
     8: "/onboarding/language",
     9: "/onboarding/salary",
-    10: "/onboarding/preferred-language",
+    10: "/onboarding/thank-you",
   };
 
   const onboardingStep = user.onboardingStep;
 
   // If onboarding is completed, send to home page
-  if (onboardingStep > 10) {
+  if (onboardingStep >= 10) {
     return redirect("/");
   }
 
   // Otherwise, send to the correct onboarding step
   const nextPath = stepToPathMap[onboardingStep] || "/";
   return redirect(nextPath);
-};
-
+}
