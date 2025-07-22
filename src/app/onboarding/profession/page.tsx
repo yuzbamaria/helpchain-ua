@@ -50,7 +50,7 @@ export default function ProfessionPage() {
           setWillingToTrain(data.willingToRetrain ? "yes" : "no");
           setWillingToRelocate(data.willingToRelocate ? "yes" : "no");
         }
-      } catch {
+      } catch (err) {
         console.error("Failed to load profession data");
       }
     };
@@ -121,7 +121,7 @@ export default function ProfessionPage() {
         <form
           id="onbord-profession-form"
           onSubmit={handleSubmit}
-          className="w-full md:w-2xl lg:w-3xl space-y-4 text-gray-300 font-semibold font-karla mb-20"
+          className="w-full md:w-xl space-y-4 text-gray-300 font-semibold font-karla mb-20"
         >
           <Input
             label="Current Role"
@@ -132,7 +132,7 @@ export default function ProfessionPage() {
             onChange={(e) => setCurrentRole(e.target.value)}
             inputIcon={
               <TooltipIcon
-                message="Used to recommend opportunities and training relevant for you."
+                message="Please enter your current job title or your most recent role. If you are not currently employed, you can mention your last role."
                 position="left"
               />
             }
@@ -147,7 +147,7 @@ export default function ProfessionPage() {
             onChange={(e) => setDesiredRole(e.target.value)}
             inputIcon={
               <TooltipIcon
-                message="Used to recommend opportunities and training relevant for you."
+                message="What type of job are you looking for? Enter the role you aspire to have in your next job or career move."
                 position="left"
               />
             }
@@ -158,7 +158,7 @@ export default function ProfessionPage() {
             <label className="flex justify-left gap-4 items-center text-base font-bold text-gray-900 mb-1">
               Skills
               <TooltipIcon
-                message="Used to recommend opportunities and training relevant for you."
+                message="List your key skills relevant to your desired job role. These can include technical skills, software tools, and soft skills like communication or leadership."
                 position="right"
               />
             </label>
@@ -210,7 +210,7 @@ export default function ProfessionPage() {
                 <h2 className="text-xl text-primary-800 font-bold mb-4">
                   Choose Skills
                 </h2>
-                <div className="flex flex-wrap gap-2">
+                <div className="flex flex-col flex-wrap gap-2">
                   {availableSkills.map((skill) => (
                     <button
                       type="button"

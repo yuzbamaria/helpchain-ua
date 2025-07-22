@@ -1,5 +1,4 @@
 import React, { useState, useRef, useEffect } from "react";
-// import TooltipIcon from "./TooltipIcon";
 import DownArrowIcon from "@/icons/DownArrow";
 import UpArrowIcon from "@/icons/UpArrow";
 
@@ -85,6 +84,12 @@ const Select: React.FC<SelectProps> = ({
     };
   }, []);
 
+  useEffect(() => {
+    if (value) {
+      setOpen(false);
+    }
+  }, [value]);
+
   const selectedLabel = options.find((opt) => opt.value === value)?.label || "";
 
   return (
@@ -113,11 +118,11 @@ const Select: React.FC<SelectProps> = ({
         </div>
 
         {open && (
-          <div className="absolute top-full left-0 right-0 bg-white shadow-md border border-gray-200 rounded-md mt-1 z-10">
+          <div className="absolute top-full left-0 right-0 bg-white shadow-md border border-gray-200 rounded-md mt-1 z-10 max-h-40 overflow-y-auto overflow-hidden">
             {options.map((option) => (
               <div
                 key={option.value}
-                onClick={() => {
+                onClick={(e) => {
                   const fakeEvent = {
                     target: { name, value: option.value },
                   } as React.ChangeEvent<HTMLSelectElement>;

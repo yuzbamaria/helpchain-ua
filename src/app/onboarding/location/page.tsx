@@ -90,10 +90,10 @@ export default function LocationPage() {
       <ProgressBar percent={40} stepInfo="Step 4 of 10" />
       <main className="flex-1 flex flex-col items-center justify-center px-4">
         <div className="w-full max-w-2xl text-black  text-center p-6">
-          <h1 className="text-2xl font-bold mb-4 font-montserrat">
+          <h1 className="text-2xl font-bold mb-4 font-montserrat text-center">
             Tell us where you are
           </h1>
-          <div className="font-karla mb-10">
+          <div className="font-karla text-base">
             <p>
               This helps us match you with jobs and support services nearby.
             </p>

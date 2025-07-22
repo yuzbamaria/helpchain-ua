@@ -81,7 +81,7 @@ export default function ProfilePage() {
         <form
           id="onbord-profile-form"
           onSubmit={handleSubmit}
-          className="w-full md:w-2xl lg:w-3xl space-y-4 text-gray-300 font-semibold font-karla mb-20"
+          className="w-full md:w-xl space-y-4 text-gray-300 font-semibold font-karla mb-20"
         >
           <Input
             name="firstName"
