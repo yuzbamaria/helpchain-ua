@@ -182,14 +182,14 @@ export default function Header() {
 
       {/* =======> Tablet & Desktop container: visible from lg and up <======= */}
       <div
-        className={`hidden lg:flex justify-center ${
+        className={`hidden lg:flex justify-center  ${
           status === "authenticated" ? "bg-white" : ""
         }`}
       >
-        <div className="px-10 py-7">
-          <nav className="flex justify-between items-center xl:w-6xl">
+        <div className="w-full max-w-7xl px-10 py-7">
+          <nav className="flex justify-between items-center">
             {/* === Left side: Logo + Nav === */}
-            <div className="flex items-center">
+            <div className="flex items-center gap-6">
               <Link href="/" aria-label="Go to homepage">
                 {status === "authenticated" ? logoDark : logoLight}
               </Link>
@@ -198,24 +198,20 @@ export default function Header() {
                   status === "authenticated" ? "text-primary-500" : "text-white"
                 }`}
               >
-                <li className="cursor-pointer p-2.5">
-                  Find a job
-                </li>
-                <li className="cursor-pointer p-2.5">
-                  Hire Talent
-                </li>
+                <li className="cursor-pointer p-2.5">Find a job</li>
+                <li className="cursor-pointer p-2.5">Hire Talent</li>
                 <li className="cursor-pointer p-2.5">Projects</li>
                 <li className="cursor-pointer p-2.5">Contact</li>
               </ul>
             </div>
 
             {/* === Right side: Lang + User Actions === */}
-            <div className="flex items-center gap-6 h-12">
+            <div className="flex items-center gap-6 h-12 whitespace-nowrap">
               {/* Language Dropdown (always visible on tablet & desktop) */}
               <div className="relative" ref={dropdownRef}>
                 <button
                   onClick={() => setShowDropdown((prev) => !prev)}
-                  className={`cursor-pointer flex items-center py-2.5 px-2.5 w-28 h-11 bg-white rounded-md ${
+                  className={`cursor-pointer flex items-center py-2.5 px-2.5 w-28 h-12 bg-white rounded-md ${
                     showDropdown
                       ? "border-4 border-primary-300"
                       : "border border-neutral-300"
@@ -263,18 +259,18 @@ export default function Header() {
               {status === "authenticated" ? (
                 <div className="flex items-center gap-6">
                   {/* Tablet view: avatar only */}
-                  <div className="xl:hidden">
+                  <div className="xl:hidden flex items-center">
                     <button
-                      className="cursor-pointer"
+                      className="cursor-pointer h-full flex items-center"
                       onClick={handleUserNameClick}
-                      aria-label="Open user menu"
+                      aria-label="Open user profile"
                     >
                       {avatar}
                     </button>
                   </div>
 
                   {/* Desktop view: email + dropdown */}
-                  <div className="hidden xl:flex items-center gap-8">
+                  <div className="hidden xl:flex items-center">
                     <button
                       className="cursor-pointer font-karla font-bold text-primary-500 text-base"
                       onClick={handleUserNameClick}
@@ -289,7 +285,7 @@ export default function Header() {
                   {/* Sign out (shown on both) */}
                   <button
                     onClick={() => signOut({ callbackUrl: "/" })}
-                    className="cursor-pointer py-2 px-5 bg-accent-400 lg:w-28 xl:w-32 h-11 text-base rounded-md font-karla font-bold text-white"
+                    className="cursor-pointer py-2 px-5 bg-accent-400 lg:w-28 xl:w-32 h-12 text-base rounded-md font-karla font-bold text-white"
                   >
                     Sign out
                   </button>
@@ -302,7 +298,7 @@ export default function Header() {
                   >
                     Login
                   </Link>
-                  <button className="cursor-pointer py-2 px-6 bg-accent-400 rounded-md lg:w-28 xl:w-32 h-11 text-lg font-karla font-bold text-white">
+                  <button className="cursor-pointer py-2 px-6 bg-accent-400 rounded-md lg:w-28 xl:w-32 h-12 text-lg font-karla font-bold text-white">
                     Join us
                   </button>
                 </>
