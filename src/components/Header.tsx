@@ -9,6 +9,7 @@ import { crossCloseIcon } from "@/icons/Cross";
 import { hamburger } from "@/icons/Hamburger";
 import { logoDark } from "@/icons/LogoDark";
 import { logoLight } from "@/icons/LogoLight";
+import { avatar } from "@/icons/Avatar";
 
 import { useState, useRef, useEffect } from "react";
 import { useSession } from "next-auth/react";
@@ -78,15 +79,16 @@ export default function Header() {
 
   return (
     <header className="bg-white lg:bg-primary-600">
+      {/* =======> Mobile menu <======= */}
       {isMenuOpen && (
-        <div className="fixed top-0 left-0 w-full h-full z-25 bg-[#191B2366] lg:hidden">
+        <div className="fixed top-0 left-0 w-full h-full z-25 bg-gray-350 lg:hidden">
           <button
             onClick={() => setIsMenuOpen(false)}
             className="absolute top-4 right-4 z-50 p-2"
           >
             {crossCloseIcon}
           </button>
-          <div className="flex flex-col items-center pt-[24px] gap-8 absolute top-0 left-0 min-w-[300px] w-[60%] h-full z-30 bg-white sm:w-[30%] md:w-[40%]">
+          <div className="flex flex-col items-center pt-6 gap-8 absolute top-0 left-0 min-w-xs w-3/5 h-full z-30 bg-white sm:w-2/6 md:w-2/5">
             <div className="flex flex-col items-center">
               <ul className="flex flex-col items-center font-karla font-bold text-primary-500">
                 <li className="cursor-pointer px-4 py-4">Find a job</li>
@@ -100,7 +102,7 @@ export default function Header() {
             <div className="flex flex-col gap-2" ref={mobileDropdownRef}>
               <button
                 onClick={() => setShowMobileDropdown((prev) => !prev)}
-                className={`flex items-center py-2.5 px-2.5 w-[236px] h-[44px] bg-white rounded-md ${
+                className={`flex items-center py-2.5 px-2.5 w-56 h-11 bg-white rounded-md ${
                   showMobileDropdown
                     ? "border-4 border-primary-300"
                     : "border border-neutral-300"
@@ -114,7 +116,7 @@ export default function Header() {
               </button>
 
               {showMobileDropdown && (
-                <div className="w-[236px] rounded-md border border-neutral-300  bg-white">
+                <div className="w-56 rounded-md border border-neutral-300  bg-white">
                   {/* ======= Eng lang button ======= */}
                   <button
                     className="flex gap-2 px-2.5 py-2.5 font-karla font-bold"
@@ -129,7 +131,7 @@ export default function Header() {
 
                   {/* ======= Ukrainian lang button ======= */}
                   <button
-                    className="flex items-center py-2.5 px-2.5 w-[236px] h-[44px] gap-2"
+                    className="flex items-center py-2.5 px-2.5 w-56 h-11 gap-2"
                     onClick={() => handleSelectLang("ukr")}
                   >
                     <div className="flex gap-3 pr-3">
@@ -142,23 +144,40 @@ export default function Header() {
               )}
             </div>
 
-            <div className="flex px-8 py-4 gap-8 text-lg font-karla font-bold">
-              <Link
-                className="cursor-pointer text-primary-500 font-karla font-bold"
-                href="/signin"
-              >
-                Login
-              </Link>
+            <div className="flex items-center px-8 py-4 gap-8 text-lg font-karla font-bold">
+              {status === "authenticated" ? (
+                <button
+                  onClick={() => {
+                    setIsMenuOpen(false);
+                    signOut({ callbackUrl: "/" });
+                  }}
+                  className="cursor-pointer py-2 px-5 bg-accent-400 rounded-md w-32 h-11 text-lg text-white"
+                >
+                  Sign out
+                </button>
+              ) : (
+                <>
+                  <Link
+                    href="/signin"
+                    onClick={() => setIsMenuOpen(false)}
+                    className="cursor-pointer text-primary-500 font-karla font-bold"
+                  >
+                    Sign in
+                  </Link>
 
-              <button className="cursor-pointer py-2 px-6 bg-accent-400 rounded-md w-[135px] h-[44px] text-lg font-karla font-bold text-white">
-                Join us
-              </button>
+                  <button className="cursor-pointer py-2 px-6 bg-accent-400 rounded-md w-32 h-11 text-lg font-karla font-bold text-white">
+                    <Link href="/signup" onClick={() => setIsMenuOpen(false)}>
+                      Join us
+                    </Link>
+                  </button>
+                </>
+              )}
             </div>
           </div>
         </div>
       )}
 
-      {/* =======> Mobile / Tablet container: visible up to 1024px <======= */}
+      {/* =======> Mobile container: visible up to 1024px <======= */}
       <div className="lg:hidden flex justify-between items-center px-3 py-6 sm:px-12 md:px-18">
         <button
           className="cursor-pointer"
@@ -170,43 +189,52 @@ export default function Header() {
         <Link href="/" aria-label="Go to homepage">
           {logoDark}
         </Link>
-        <button className="cursor-pointer py-2 px-6 bg-accent-400 rounded-md w-[109px] h-[44px] text-lg font-karla font-bold text-white">
-          Join us
-        </button>
+        {status === "authenticated" ? (
+          <button
+            onClick={handleUserNameClick}
+            className="cursor-pointer flex items-center gap-2 text-primary-500"
+          >
+            {avatar}
+          </button>
+        ) : (
+          <button className="cursor-pointer py-2 px-6 bg-accent-400 rounded-md w-28 h-11 text-lg font-karla font-bold text-white">
+            <Link href="/signup">Join us</Link>
+          </button>
+        )}
       </div>
 
-      {/* =======> Desktop container: visible above 1024px <======= */}
+      {/* =======> Tablet & Desktop container: visible from lg and up <======= */}
       <div
-        className={`flex justify-center ${status === "authenticated" ? "bg-white" : ""}`}
+        className={`hidden lg:flex justify-center  ${
+          status === "authenticated" ? "bg-white" : ""
+        }`}
       >
-        <div className="hidden lg:block px-10 py-7 xl:w-6xl 2xl:w-7xl">
-          <nav className="flex justify-between items-center max-w-[1200px] h-[52px] lg:gap-x-12 2xl:w-1200px">
-            <div className="flex items-center lg:gap-x-7">
-              {/* change logo color based on auth user */}
+        <div className="w-full max-w-7xl px-10 py-7">
+          <nav className="flex justify-between items-center">
+            {/* === Left side: Logo + Nav === */}
+            <div className="flex items-center gap-6">
               <Link href="/" aria-label="Go to homepage">
                 {status === "authenticated" ? logoDark : logoLight}
               </Link>
               <ul
-                className={`flex items-center gap-4 h-[48px] font-karla font-bold ${
+                className={`flex items-center gap-4 h-12 font-karla font-bold ${
                   status === "authenticated" ? "text-primary-500" : "text-white"
                 }`}
               >
-                <li className="cursor-pointer px-[10px] py-[10px]">
-                  Find a job
-                </li>
-                <li className="cursor-pointer px-[10px] py-[10px]">
-                  Hire Talent
-                </li>
-                <li className="cursor-pointer px-[10px] py-[10px]">Projects</li>
-                <li className="cursor-pointer px-[10px] py-[10px]">Contact</li>
+                <li className="cursor-pointer p-2.5">Find a job</li>
+                <li className="cursor-pointer p-2.5">Hire Talent</li>
+                <li className="cursor-pointer p-2.5">Projects</li>
+                <li className="cursor-pointer p-2.5">Contact</li>
               </ul>
             </div>
-            <div className="flex items-center gap-8 h-[48px]">
-              {/* Dropdown language button */}
+
+            {/* === Right side: Lang + User Actions === */}
+            <div className="flex items-center gap-6 h-12 whitespace-nowrap">
+              {/* Language Dropdown (always visible on tablet & desktop) */}
               <div className="relative" ref={dropdownRef}>
                 <button
                   onClick={() => setShowDropdown((prev) => !prev)}
-                  className={`cursor-pointer flex items-center py-2.5 px-2.5 w-[120px] h-[44px] bg-white rounded-md ${
+                  className={`cursor-pointer flex items-center py-2.5 px-2.5 w-28 h-12 bg-white rounded-md ${
                     showDropdown
                       ? "border-4 border-primary-300"
                       : "border border-neutral-300"
@@ -221,13 +249,12 @@ export default function Header() {
 
                 {showDropdown && (
                   <div
-                    className=" absolute top-full left-0 w-[120px] rounded-md border bg-white border-neutral-300"
+                    className="absolute top-full left-0 w-28 rounded-md border bg-white border-neutral-300"
                     style={{ top: "calc(100% + 6px)" }}
                   >
-                    <div className="">
-                      {/* Eng lang button */}
+                    <div>
                       <button
-                        className="cursor-pointer flex gap-2 px-2.5 py-2.5 font-karla font-bold"
+                        className="cursor-pointer flex gap-2 p-2.5 font-karla font-bold"
                         onClick={() => handleSelectLang("en")}
                       >
                         <div className="flex gap-3 pr-3">
@@ -236,10 +263,8 @@ export default function Header() {
                         </div>
                         {selectedLang === "en" && checkIcon2}
                       </button>
-
-                      {/* Ukrainian lang button */}
                       <button
-                        className="cursor-pointer flex items-center py-2.5 px-2.5 gap-2"
+                        className="cursor-pointer flex items-center p-2.5 gap-2"
                         onClick={() => handleSelectLang("ukr")}
                       >
                         <div className="flex gap-3 pr-3">
@@ -252,19 +277,38 @@ export default function Header() {
                   </div>
                 )}
               </div>
+
+              {/* === Authenticated user controls === */}
               {status === "authenticated" ? (
-                <div className="flex gap-8">
-                  <button
-                    className="cursor-pointer font-karla font-bold text-primary-500 text-base"
-                    onClick={handleUserNameClick}
-                  >
-                    <div className="flex gap-2 items-center">
-                      {user?.email}{dropDownIcon}
-                    </div>
-                  </button>
+                <div className="flex items-center gap-6">
+                  {/* Tablet view: avatar only */}
+                  <div className="xl:hidden flex items-center">
+                    <button
+                      className="cursor-pointer h-full flex items-center"
+                      onClick={handleUserNameClick}
+                      aria-label="Open user profile"
+                    >
+                      {avatar}
+                    </button>
+                  </div>
+
+                  {/* Desktop view: email + dropdown */}
+                  <div className="hidden xl:flex items-center">
+                    <button
+                      className="cursor-pointer font-karla font-bold text-primary-500 text-base"
+                      onClick={handleUserNameClick}
+                    >
+                      <div className="flex gap-2 items-center">
+                        {user?.email}
+                        {dropDownIcon}
+                      </div>
+                    </button>
+                  </div>
+
+                  {/* Sign out (shown on both) */}
                   <button
                     onClick={() => signOut({ callbackUrl: "/" })}
-                    className="cursor-pointer py-2 px-6 bg-accent-400 rounded-md text-lg font-karla font-bold text-white"
+                    className="cursor-pointer py-2 px-5 bg-accent-400 lg:w-28 xl:w-32 h-12 text-base rounded-md font-karla font-bold text-white"
                   >
                     Sign out
                   </button>
@@ -277,9 +321,13 @@ export default function Header() {
                   >
                     Login
                   </Link>
-                  <button className="cursor-pointer py-2 px-6 bg-accent-400 rounded-md w-[109px] h-[44px] text-lg font-karla font-bold text-white">
+                  <Link
+                    href="/signup"
+                    onClick={() => setIsMenuOpen(false)}
+                    className="cursor-pointer py-2 px-6 bg-accent-400 rounded-md lg:w-28 xl:w-32 h-12 text-lg font-karla font-bold text-white"
+                  >
                     Join us
-                  </button>
+                  </Link>
                 </>
               )}
             </div>
