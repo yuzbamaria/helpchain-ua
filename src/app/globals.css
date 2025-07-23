@@ -8,13 +8,8 @@ body {
   padding: 0;
 }
 
-/* * {
-  margin: 0;
-  box-sizing: border-box;
-} */
-
 @theme {
-  /* 🎨 Кольори */
+  /* 🎨 Colors */
   /* ==== BASE COLORS ==== */
   --color-white: #FFFFFF;
   --color-black: #000000;
@@ -25,6 +20,7 @@ body {
   --color-gray-100: #F2F4F7;
   --color-gray-200: #EAECF0;
   --color-gray-300: #D0D5DD;
+  --color-gray-350: #191B2366;
   --color-gray-400: #98A2B3;
   --color-gray-500: #667085;
   --color-gray-600: #475467;
