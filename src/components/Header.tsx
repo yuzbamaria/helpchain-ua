@@ -145,19 +145,33 @@ export default function Header() {
             </div>
 
             <div className="flex items-center px-8 py-4 gap-8 text-lg font-karla font-bold">
-              <Link
-                href="/signin"
-                onClick={() => setIsMenuOpen(false)}
-                className="cursor-pointer text-primary-500 font-karla font-bold"
-              >
-                Sign in
-              </Link>
+              {status === "authenticated" ? (
+                  <button
+                    onClick={() => {
+                      setIsMenuOpen(false);
+                      signOut({ callbackUrl: "/" });
+                    }}
+                    className="cursor-pointer py-2 px-5 bg-accent-400 rounded-md w-32 h-11 text-lg text-white"
+                  >
+                    Sign out
+                  </button>
+              ) : (
+                <>
+                  <Link
+                    href="/signin"
+                    onClick={() => setIsMenuOpen(false)}
+                    className="cursor-pointer text-primary-500 font-karla font-bold"
+                  >
+                    Sign in
+                  </Link>
 
-              <button className="cursor-pointer py-2 px-6 bg-accent-400 rounded-md w-32 h-11 text-lg font-karla font-bold text-white">
-                <Link href="/signup" onClick={() => setIsMenuOpen(false)}>
-                  Join us
-                </Link>
-              </button>
+                  <button className="cursor-pointer py-2 px-6 bg-accent-400 rounded-md w-32 h-11 text-lg font-karla font-bold text-white">
+                    <Link href="/signup" onClick={() => setIsMenuOpen(false)}>
+                      Join us
+                    </Link>
+                  </button>
+                </>
+              )}
             </div>
           </div>
         </div>
@@ -175,9 +189,18 @@ export default function Header() {
         <Link href="/" aria-label="Go to homepage">
           {logoDark}
         </Link>
-        <button className="cursor-pointer py-2 px-6 bg-accent-400 rounded-md w-28 h-11 text-lg font-karla font-bold text-white">
-          Join us
-        </button>
+        {status === "authenticated" ? (
+            <button
+              onClick={handleUserNameClick}
+              className="cursor-pointer flex items-center gap-2 text-primary-500"
+            >
+              {avatar}
+            </button>
+        ) : (
+          <button className="cursor-pointer py-2 px-6 bg-accent-400 rounded-md w-28 h-11 text-lg font-karla font-bold text-white">
+            <Link href="/signup">Join us</Link>
+          </button>
+        )}
       </div>
 
       {/* =======> Tablet & Desktop container: visible from lg and up <======= */}
