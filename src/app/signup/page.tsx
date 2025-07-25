@@ -1,27 +1,56 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import { eyeOn } from "@/icons/EyeOn";
 import { eyeOff } from "@/icons/EyeOff";
 import { checkmark } from "@/icons/CheckMark";
 import SocialAuthButtons from "@/components/SocialAuthButtons";
+import { validatePassword } from "@/utils/validatePassword";
 
 export default function RegisterPage() {
   const router = useRouter();
 
   const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [emailFocused, setEmailFocused] = useState(false);
+  const [emailTouched, setEmailTouched] = useState(false);
+
   const [error, setError] = useState("");
+
+  const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const [passwordTouched, setPasswordTouched] = useState(false); // Tracks if the user has interacted with the field (on blur)
+  const [passwordFocused, setPasswordFocused] = useState(false); // Tracks if the field is currently focused (on focus)
+
   const [passwordConfirmed, setPasswordConfirmed] = useState("");
   const [showPasswordConfirmed, setShowPasswordConfirmed] = useState(false);
+  const [passwordConfirmedTouched, setPasswordConfirmedTouched] =
+    useState(false);
+  const [passwordConfirmedFocused, setPasswordConfirmedFocused] =
+    useState(false);
+
+  const passwordError = validatePassword(password);
+  useEffect(() => {
+    // Clear error when password becomes valid and matches
+    if (!passwordError && password && password === passwordConfirmed) {
+      setError("");
+    }
+  }, [password, passwordConfirmed, passwordError]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError("");
-    // console.log("Submitting registration:", { email, password });
+
+    if (!email || !password || !passwordConfirmed) {
+      setError("Please fill in all required fields.");
+      return;
+    }
+
+    if (passwordError) {
+      setError(passwordError);
+      return;
+    }
 
     if (passwordConfirmed !== password) {
       setError("Passwords don't match.");
@@ -56,14 +85,18 @@ export default function RegisterPage() {
         <h1 className="text-2xl font-extrabold font-montserrat text-center tracking-[0.1em]">
           Create Your Account
         </h1>
-        <p className="font-karla font-normal text-center text-base text-gray-700 ">
+        <p className="font-karla font-normal text-center text-base text-gray-700">
           Use your email or sign up with Google or Facebook.
         </p>
       </div>
 
-      <form onSubmit={handleSubmit} className="flex flex-col gap-4 w-[624px]">
+      <form
+        noValidate
+        onSubmit={handleSubmit}
+        className="flex flex-col gap-4 max-w-xl"
+      >
         {error && (
-          <p className="rounded-md bg-red-100 p-2 text-center text-red-700">
+          <p className="rounded-md bg-red-100 p-2 text-center text-error-500">
             {error}
           </p>
         )}
@@ -78,8 +111,24 @@ export default function RegisterPage() {
               required
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="w-full rounded-lg border border-gray-300 px-4 py-3 bg-white focus:outline-none focus:ring-3 focus:ring-primary-100 focus:shadow-input focus:border-primary-300"
+              onFocus={() => setEmailFocused(true)}
+              onBlur={() => {
+                setEmailFocused(false);
+                setEmailTouched(true);
+              }}
+              className={`w-full rounded-lg border px-4 py-3 bg-white focus:outline-none focus:ring-3
+                ${
+                  emailTouched && !email
+                    ? "border-error-500 focus:ring-error-100 focus:shadow-error-sm"
+                    : "border-gray-300 focus:ring-primary-100 focus:shadow-input focus:border-primary-300"
+                }
+              `}
             />
+            {emailTouched && !email && !emailFocused && (
+              <p className="mt-1 font-karla text-sm text-error-500">
+                Required field.
+              </p>
+            )}
           </div>
 
           <div className="flex flex-col gap-1.5">
@@ -92,7 +141,18 @@ export default function RegisterPage() {
                 required
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="w-full rounded-lg font-karla font-medium text-base text-gray-500 border border-gray-300 px-4 py-3 bg-white focus:outline-none focus:ring-3 focus:ring-primary-100 focus:shadow-input focus:border-primary-300"
+                onFocus={() => setPasswordFocused(true)}
+                onBlur={() => {
+                  setPasswordFocused(false);
+                  setPasswordTouched(true);
+                }}
+                className={`w-full rounded-lg border px-4 py-3 bg-white focus:outline-none focus:ring-3
+                  ${
+                    passwordTouched && (!password || passwordError)
+                      ? "border-error-500 focus:ring-error-100 focus:shadow-error-sm"
+                      : "border-gray-300 focus:ring-primary-100 focus:shadow-input focus:border-primary-300"
+                  }
+                `}
               />
               <button
                 type="button"
@@ -102,9 +162,28 @@ export default function RegisterPage() {
                 {showPassword ? eyeOn : eyeOff}
               </button>
             </div>
-            <p className="font-karla text-sm text-gray-500">
-              Enter at least 8 characters
-            </p>
+            {passwordFocused && (
+              <p className="mt-1 font-karla text-sm text-gray-500 max-w-lg">
+                Enter a secure password: at least 8 characters, including
+                upper-case and lower-case letters, numbers and special
+                characters.
+              </p>
+            )}
+
+            {passwordTouched && !password && !passwordFocused && (
+              <p className="mt-1 font-karla text-sm text-error-500">
+                Required field.
+              </p>
+            )}
+
+            {passwordTouched &&
+              password &&
+              passwordError &&
+              !passwordFocused && (
+                <p className="mt-1 font-karla text-sm text-error-500">
+                  {passwordError}
+                </p>
+              )}
           </div>
 
           <div className="flex flex-col gap-1.5">
@@ -117,8 +196,40 @@ export default function RegisterPage() {
                 required
                 value={passwordConfirmed}
                 onChange={(e) => setPasswordConfirmed(e.target.value)}
-                className="w-full rounded-lg font-karla font-medium text-base text-gray-500 border border-gray-300 px-4 py-3 bg-white focus:outline-none focus:ring-3 focus:ring-primary-100 focus:shadow-input focus:border-primary-300"
+                onFocus={() => setPasswordConfirmedFocused(true)}
+                onBlur={() => {
+                  setPasswordConfirmedFocused(false);
+                  setPasswordConfirmedTouched(true);
+                }}
+                className={`w-full rounded-lg border px-4 py-3 bg-white focus:outline-none focus:ring-3
+              ${
+                passwordConfirmedTouched &&
+                (!passwordConfirmed || password !== passwordConfirmed)
+                  ? "border-error-500 focus:ring-error-100 focus:shadow-error-sm"
+                  : "border-gray-300 focus:ring-primary-100 focus:shadow-input focus:border-primary-300"
+              }
+            `}
               />
+              {passwordConfirmedFocused && (
+                <p className="mt-1 font-karla text-sm text-gray-500">
+                  Make sure it matches your password above.
+                </p>
+              )}
+              {passwordConfirmedTouched &&
+                !passwordConfirmed &&
+                !passwordConfirmedFocused && (
+                  <p className="mt-1 font-karla text-sm text-error-500">
+                    Required field.
+                  </p>
+                )}
+              {passwordConfirmedTouched &&
+                passwordConfirmed &&
+                !passwordConfirmedFocused &&
+                password !== passwordConfirmed && (
+                  <p className="mt-1 font-karla text-sm text-error-500">
+                    Passwords do not match.
+                  </p>
+                )}
               <button
                 type="button"
                 onClick={handleShowPasswordConfirmed}
@@ -127,9 +238,6 @@ export default function RegisterPage() {
                 {showPasswordConfirmed ? eyeOn : eyeOff}
               </button>
             </div>
-            <p className="font-karla text-sm text-gray-500">
-              Make sure it matches your password above
-            </p>
           </div>
         </div>
 
@@ -162,7 +270,7 @@ export default function RegisterPage() {
 
         <button
           type="submit"
-          className="w-full h-[46px] rounded-md bg-primary-500 py-2.5 px-3 font-karla font-bold text-white transition hover:bg-primary-700"
+          className="w-full h-12 rounded-md bg-primary-500 py-2.5 px-3 font-karla font-bold text-white transition hover:bg-primary-700"
         >
           Create Account
         </button>
@@ -173,7 +281,7 @@ export default function RegisterPage() {
           {"Already have an account?"}{" "}
           <Link
             href="/signin"
-            className="font-bold text-brand-primary hover:underline"
+            className="font-bold text-primary-500 hover:text-primary-800"
           >
             Sign In
           </Link>

@@ -109,13 +109,13 @@ export default function SignInPage() {
             </button>
           </div>
         </div>
-        <div className="cursor-pointer py-4 text-center font-karla text-base font-bold text-brand-primary hover:underline">
+        <div className="cursor-pointer py-4 text-center font-karla text-base font-bold text-primary-500 hover:text-primary-700 active:text-primary-700">
           <Link href="/forgot-password">Forgot your password?</Link>
         </div>
 
         <button
           type="submit"
-          className="cursor-pointer w-full h-[46px] rounded-md bg-primary-500 py-2.5 px-3 font-karla font-bold text-white transition hover:bg-primary-700"
+          className="cursor-pointer w-full h-[46px] rounded-md bg-primary-500 py-2.5 px-3 font-karla font-bold text-white transition hover:bg-primary-700  active:text-primary-700"
         >
           Sign In
         </button>
@@ -130,7 +130,7 @@ export default function SignInPage() {
           {"Don't have an account? "}
           <Link
             href="/signup"
-            className="cursor-pointer font-bold text-brand-primary hover:underline"
+            className="cursor-pointer font-bold text-primary-500 hover:text-primary-700"
           >
             Sign Up
           </Link>

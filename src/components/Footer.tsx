@@ -329,13 +329,13 @@ export default function Footer() {
                   <input
                     type="text"
                     placeholder="Your Email Here"
-                    className="w-[305px] rounded-sm p-3 border border-primary-400 placeholder-white"
+                    className="min-w-3xs rounded-sm p-3 border border-primary-400 placeholder-white"
                     required
                   />
                   <input
                     type="submit"
                     value="Join"
-                    className="w-[79px] rounded-sm border border-primary-400 px-6 py-3"
+                    className="w-20 rounded-sm border border-primary-400 px-6 py-3"
                   />
                 </form>
               </div>
