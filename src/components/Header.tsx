@@ -91,10 +91,18 @@ export default function Header() {
           <div className="flex flex-col items-center pt-6 gap-8 absolute top-0 left-0 min-w-xs w-3/5 h-full z-30 bg-white sm:w-2/6 md:w-2/5">
             <div className="flex flex-col items-center">
               <ul className="flex flex-col items-center font-karla font-bold text-primary-500">
-                <li className="cursor-pointer p-4 active:text-primary-700">Find a job</li>
-                <li className="cursor-pointer p-4 active:text-primary-700">Hire Talent</li>
-                <li className="cursor-pointer p-4 active:text-primary-700">Projects</li>
-                <li className="cursor-pointer p-4 active:text-primary-700">Contact</li>
+                <li className="cursor-pointer p-4 active:text-primary-700">
+                  Find a job
+                </li>
+                <li className="cursor-pointer p-4 active:text-primary-700">
+                  Hire Talent
+                </li>
+                <li className="cursor-pointer p-4 active:text-primary-700">
+                  Projects
+                </li>
+                <li className="cursor-pointer p-4 active:text-primary-700">
+                  Contact
+                </li>
               </ul>
             </div>
 
@@ -221,7 +229,7 @@ export default function Header() {
                   status === "authenticated" ? "text-primary-500" : "text-white"
                 }`}
               >
-                <li className="cursor-pointer p-2.5 ">Find a job</li>
+                <li className="cursor-pointer p-2.5">Find a job</li>
                 <li className="cursor-pointer p-2.5">Hire Talent</li>
                 <li className="cursor-pointer p-2.5">Projects</li>
                 <li className="cursor-pointer p-2.5">Contact</li>
