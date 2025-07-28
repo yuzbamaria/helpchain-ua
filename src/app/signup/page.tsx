@@ -3,9 +3,7 @@
 import { useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import { eyeOn } from "@/icons/EyeOn";
-import { eyeOff } from "@/icons/EyeOff";
-import { checkmark } from "@/icons/CheckMark";
+import { EyeOn, EyeOff, CheckMark } from "@/icons/index";
 import SocialAuthButtons from "@/components/SocialAuthButtons";
 import { validatePassword } from "@/utils/validatePassword";
 
@@ -159,7 +157,7 @@ export default function RegisterPage() {
                 onClick={handleShowPassword}
                 className="absolute right-4 top-4 text-gray-500"
               >
-                {showPassword ? eyeOn : eyeOff}
+                {showPassword ? <EyeOn /> : <EyeOff />}
               </button>
             </div>
             {passwordFocused && (
@@ -235,7 +233,7 @@ export default function RegisterPage() {
                 onClick={handleShowPasswordConfirmed}
                 className="absolute right-4 top-4 text-gray-500"
               >
-                {showPasswordConfirmed ? eyeOn : eyeOff}
+                {showPasswordConfirmed ? <EyeOn /> : <EyeOff />}
               </button>
             </div>
           </div>
@@ -249,7 +247,7 @@ export default function RegisterPage() {
                 className="peer cursor-pointer w-5 h-5 bg-white rounded-md border border-gray-300 appearance-none focus:ring-2 focus:ring-primary-300 checked:bg-primary-500"
               />
               <span className="pointer-events-none absolute top-1 left-1 hidden peer-checked:block">
-                {checkmark}
+                <CheckMark/>
               </span>
             </label>
 
