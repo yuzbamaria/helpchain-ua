@@ -45,7 +45,7 @@ export default function SignInPage() {
       <form
         noValidate
         onSubmit={handleSubmit}
-        className="flex flex-col gap-4 w-full max-w-[624px] sm:w-4/5 md:w-3/5 lg:w-1/2"
+        className="flex flex-col gap-4 w-full max-w-xl"
       >
         {error && (
           <p className="rounded-md bg-red-100 p-2 text-center text-red-700">
