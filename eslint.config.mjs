@@ -1,3 +1,6 @@
+// For more info, see https://github.com/storybookjs/eslint-plugin-storybook#configuration-flat-config-format
+import storybook from "eslint-plugin-storybook";
+
 import { dirname } from "path";
 import { fileURLToPath } from "url";
 import { FlatCompat } from "@eslint/eslintrc";
@@ -9,19 +12,16 @@ const compat = new FlatCompat({
   baseDirectory: __dirname,
 });
 
-const eslintConfig = [
-  {
-    ignores: [
-      "./src/generated/prisma/**", 
-      "./src/icons/AlertIcon.tsx",
-      "./src/icons/ArrowRight.tsx",
-      "./src/icons/ArrowLeft.tsx",
-      "./src/icons/HelpIcon.tsx",
-      "./src/icons/LocationIcon.tsx",
-      "./src/types/next-auth.d.ts"
-    ],
-  },
-  ...compat.extends("next/core-web-vitals", "next/typescript"),
-];
+const eslintConfig = [{
+  ignores: [
+    "./src/generated/prisma/**", 
+    "./src/icons/AlertIcon.tsx",
+    "./src/icons/ArrowRight.tsx",
+    "./src/icons/ArrowLeft.tsx",
+    "./src/icons/HelpIcon.tsx",
+    "./src/icons/LocationIcon.tsx",
+    "./src/types/next-auth.d.ts"
+  ],
+}, ...compat.extends("next/core-web-vitals", "next/typescript"), ...storybook.configs["flat/recommended"]];
 
 export default eslintConfig;
