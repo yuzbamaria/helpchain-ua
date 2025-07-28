@@ -6,6 +6,7 @@ import Link from "next/link";
 import { EyeOn, EyeOff, CheckMark } from "@/icons/index";
 import SocialAuthButtons from "@/components/SocialAuthButtons";
 import { validatePassword } from "@/utils/validatePassword";
+import TextInput from "@/components/ui/TextInput";
 
 export default function RegisterPage() {
   const router = useRouter();
@@ -100,6 +101,7 @@ export default function RegisterPage() {
         )}
 
         <div className="flex flex-col gap-4">
+          {/* Email input */}
           <div className="flex flex-col gap-1.5">
             <label className="font-karla font-normal text-base text-gray-700">
               Email
@@ -129,61 +131,33 @@ export default function RegisterPage() {
             )}
           </div>
 
-          <div className="flex flex-col gap-1.5">
-            <label className="font-karla font-normal text-base text-gray-700">
-              Password
-            </label>
-            <div className="relative">
-              <input
-                type={showPassword ? "text" : "password"}
-                required
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                onFocus={() => setPasswordFocused(true)}
-                onBlur={() => {
-                  setPasswordFocused(false);
-                  setPasswordTouched(true);
-                }}
-                className={`w-full rounded-lg border px-4 py-3 bg-white focus:outline-none focus:ring-3
-                  ${
-                    passwordTouched && (!password || passwordError)
-                      ? "border-error-500 focus:ring-error-100 focus:shadow-error-sm"
-                      : "border-gray-300 focus:ring-primary-100 focus:shadow-input focus:border-primary-300"
-                  }
-                `}
-              />
-              <button
-                type="button"
-                onClick={handleShowPassword}
-                className="absolute right-4 top-4 text-gray-500"
-              >
-                {showPassword ? <EyeOn /> : <EyeOff />}
-              </button>
-            </div>
-            {passwordFocused && (
-              <p className="mt-1 font-karla text-sm text-gray-500 max-w-lg">
-                Enter a secure password: at least 8 characters, including
-                upper-case and lower-case letters, numbers and special
-                characters.
-              </p>
-            )}
+          {/* Password input  */}
 
-            {passwordTouched && !password && !passwordFocused && (
-              <p className="mt-1 font-karla text-sm text-error-500">
-                Required field.
-              </p>
-            )}
+          <TextInput
+            label="Password"
+            type={showPassword ? "text" : "password"}
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            onFocus={() => setPasswordFocused(true)}
+            onBlur={() => {
+              setPasswordFocused(false);
+              setPasswordTouched(true);
+            }}
+            touched={passwordTouched}
+            error={
+              passwordTouched && !password && !passwordFocused
+                ? "Required field."
+                : passwordTouched && passwordError && !passwordFocused
+                ? passwordError
+                : undefined
+            }
+            helperText="Enter a secure password: at least 8 characters, including upper-case and lower-case letters, numbers and special characters."
+            showIconButton
+            icon={showPassword ? <EyeOn /> : <EyeOff />}
+            onIconButtonClick={handleShowPassword}
+          />
 
-            {passwordTouched &&
-              password &&
-              passwordError &&
-              !passwordFocused && (
-                <p className="mt-1 font-karla text-sm text-error-500">
-                  {passwordError}
-                </p>
-              )}
-          </div>
-
+          {/* Password confirmation input  */}
           <div className="flex flex-col gap-1.5">
             <label className="font-karla font-normal text-base text-gray-700">
               Confirm Password
@@ -247,7 +221,7 @@ export default function RegisterPage() {
                 className="peer cursor-pointer w-5 h-5 bg-white rounded-md border border-gray-300 appearance-none focus:ring-2 focus:ring-primary-300 checked:bg-primary-500"
               />
               <span className="pointer-events-none absolute top-1 left-1 hidden peer-checked:block">
-                <CheckMark/>
+                <CheckMark />
               </span>
             </label>
 

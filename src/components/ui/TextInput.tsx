@@ -10,6 +10,8 @@ export interface TextInputProps extends React.InputHTMLAttributes<HTMLInputEleme
   touched?: boolean;
   showIconButton?: boolean;
   onIconButtonClick?: () => void;
+  onFocus?: () => void;
+  onBlur?: () => void;
 }
 
 export default function TextInput({
@@ -22,10 +24,24 @@ export default function TextInput({
   icon,
   className = "",
   type = "text",
+  onFocus,
+  onBlur,
   ...rest
 }: TextInputProps) {
 
   const [isFocused, setIsFocused] = useState(false);
+
+  const handleFocus = () => {
+    setIsFocused(true);
+    onFocus?.();
+  };
+
+  const handleBlur = () => {
+    setIsFocused(false);
+    onBlur?.();
+  };
+
+  const showHelper = isFocused && helperText && !error;
 
   return (
     <div className="flex flex-col gap-1.5">
@@ -33,6 +49,8 @@ export default function TextInput({
       <div className="relative">
         <input
           type={type}
+          onFocus={handleFocus}
+          onBlur={handleBlur}
           className={`w-full rounded-lg border px-4 py-3 bg-white focus:outline-none focus:ring-3
             ${
               touched && error
@@ -40,14 +58,6 @@ export default function TextInput({
                 : "border-gray-300 focus:ring-primary-100 focus:shadow-input focus:border-primary-300"
             }
           `}
-          onFocus={(e) => {
-            setIsFocused(true);
-            rest.onFocus?.(e);
-          }}
-          onBlur={(e) => {
-            setIsFocused(false);
-            rest.onBlur?.(e);
-          }}
           {...rest}
         />
         {showIconButton && (
@@ -60,11 +70,12 @@ export default function TextInput({
           </button>
         )}
       </div>
-      {helperText && isFocused && (
-        <p className="mt-1 font-karla text-sm text-gray-500 max-w-lg">{helperText}</p>
+       {error && !isFocused && (
+        <p className="mt-1 font-karla text-sm text-error-500 ">{error}</p>
       )}
-      {touched && error && !isFocused && (
-        <p className="text-sm font-karla text-error-500 mt-1">{error}</p>
+
+      {showHelper && (
+        <p className="mt-1 font-karla text-sm text-gray-500 max-w-lg">{helperText}</p>
       )}
     </div>
   );

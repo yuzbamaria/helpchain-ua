@@ -20,7 +20,7 @@ export function validatePassword(password: string): string | null {
     return "Password must include a number.";
   }
 
-  if (!/[!@#$%^&*(),.?":{}|<>]/.test(password)) {
+  if (!/[^A-Za-z0-9]/.test(password)) {
     return "Password must include a special character.";
   }
 
