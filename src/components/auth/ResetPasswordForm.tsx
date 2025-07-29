@@ -5,8 +5,7 @@
 import { useState } from "react";
 import { useSearchParams } from "next/navigation";
 import axios, { AxiosError } from "axios";
-import { eyeOn } from "@/icons/EyeOn";
-import { eyeOff } from "@/icons/EyeOff";
+import { EyeOn, EyeOff } from "@/icons/index";
 import Link from "next/link";
 
 export default function ResetPasswordPage() {
@@ -99,7 +98,7 @@ export default function ResetPasswordPage() {
                 onClick={handleShowNewPassword}
                 className="absolute right-4 top-4 text-gray-500"
               >
-                {showNewPassword ? eyeOn : eyeOff}
+                {showNewPassword ? <EyeOn /> : <EyeOff />}
               </button>
             </div>
           </div>
@@ -121,7 +120,7 @@ export default function ResetPasswordPage() {
                 onClick={handleShowConfirmedNewPassword}
                 className="absolute right-4 top-4 text-gray-500"
               >
-                {showConfirmedNewPassword ? eyeOn : eyeOff}
+                {showConfirmedNewPassword ? <EyeOn /> : <EyeOff />}
               </button>
             </div>
           </div>
@@ -130,7 +129,7 @@ export default function ResetPasswordPage() {
         <div className="py-3">
           <button
             type="submit"
-            className="w-full h-[46px] rounded-md bg-primary-500 py-2.5 px-3 font-karla font-bold text-white transition"
+            className="w-full h-12 rounded-md bg-primary-500 py-2.5 px-3 font-karla font-bold text-white transition"
           >
             Save new password
           </button>

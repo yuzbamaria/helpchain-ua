@@ -4,8 +4,7 @@ import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import Link from "next/link";
-import { eyeOn } from "@/icons/EyeOn";
-import { eyeOff } from "@/icons/EyeOff";
+import { EyeOn, EyeOff } from "@/icons/index";
 import SocialAuthButtons from "@/components/SocialAuthButtons";
 
 export default function SignInPage() {
@@ -105,7 +104,7 @@ export default function SignInPage() {
               onClick={() => setShowPassword((s) => !s)}
               className="absolute right-4 top-4 text-gray-500"
             >
-              {showPassword ? eyeOn : eyeOff}
+              {showPassword ? <EyeOn /> : <EyeOff />}
             </button>
           </div>
         </div>
@@ -115,7 +114,7 @@ export default function SignInPage() {
 
         <button
           type="submit"
-          className="cursor-pointer w-full h-[46px] rounded-md bg-primary-500 py-2.5 px-3 font-karla font-bold text-white transition hover:bg-primary-700  active:text-primary-700"
+          className="cursor-pointer w-full h-12 rounded-md bg-primary-500 py-2.5 px-3 font-karla font-bold text-white transition hover:bg-primary-700  active:text-primary-700"
         >
           Sign In
         </button>

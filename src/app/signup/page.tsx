@@ -12,10 +12,8 @@ export default function RegisterPage() {
   const router = useRouter();
 
   const [email, setEmail] = useState("");
-  const [emailFocused, setEmailFocused] = useState(false);
-  const [emailTouched, setEmailTouched] = useState(false);
-
-  const [error, setError] = useState("");
+  const [emailFocused, setEmailFocused] = useState(false); // Tracks if the field is currently focused (on focus)
+  const [emailTouched, setEmailTouched] = useState(false); // Tracks if the user has interacted with the field (on blur)
 
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
@@ -29,7 +27,10 @@ export default function RegisterPage() {
   const [passwordConfirmedFocused, setPasswordConfirmedFocused] =
     useState(false);
 
+  const [error, setError] = useState("");
+
   const passwordError = validatePassword(password);
+
   useEffect(() => {
     // Clear error when password becomes valid and matches
     if (!passwordError && password && password === passwordConfirmed) {
@@ -102,37 +103,25 @@ export default function RegisterPage() {
 
         <div className="flex flex-col gap-4">
           {/* Email input */}
-          <div className="flex flex-col gap-1.5">
-            <label className="font-karla font-normal text-base text-gray-700">
-              Email
-            </label>
-            <input
-              type="email"
-              required
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              onFocus={() => setEmailFocused(true)}
-              onBlur={() => {
-                setEmailFocused(false);
-                setEmailTouched(true);
-              }}
-              className={`w-full rounded-lg border px-4 py-3 bg-white focus:outline-none focus:ring-3
-                ${
-                  emailTouched && !email
-                    ? "border-error-500 focus:ring-error-100 focus:shadow-error-sm"
-                    : "border-gray-300 focus:ring-primary-100 focus:shadow-input focus:border-primary-300"
-                }
-              `}
-            />
-            {emailTouched && !email && !emailFocused && (
-              <p className="mt-1 font-karla text-sm text-error-500">
-                Required field.
-              </p>
-            )}
-          </div>
+          <TextInput
+            label="Email"
+            type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            onFocus={() => setEmailFocused(true)}
+            onBlur={() => {
+              setEmailFocused(false);
+              setEmailTouched(true);
+            }}
+            touched={emailTouched} // tells TextInput whether the field has been touched
+            error={
+              emailTouched && !email && !emailFocused
+                ? "Required field." // shows error only when blurred and empty
+                : undefined
+            }
+          />
 
           {/* Password input  */}
-
           <TextInput
             label="Password"
             type={showPassword ? "text" : "password"}

@@ -71,7 +71,7 @@ export default function TextInput({
         )}
       </div>
        {error && !isFocused && (
-        <p className="mt-1 font-karla text-sm text-error-500 ">{error}</p>
+        <p className="mt-1 font-karla text-sm text-error-500">{error}</p>
       )}
 
       {showHelper && (
