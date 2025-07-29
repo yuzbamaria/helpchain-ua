@@ -6,10 +6,15 @@ import { useState } from "react";
 import Link from "next/link";
 import { EyeOn, EyeOff } from "@/icons/index";
 import SocialAuthButtons from "@/components/SocialAuthButtons";
+import TextInput from "@/components/ui/TextInput";
 
 export default function SignInPage() {
   const router = useRouter();
+
   const [email, setEmail] = useState("");
+  const [emailFocused, setEmailFocused] = useState(false); // Tracks if the field is currently focused (on focus)
+  const [emailTouched, setEmailTouched] = useState(false); // Tracks if the user has interacted with the field (on blur)
+
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [showPassword, setShowPassword] = useState(false);
@@ -18,6 +23,7 @@ export default function SignInPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setSubmitted(true);
+    setEmailTouched(true);
     setError("");
 
     if (!email || !password) return;
@@ -52,29 +58,26 @@ export default function SignInPage() {
           </p>
         )}
 
-        <div>
-          <label className="font-karla font-normal text-base text-gray-700">
-            Email
-          </label>
-          <input
-            type="email"
-            required
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            className={`w-full rounded-lg border px-4 py-3 bg-white focus:outline-none focus:ring-3
-              ${
-                (submitted && !email) || error
-                  ? "border-error-500 focus:ring-error-100 focus:shadow-error-sm"
-                  : "border-gray-300 focus:ring-primary-100 focus:shadow-input focus:border-primary-300"
-              }
-            `}
-          />
-          {submitted && !email && (
-            <p className="mt-1 font-karla text-sm text-error-500">
-              Email is required.
-            </p>
-          )}
-        </div>
+        {/* Email input field*/}
+        <TextInput
+          label="Email"
+          type="email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          onFocus={() => setEmailFocused(true)}
+          onBlur={() => {
+            setEmailFocused(false);
+            setEmailTouched(true);
+          }}
+          touched={emailTouched} // tells TextInput whether the field has been touched
+          error={
+            submitted && !email
+              ? "Email is required."
+              : emailTouched && !email && !emailFocused
+              ? "Required field." // shows error only when blurred and empty
+              : undefined
+          }
+        />
 
         <div>
           <label className="font-karla font-normal text-base text-gray-700">

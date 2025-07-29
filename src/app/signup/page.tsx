@@ -102,7 +102,7 @@ export default function RegisterPage() {
         )}
 
         <div className="flex flex-col gap-4">
-          {/* Email input */}
+          {/* Email input field*/}
           <TextInput
             label="Email"
             type="email"
