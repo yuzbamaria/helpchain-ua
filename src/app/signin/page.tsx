@@ -16,9 +16,16 @@ export default function SignInPage() {
   const [emailTouched, setEmailTouched] = useState(false); // Tracks if the user has interacted with the field (on blur)
 
   const [password, setPassword] = useState("");
+  const [passwordTouched, setPasswordTouched] = useState(false); // Tracks if the user has interacted with the field (on blur)
+  const [passwordFocused, setPasswordFocused] = useState(false); // Tracks if the field is currently focused (on focus)
+
   const [error, setError] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+
+  const handleShowPassword = () => {
+    setShowPassword((prev) => !prev);
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -69,6 +76,7 @@ export default function SignInPage() {
             setEmailFocused(false);
             setEmailTouched(true);
           }}
+          helperText="Enter your email."
           touched={emailTouched} // tells TextInput whether the field has been touched
           error={
             submitted && !email
@@ -79,38 +87,31 @@ export default function SignInPage() {
           }
         />
 
-        <div>
-          <label className="font-karla font-normal text-base text-gray-700">
-            Password
-          </label>
-          <div className="relative">
-            <input
-              type={showPassword ? "text" : "password"}
-              required
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              className={`w-full rounded-lg border px-4 py-3 bg-white focus:outline-none focus:ring-3
-              ${
-                (submitted && !password) || error
-                  ? "border-error-500 focus:ring-error-100 focus:shadow-error-sm"
-                  : "border-gray-300 focus:ring-primary-100 focus:shadow-input focus:border-primary-300"
-              }
-            `}
-            />
-            {submitted && !password && (
-              <p className="mt-1 font-karla text-sm text-error-500">
-                Password is required.
-              </p>
-            )}
-            <button
-              type="button"
-              onClick={() => setShowPassword((s) => !s)}
-              className="absolute right-4 top-4 text-gray-500"
-            >
-              {showPassword ? <EyeOn /> : <EyeOff />}
-            </button>
-          </div>
-        </div>
+        {/* Password input field*/}
+        <TextInput
+          label="Password"
+          type={showPassword ? "text" : "password"}
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          onFocus={() => setPasswordFocused(true)}
+          onBlur={() => {
+            setPasswordFocused(false);
+            setPasswordTouched(true);
+          }}
+          touched={passwordTouched}
+          error={
+            submitted && !password
+              ? "Password is required."
+              : passwordTouched && !password && !passwordFocused
+              ? "Required field."
+              : undefined
+          }
+          helperText="Enter your password."
+          showIconButton
+          icon={showPassword ? <EyeOn /> : <EyeOff />}
+          onIconButtonClick={handleShowPassword}
+        />
+
         <div className="cursor-pointer py-4 text-center font-karla text-base font-bold text-primary-500 hover:text-primary-700 active:text-primary-700">
           <Link href="/forgot-password">Forgot your password?</Link>
         </div>

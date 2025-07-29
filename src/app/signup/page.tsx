@@ -121,7 +121,7 @@ export default function RegisterPage() {
             }
           />
 
-          {/* Password input  */}
+          {/* Password input field*/}
           <TextInput
             label="Password"
             type={showPassword ? "text" : "password"}
@@ -146,7 +146,7 @@ export default function RegisterPage() {
             onIconButtonClick={handleShowPassword}
           />
 
-          {/* Password confirmation input  */}
+          {/* Password confirmation input field*/}
           <TextInput
             label="Confirm Password"
             type={showPasswordConfirmed ? "text" : "password"}
