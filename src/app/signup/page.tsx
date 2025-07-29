@@ -147,59 +147,34 @@ export default function RegisterPage() {
           />
 
           {/* Password confirmation input  */}
-          <div className="flex flex-col gap-1.5">
-            <label className="font-karla font-normal text-base text-gray-700">
-              Confirm Password
-            </label>
-            <div className="relative">
-              <input
-                type={showPasswordConfirmed ? "text" : "password"}
-                required
-                value={passwordConfirmed}
-                onChange={(e) => setPasswordConfirmed(e.target.value)}
-                onFocus={() => setPasswordConfirmedFocused(true)}
-                onBlur={() => {
-                  setPasswordConfirmedFocused(false);
-                  setPasswordConfirmedTouched(true);
-                }}
-                className={`w-full rounded-lg border px-4 py-3 bg-white focus:outline-none focus:ring-3
-              ${
-                passwordConfirmedTouched &&
-                (!passwordConfirmed || password !== passwordConfirmed)
-                  ? "border-error-500 focus:ring-error-100 focus:shadow-error-sm"
-                  : "border-gray-300 focus:ring-primary-100 focus:shadow-input focus:border-primary-300"
-              }
-            `}
-              />
-              {passwordConfirmedFocused && (
-                <p className="mt-1 font-karla text-sm text-gray-500">
-                  Make sure it matches your password above.
-                </p>
-              )}
-              {passwordConfirmedTouched &&
-                !passwordConfirmed &&
-                !passwordConfirmedFocused && (
-                  <p className="mt-1 font-karla text-sm text-error-500">
-                    Required field.
-                  </p>
-                )}
-              {passwordConfirmedTouched &&
-                passwordConfirmed &&
-                !passwordConfirmedFocused &&
-                password !== passwordConfirmed && (
-                  <p className="mt-1 font-karla text-sm text-error-500">
-                    Passwords do not match.
-                  </p>
-                )}
-              <button
-                type="button"
-                onClick={handleShowPasswordConfirmed}
-                className="absolute right-4 top-4 text-gray-500"
-              >
-                {showPasswordConfirmed ? <EyeOn /> : <EyeOff />}
-              </button>
-            </div>
-          </div>
+          <TextInput
+            label="Confirm Password"
+            type={showPasswordConfirmed ? "text" : "password"}
+            value={passwordConfirmed}
+            onChange={(e) => setPasswordConfirmed(e.target.value)}
+            onFocus={() => setPasswordConfirmedFocused(true)}
+            onBlur={() => {
+              setPasswordConfirmedFocused(false);
+              setPasswordConfirmedTouched(true);
+            }}
+            touched={passwordConfirmedTouched}
+            error={
+              passwordConfirmedTouched &&
+              !passwordConfirmed &&
+              !passwordConfirmedFocused
+                ? "Required field."
+                : passwordConfirmedTouched &&
+                  passwordConfirmed &&
+                  !passwordConfirmedFocused &&
+                  password !== passwordConfirmed
+                ? "Passwords do not match."
+                : undefined
+            }
+            helperText="Make sure it matches your password above."
+            showIconButton
+            icon={showPasswordConfirmed ? <EyeOn /> : <EyeOff />}
+            onIconButtonClick={handleShowPasswordConfirmed}
+          />
         </div>
 
         <div className="flex flex-col gap-4">
