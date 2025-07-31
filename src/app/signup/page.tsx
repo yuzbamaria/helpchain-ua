@@ -40,6 +40,9 @@ export default function RegisterPage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setEmailTouched(true);
+    setPasswordTouched(true);
+    setPasswordConfirmedTouched(true);
     setError("");
 
     if (!email || !password || !passwordConfirmed) {
@@ -107,6 +110,7 @@ export default function RegisterPage() {
             label="Email"
             type="email"
             value={email}
+            required
             onChange={(e) => setEmail(e.target.value)}
             onFocus={() => setEmailFocused(true)}
             onBlur={() => {
@@ -126,6 +130,7 @@ export default function RegisterPage() {
             label="Password"
             type={showPassword ? "text" : "password"}
             value={password}
+            required
             onChange={(e) => setPassword(e.target.value)}
             onFocus={() => setPasswordFocused(true)}
             onBlur={() => {
@@ -151,6 +156,7 @@ export default function RegisterPage() {
             label="Confirm Password"
             type={showPasswordConfirmed ? "text" : "password"}
             value={passwordConfirmed}
+            required
             onChange={(e) => setPasswordConfirmed(e.target.value)}
             onFocus={() => setPasswordConfirmedFocused(true)}
             onBlur={() => {
@@ -206,7 +212,7 @@ export default function RegisterPage() {
 
         <button
           type="submit"
-          className="w-full h-12 rounded-md bg-primary-500 py-2.5 px-3 font-karla font-bold text-white transition hover:bg-primary-700"
+          className="cursor-pointer w-full h-12 rounded-md bg-primary-500 py-2.5 px-3 font-karla font-bold text-white transition hover:bg-primary-700"
         >
           Create Account
         </button>

@@ -1,8 +1,8 @@
 "use client";
 
 import { signIn } from "next-auth/react";
-import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useSearchParams, useRouter } from "next/navigation";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import { EyeOn, EyeOff } from "@/icons/index";
 import SocialAuthButtons from "@/components/SocialAuthButtons";
@@ -23,6 +23,23 @@ export default function SignInPage() {
   const [showPassword, setShowPassword] = useState(false);
   const [submitted, setSubmitted] = useState(false);
 
+  const searchParams = useSearchParams();
+  const resetSuccess = searchParams.get("reset") === "success";
+
+  const [showResetSuccess, setShowResetSuccess] = useState(resetSuccess);
+
+  useEffect(() => {
+    if (showResetSuccess) {
+      const timer = setTimeout(() => {
+        setShowResetSuccess(false);
+        const url = new URL(window.location.href);
+        url.searchParams.delete("reset");
+        window.history.replaceState({}, "", url.toString());
+      }, 5000);
+      return () => clearTimeout(timer);
+    }
+  }, [showResetSuccess]);
+
   const handleShowPassword = () => {
     setShowPassword((prev) => !prev);
   };
@@ -31,16 +48,19 @@ export default function SignInPage() {
     e.preventDefault();
     setSubmitted(true);
     setEmailTouched(true);
+    setPasswordTouched(true);
     setError("");
 
-    if (!email || !password) return;
+    if (!email || !password) {
+      setError("Please fill in all required fields.");
+      return;
+    }
 
     const res = await signIn("credentials", {
       redirect: false,
       email,
       password,
-    });
-    console.log("SignIn response:", res);
+    }); 
 
     if (res?.ok) {
       router.push("/redirect-after-auth"); // use page here instead of route
@@ -59,8 +79,13 @@ export default function SignInPage() {
         onSubmit={handleSubmit}
         className="flex flex-col gap-4 w-full max-w-xl"
       >
+        {showResetSuccess && (
+          <p className="p-2 font-karla font-semibold rounded-md bg-custom-success-50 text-custom-success-500">
+            Your password has been reset. Please sign in.
+          </p>
+        )}
         {error && (
-          <p className="rounded-md bg-red-100 p-2 text-center text-red-700">
+          <p className="rounded-md bg-red-100 p-2 text-center text-red-500">
             {error}
           </p>
         )}
@@ -70,6 +95,7 @@ export default function SignInPage() {
           label="Email"
           type="email"
           value={email}
+          required
           onChange={(e) => setEmail(e.target.value)}
           onFocus={() => setEmailFocused(true)}
           onBlur={() => {
@@ -79,9 +105,7 @@ export default function SignInPage() {
           helperText="Enter your email."
           touched={emailTouched} // tells TextInput whether the field has been touched
           error={
-            submitted && !email
-              ? "Email is required."
-              : emailTouched && !email && !emailFocused
+              emailTouched && !email && !emailFocused
               ? "Required field." // shows error only when blurred and empty
               : undefined
           }
@@ -92,6 +116,7 @@ export default function SignInPage() {
           label="Password"
           type={showPassword ? "text" : "password"}
           value={password}
+          required
           onChange={(e) => setPassword(e.target.value)}
           onFocus={() => setPasswordFocused(true)}
           onBlur={() => {
@@ -100,9 +125,7 @@ export default function SignInPage() {
           }}
           touched={passwordTouched}
           error={
-            submitted && !password
-              ? "Password is required."
-              : passwordTouched && !password && !passwordFocused
+              passwordTouched && !password && !passwordFocused
               ? "Required field."
               : undefined
           }
@@ -118,7 +141,7 @@ export default function SignInPage() {
 
         <button
           type="submit"
-          className="cursor-pointer w-full h-12 rounded-md bg-primary-500 py-2.5 px-3 font-karla font-bold text-white transition hover:bg-primary-700  active:text-primary-700"
+          className="cursor-pointer w-full h-12 rounded-md bg-primary-500 py-2.5 px-3 font-karla font-bold text-white transition hover:bg-primary-700 active:text-primary-700"
         >
           Sign In
         </button>

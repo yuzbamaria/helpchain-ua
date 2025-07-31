@@ -5,6 +5,7 @@ export interface TextInputProps extends React.InputHTMLAttributes<HTMLInputEleme
   label: string;
   icon?: React.ReactNode;
   className?: string;
+  required?: boolean;
   error?: string;
   helperText?: string;
   touched?: boolean;
@@ -17,6 +18,7 @@ export interface TextInputProps extends React.InputHTMLAttributes<HTMLInputEleme
 export default function TextInput({
   label,
   error,
+  required,
   touched,
   helperText,
   showIconButton = false,
@@ -45,7 +47,9 @@ export default function TextInput({
 
   return (
     <div className="flex flex-col gap-1.5">
-      <label className="font-karla font-normal text-base text-gray-700">{label}</label>
+      <label className="font-karla font-normal text-base text-gray-700">{label}
+        {required && <span className="ml-1 text-error-500">*</span>}
+      </label>
       <div className="relative">
         <input
           type={type}
