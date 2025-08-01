@@ -1,12 +1,13 @@
 "use client";
 
 import { signIn } from "next-auth/react";
-import { useSearchParams, useRouter } from "next/navigation";
-import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
+import { useState, Suspense } from "react";
 import Link from "next/link";
 import { EyeOn, EyeOff } from "@/icons/index";
 import SocialAuthButtons from "@/components/SocialAuthButtons";
 import TextInput from "@/components/ui/TextInput";
+import ResetSuccessMessage from "@/components/auth/ResetSuccessMessage";
 
 export default function SignInPage() {
   const router = useRouter();
@@ -21,24 +22,7 @@ export default function SignInPage() {
 
   const [error, setError] = useState("");
   const [showPassword, setShowPassword] = useState(false);
-  const [submitted, setSubmitted] = useState(false);
-
-  const searchParams = useSearchParams();
-  const resetSuccess = searchParams.get("reset") === "success";
-
-  const [showResetSuccess, setShowResetSuccess] = useState(resetSuccess);
-
-  useEffect(() => {
-    if (showResetSuccess) {
-      const timer = setTimeout(() => {
-        setShowResetSuccess(false);
-        const url = new URL(window.location.href);
-        url.searchParams.delete("reset");
-        window.history.replaceState({}, "", url.toString());
-      }, 5000);
-      return () => clearTimeout(timer);
-    }
-  }, [showResetSuccess]);
+  const [showResetSuccess, setShowResetSuccess] = useState(false);
 
   const handleShowPassword = () => {
     setShowPassword((prev) => !prev);
@@ -46,7 +30,6 @@ export default function SignInPage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setSubmitted(true);
     setEmailTouched(true);
     setPasswordTouched(true);
     setError("");
@@ -60,7 +43,7 @@ export default function SignInPage() {
       redirect: false,
       email,
       password,
-    }); 
+    });
 
     if (res?.ok) {
       router.push("/redirect-after-auth"); // use page here instead of route
@@ -71,6 +54,10 @@ export default function SignInPage() {
 
   return (
     <div className="flex flex-col min-h-screen py-20 px-4 items-center justify-start bg-primary-50">
+      <Suspense fallback={null}>
+        <ResetSuccessMessage setShowResetSuccess={setShowResetSuccess} />
+      </Suspense>
+
       <h1 className="mb-12 text-2xl font-extrabold font-montserrat text-center tracking-[0.1em]">
         Sign in to your account
       </h1>
@@ -105,7 +92,7 @@ export default function SignInPage() {
           helperText="Enter your email."
           touched={emailTouched} // tells TextInput whether the field has been touched
           error={
-              emailTouched && !email && !emailFocused
+            emailTouched && !email && !emailFocused
               ? "Required field." // shows error only when blurred and empty
               : undefined
           }
@@ -125,7 +112,7 @@ export default function SignInPage() {
           }}
           touched={passwordTouched}
           error={
-              passwordTouched && !password && !passwordFocused
+            passwordTouched && !password && !passwordFocused
               ? "Required field."
               : undefined
           }
