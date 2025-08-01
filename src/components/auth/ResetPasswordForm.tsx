@@ -20,9 +20,12 @@ export default function ResetPasswordPage() {
   const [newPasswordFocused, setNewPasswordFocused] = useState(false);
 
   const [confirmedNewPassword, setConfirmedNewPassword] = useState("");
-  const [showConfirmedNewPassword, setShowConfirmedNewPassword] = useState(false);
-  const [confirmedNewPasswordTouched, setConfirmedNewPasswordTouched] = useState(false);
-  const [confirmedNewPasswordFocused, setConfirmedNewPasswordFocused] = useState(false);
+  const [showConfirmedNewPassword, setShowConfirmedNewPassword] =
+    useState(false);
+  const [confirmedNewPasswordTouched, setConfirmedNewPasswordTouched] =
+    useState(false);
+  const [confirmedNewPasswordFocused, setConfirmedNewPasswordFocused] =
+    useState(false);
 
   const [error, setError] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -66,8 +69,9 @@ export default function ResetPasswordPage() {
       } else {
         setError(res.data.message || "Reset failed. Try again.");
       }
-    } catch (err: any) {
-      setError(err.response?.data?.message || "Something went wrong.");
+    } catch (err: unknown) {
+      console.log(err);
+      setError("Something went wrong. Please try again.");
     } finally {
       setIsSubmitting(false);
     }

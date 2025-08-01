@@ -1,8 +1,6 @@
 import React from "react";
 
-interface IconProps extends React.SVGProps<SVGSVGElement> {}
-
-const EyeOn: React.FC<IconProps> = (props) => (
+const EyeOn: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
   <svg
     width="16"
     height="16"

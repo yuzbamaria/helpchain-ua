@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import TextInput, { TextInputProps } from "@/components/ui/TextInput";
-import { StoryFn  } from "@storybook/react";
+import { StoryFn } from "@storybook/nextjs-vite";
 import { EyeOn, EyeOff } from "@/icons/index";
 
 export default {
@@ -20,7 +20,6 @@ export default {
     },
   },
 };
-
 
 type IconName = "none" | "eyeOn" | "eyeOff";
 

@@ -4,7 +4,6 @@ import { useState } from "react";
 export interface TextInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   label: string;
   icon?: React.ReactNode;
-  className?: string;
   required?: boolean;
   error?: string;
   helperText?: string;
@@ -24,7 +23,6 @@ export default function TextInput({
   showIconButton = false,
   onIconButtonClick,
   icon,
-  className = "",
   type = "text",
   onFocus,
   onBlur,
