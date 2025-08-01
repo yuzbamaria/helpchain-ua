@@ -21,7 +21,6 @@ export default function ForgotPasswordPage() {
     try {
       const res = await axios.post("/api/forgot-password", { email });
       if (res.status === 200) {
-        console.log("res data", res.data);
         setMessage(
           res.data.message ||
             "Check your email for reset link. You can close this page now."
@@ -56,7 +55,7 @@ export default function ForgotPasswordPage() {
         </p>
       </div>
 
-      <form onSubmit={handleSubmit} className="flex flex-col gap-6 w-[624px]">
+      <form onSubmit={handleSubmit} className="flex flex-col gap-6 w-full max-w-xl">
         {error && (
           <p className="rounded-md bg-red-100 p-2 text-center text-red-700">
             {error}
@@ -78,7 +77,7 @@ export default function ForgotPasswordPage() {
 
         <button
           type="submit"
-          className="w-full h-[46px] rounded-md bg-primary-500 py-2.5 px-3 font-karla font-bold text-white transition"
+          className="cursor-pointer w-full h-12 rounded-md bg-primary-500 py-2.5 px-3 font-karla font-bold text-white transition hover:bg-primary-700  active:text-primary-700"
         >
           Send Reset Link
         </button>

@@ -3,20 +3,17 @@
 import { useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import { eyeOn } from "@/icons/EyeOn";
-import { eyeOff } from "@/icons/EyeOff";
-import { checkmark } from "@/icons/CheckMark";
+import { EyeOn, EyeOff, CheckMark } from "@/icons/index";
 import SocialAuthButtons from "@/components/SocialAuthButtons";
 import { validatePassword } from "@/utils/validatePassword";
+import TextInput from "@/components/ui/TextInput";
 
 export default function RegisterPage() {
   const router = useRouter();
 
   const [email, setEmail] = useState("");
-  const [emailFocused, setEmailFocused] = useState(false);
-  const [emailTouched, setEmailTouched] = useState(false);
-
-  const [error, setError] = useState("");
+  const [emailFocused, setEmailFocused] = useState(false); // Tracks if the field is currently focused (on focus)
+  const [emailTouched, setEmailTouched] = useState(false); // Tracks if the user has interacted with the field (on blur)
 
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
@@ -30,7 +27,10 @@ export default function RegisterPage() {
   const [passwordConfirmedFocused, setPasswordConfirmedFocused] =
     useState(false);
 
+  const [error, setError] = useState("");
+
   const passwordError = validatePassword(password);
+
   useEffect(() => {
     // Clear error when password becomes valid and matches
     if (!passwordError && password && password === passwordConfirmed) {
@@ -40,6 +40,9 @@ export default function RegisterPage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setEmailTouched(true);
+    setPasswordTouched(true);
+    setPasswordConfirmedTouched(true);
     setError("");
 
     if (!email || !password || !passwordConfirmed) {
@@ -102,143 +105,82 @@ export default function RegisterPage() {
         )}
 
         <div className="flex flex-col gap-4">
-          <div className="flex flex-col gap-1.5">
-            <label className="font-karla font-normal text-base text-gray-700">
-              Email
-            </label>
-            <input
-              type="email"
-              required
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              onFocus={() => setEmailFocused(true)}
-              onBlur={() => {
-                setEmailFocused(false);
-                setEmailTouched(true);
-              }}
-              className={`w-full rounded-lg border px-4 py-3 bg-white focus:outline-none focus:ring-3
-                ${
-                  emailTouched && !email
-                    ? "border-error-500 focus:ring-error-100 focus:shadow-error-sm"
-                    : "border-gray-300 focus:ring-primary-100 focus:shadow-input focus:border-primary-300"
-                }
-              `}
-            />
-            {emailTouched && !email && !emailFocused && (
-              <p className="mt-1 font-karla text-sm text-error-500">
-                Required field.
-              </p>
-            )}
-          </div>
+          {/* Email input field*/}
+          <TextInput
+            label="Email"
+            type="email"
+            value={email}
+            required
+            onChange={(e) => setEmail(e.target.value)}
+            onFocus={() => setEmailFocused(true)}
+            onBlur={() => {
+              setEmailFocused(false);
+              setEmailTouched(true);
+            }}
+            touched={emailTouched} // tells TextInput whether the field has been touched
+            error={
+              emailTouched && !email && !emailFocused
+                ? "Required field." // shows error only when blurred and empty
+                : undefined
+            }
+          />
 
-          <div className="flex flex-col gap-1.5">
-            <label className="font-karla font-normal text-base text-gray-700">
-              Password
-            </label>
-            <div className="relative">
-              <input
-                type={showPassword ? "text" : "password"}
-                required
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                onFocus={() => setPasswordFocused(true)}
-                onBlur={() => {
-                  setPasswordFocused(false);
-                  setPasswordTouched(true);
-                }}
-                className={`w-full rounded-lg border px-4 py-3 bg-white focus:outline-none focus:ring-3
-                  ${
-                    passwordTouched && (!password || passwordError)
-                      ? "border-error-500 focus:ring-error-100 focus:shadow-error-sm"
-                      : "border-gray-300 focus:ring-primary-100 focus:shadow-input focus:border-primary-300"
-                  }
-                `}
-              />
-              <button
-                type="button"
-                onClick={handleShowPassword}
-                className="absolute right-4 top-4 text-gray-500"
-              >
-                {showPassword ? eyeOn : eyeOff}
-              </button>
-            </div>
-            {passwordFocused && (
-              <p className="mt-1 font-karla text-sm text-gray-500 max-w-lg">
-                Enter a secure password: at least 8 characters, including
-                upper-case and lower-case letters, numbers and special
-                characters.
-              </p>
-            )}
+          {/* Password input field*/}
+          <TextInput
+            label="Password"
+            type={showPassword ? "text" : "password"}
+            value={password}
+            required
+            onChange={(e) => setPassword(e.target.value)}
+            onFocus={() => setPasswordFocused(true)}
+            onBlur={() => {
+              setPasswordFocused(false);
+              setPasswordTouched(true);
+            }}
+            touched={passwordTouched}
+            error={
+              passwordTouched && !password && !passwordFocused
+                ? "Required field."
+                : passwordTouched && passwordError && !passwordFocused
+                ? passwordError
+                : undefined
+            }
+            helperText="Enter a secure password: at least 8 characters, including upper-case and lower-case letters, numbers and special characters."
+            showIconButton
+            icon={showPassword ? <EyeOn /> : <EyeOff />}
+            onIconButtonClick={handleShowPassword}
+          />
 
-            {passwordTouched && !password && !passwordFocused && (
-              <p className="mt-1 font-karla text-sm text-error-500">
-                Required field.
-              </p>
-            )}
-
-            {passwordTouched &&
-              password &&
-              passwordError &&
-              !passwordFocused && (
-                <p className="mt-1 font-karla text-sm text-error-500">
-                  {passwordError}
-                </p>
-              )}
-          </div>
-
-          <div className="flex flex-col gap-1.5">
-            <label className="font-karla font-normal text-base text-gray-700">
-              Confirm Password
-            </label>
-            <div className="relative">
-              <input
-                type={showPasswordConfirmed ? "text" : "password"}
-                required
-                value={passwordConfirmed}
-                onChange={(e) => setPasswordConfirmed(e.target.value)}
-                onFocus={() => setPasswordConfirmedFocused(true)}
-                onBlur={() => {
-                  setPasswordConfirmedFocused(false);
-                  setPasswordConfirmedTouched(true);
-                }}
-                className={`w-full rounded-lg border px-4 py-3 bg-white focus:outline-none focus:ring-3
-              ${
-                passwordConfirmedTouched &&
-                (!passwordConfirmed || password !== passwordConfirmed)
-                  ? "border-error-500 focus:ring-error-100 focus:shadow-error-sm"
-                  : "border-gray-300 focus:ring-primary-100 focus:shadow-input focus:border-primary-300"
-              }
-            `}
-              />
-              {passwordConfirmedFocused && (
-                <p className="mt-1 font-karla text-sm text-gray-500">
-                  Make sure it matches your password above.
-                </p>
-              )}
-              {passwordConfirmedTouched &&
-                !passwordConfirmed &&
-                !passwordConfirmedFocused && (
-                  <p className="mt-1 font-karla text-sm text-error-500">
-                    Required field.
-                  </p>
-                )}
-              {passwordConfirmedTouched &&
-                passwordConfirmed &&
-                !passwordConfirmedFocused &&
-                password !== passwordConfirmed && (
-                  <p className="mt-1 font-karla text-sm text-error-500">
-                    Passwords do not match.
-                  </p>
-                )}
-              <button
-                type="button"
-                onClick={handleShowPasswordConfirmed}
-                className="absolute right-4 top-4 text-gray-500"
-              >
-                {showPasswordConfirmed ? eyeOn : eyeOff}
-              </button>
-            </div>
-          </div>
+          {/* Password confirmation input field*/}
+          <TextInput
+            label="Confirm Password"
+            type={showPasswordConfirmed ? "text" : "password"}
+            value={passwordConfirmed}
+            required
+            onChange={(e) => setPasswordConfirmed(e.target.value)}
+            onFocus={() => setPasswordConfirmedFocused(true)}
+            onBlur={() => {
+              setPasswordConfirmedFocused(false);
+              setPasswordConfirmedTouched(true);
+            }}
+            touched={passwordConfirmedTouched}
+            error={
+              passwordConfirmedTouched &&
+              !passwordConfirmed &&
+              !passwordConfirmedFocused
+                ? "Required field."
+                : passwordConfirmedTouched &&
+                  passwordConfirmed &&
+                  !passwordConfirmedFocused &&
+                  password !== passwordConfirmed
+                ? "Passwords do not match."
+                : undefined
+            }
+            helperText="Make sure it matches your password above."
+            showIconButton
+            icon={showPasswordConfirmed ? <EyeOn /> : <EyeOff />}
+            onIconButtonClick={handleShowPasswordConfirmed}
+          />
         </div>
 
         <div className="flex flex-col gap-4">
@@ -249,7 +191,7 @@ export default function RegisterPage() {
                 className="peer cursor-pointer w-5 h-5 bg-white rounded-md border border-gray-300 appearance-none focus:ring-2 focus:ring-primary-300 checked:bg-primary-500"
               />
               <span className="pointer-events-none absolute top-1 left-1 hidden peer-checked:block">
-                {checkmark}
+                <CheckMark />
               </span>
             </label>
 
@@ -270,7 +212,7 @@ export default function RegisterPage() {
 
         <button
           type="submit"
-          className="w-full h-12 rounded-md bg-primary-500 py-2.5 px-3 font-karla font-bold text-white transition hover:bg-primary-700"
+          className="cursor-pointer w-full h-12 rounded-md bg-primary-500 py-2.5 px-3 font-karla font-bold text-white transition hover:bg-primary-700"
         >
           Create Account
         </button>

@@ -7,7 +7,9 @@
     "build": "next build",
     "postinstall": "prisma generate",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "storybook": "storybook dev -p 6006",
+    "build-storybook": "storybook build"
   },
   "prisma": {
     "seed": "tsx prisma/seed.ts"
@@ -28,7 +30,12 @@
     "zxcvbn": "^4.4.2"
   },
   "devDependencies": {
+    "@chromatic-com/storybook": "^4.0.1",
     "@eslint/eslintrc": "^3",
+    "@storybook/addon-a11y": "^9.0.18",
+    "@storybook/addon-docs": "^9.0.18",
+    "@storybook/addon-vitest": "^9.0.18",
+    "@storybook/nextjs-vite": "^9.0.18",
     "@tailwindcss/postcss": "^4",
     "@types/bcrypt": "^5.0.2",
     "@types/jsonwebtoken": "^9.0.10",
@@ -38,11 +45,17 @@
     "@types/react-dom": "^19",
     "@types/uuid": "^10.0.0",
     "@types/zxcvbn": "^4.4.5",
+    "@vitest/browser": "^3.2.4",
+    "@vitest/coverage-v8": "^3.2.4",
     "eslint": "^9",
     "eslint-config-next": "15.3.3",
+    "eslint-plugin-storybook": "^9.0.18",
+    "playwright": "^1.54.1",
     "prisma": "^6.10.1",
-    "tailwindcss": "^4",
+    "storybook": "^9.0.18",
+    "tailwindcss": "^4.1.11",
     "tsx": "^4.20.3",
-    "typescript": "^5"
+    "typescript": "^5",
+    "vitest": "^3.2.4"
   }
 }
