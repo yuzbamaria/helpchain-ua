@@ -4,6 +4,7 @@ import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useState, Suspense } from "react";
 import Link from "next/link";
+import validator from "validator";
 import { EyeOn, EyeOff } from "@/icons/index";
 import SocialAuthButtons from "@/components/SocialAuthButtons";
 import TextInput from "@/components/ui/TextInput";
@@ -36,6 +37,15 @@ export default function SignInPage() {
 
     if (!email || !password) {
       setError("Please fill in all required fields.");
+      return;
+    }
+
+    if (!validator.isEmail(email)) {
+      return;
+    }
+
+    if (!password) {
+      // setError("Please enter your password.");
       return;
     }
 
@@ -94,6 +104,8 @@ export default function SignInPage() {
           error={
             emailTouched && !email && !emailFocused
               ? "Required field." // shows error only when blurred and empty
+              : emailTouched && email && !validator.isEmail(email) && !emailFocused
+              ? "Invalid email format."
               : undefined
           }
         />

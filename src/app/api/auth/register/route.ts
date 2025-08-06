@@ -1,6 +1,8 @@
 import { prisma } from "@/lib/prisma";
 import bcrypt from "bcrypt";
 import { NextResponse } from "next/server";
+import validator from "validator";
+import { isPasswordValid } from "@/utils/validatePassword";
 
 export async function POST(req: Request) {
   const { email, password } = await req.json();
@@ -21,17 +23,15 @@ export async function POST(req: Request) {
     );
   }
 
-  const isPasswordValid = (password: string) => {
-    const strongRegex =
-      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_])[A-Za-z\d\W_]{8,128}$/;
-    return strongRegex.test(password);
-  };
-
   if (!isPasswordValid(password)) {
     return NextResponse.json(
       { message: "Password does not meet complexity requirements." },
       { status: 400 }
     );
+  }
+
+  if (!validator.isEmail(email)) {
+  return NextResponse.json({ message: "Invalid email format" }, { status: 400 });
   }
 
   const hashedPassword = await bcrypt.hash(password, 10);

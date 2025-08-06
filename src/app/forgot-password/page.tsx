@@ -3,6 +3,8 @@
 
 import { useState } from "react";
 import axios from "axios";
+import validator from "validator";
+import TextInput from "@/components/ui/TextInput";
 
 export default function ForgotPasswordPage() {
   const [email, setEmail] = useState("");
@@ -15,6 +17,11 @@ export default function ForgotPasswordPage() {
 
     if (!email) {
       setError("Please enter your email address.");
+      return;
+    }
+
+    if (!validator.isEmail(email)) {
+      setError("Invalid email format.");
       return;
     }
 
@@ -55,7 +62,11 @@ export default function ForgotPasswordPage() {
         </p>
       </div>
 
-      <form onSubmit={handleSubmit} className="flex flex-col gap-6 w-full max-w-xl">
+      <form
+        noValidate
+        onSubmit={handleSubmit}
+        className="flex flex-col gap-6 w-full max-w-xl"
+      >
         {error && (
           <p className="rounded-md bg-red-100 p-2 text-center text-red-700">
             {error}
@@ -63,15 +74,14 @@ export default function ForgotPasswordPage() {
         )}
 
         <div className="flex flex-col gap-1.5">
-          <label className="font-karla font-normal text-base text-gray-700">
-            Email
-          </label>
-          <input
+          {/* Email input field*/}
+          <TextInput
+            label="Email"
             type="email"
-            required
             value={email}
+            required
             onChange={(e) => setEmail(e.target.value)}
-            className="w-full rounded-lg border border-gray-300 px-4 py-3 bg-white focus:outline-none focus:ring-3 focus:ring-primary-100 focus:shadow-input"
+            helperText="Enter your email."
           />
         </div>
 

@@ -3,9 +3,10 @@
 import { useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import validator from "validator";
 import { EyeOn, EyeOff, CheckMark } from "@/icons/index";
 import SocialAuthButtons from "@/components/SocialAuthButtons";
-import { validatePassword } from "@/utils/validatePassword";
+import { isPasswordValid, validatePassword } from "@/utils/validatePassword";
 import TextInput from "@/components/ui/TextInput";
 
 export default function RegisterPage() {
@@ -50,13 +51,16 @@ export default function RegisterPage() {
       return;
     }
 
+    if (!validator.isEmail(email) || !isPasswordValid(password)) {
+      return;
+    }
+
     if (passwordError) {
       setError(passwordError);
       return;
     }
 
     if (passwordConfirmed !== password) {
-      setError("Passwords don't match.");
       return;
     }
 
@@ -69,7 +73,7 @@ export default function RegisterPage() {
     if (res.status === 201) {
       router.push("/signin");
     } else {
-      const data = await res.json();
+      const data = await res.json();  // Error comes from backend route
       setError(data.message || "Something went wrong");
     }
   };
@@ -121,6 +125,8 @@ export default function RegisterPage() {
             error={
               emailTouched && !email && !emailFocused
                 ? "Required field." // shows error only when blurred and empty
+                : emailTouched && email && !validator.isEmail(email) && !emailFocused
+                ? "Invalid email format."
                 : undefined
             }
           />
