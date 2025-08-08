@@ -1,68 +1,21 @@
-name: Discord Notification
+name: Discord Notification on PR Merge to Main
 
 on:
   pull_request:
-    types: [opened, closed, labeled]
-  pull_request_review:
-    types: [submitted]
-  push:
+    types: [closed]
     branches:
       - main
 
 jobs:
-  pr-opened:
-    if: github.event_name == 'pull_request' && github.event.action == 'opened'
+  notify-on-merge:
+    if: github.event.pull_request.merged == true
     runs-on: ubuntu-latest
     steps:
       - uses: fateyan/action-discord-notifier@v1
         with:
           webhook: ${{ secrets.DISCORD_WEBHOOK_URL }}
           message-title: |
-            🚀 PR Opened #${{ github.event.pull_request.number }}: ${{ github.event.pull_request.title }}
-            By: ${{ github.event.pull_request.user.login }}
-            🔗 ${{ github.event.pull_request.html_url }}
+            ✅ PR #${{ github.event.pull_request.number }} merged into `main` by ${{ github.actor }}
+            📄 Title: ${{ github.event.pull_request.title }}
+            🔗 URL: ${{ github.event.pull_request.html_url }}
 
-  pr-merged:
-    if: github.event_name == 'pull_request' && github.event.action == 'closed' && github.event.pull_request.merged == true
-    runs-on: ubuntu-latest
-    steps:
-      - uses: fateyan/action-discord-notifier@v1
-        with:
-          webhook: ${{ secrets.DISCORD_WEBHOOK_URL }}
-          message-title: |
-            ✅ PR Merged #${{ github.event.pull_request.number }}: ${{ github.event.pull_request.title }}
-            By: ${{ github.event.pull_request.merged_by.login }}
-            🔗 ${{ github.event.pull_request.html_url }}
-
-  pr-labeled:
-    if: github.event_name == 'pull_request' && github.event.action == 'labeled'
-    runs-on: ubuntu-latest
-    steps:
-      - uses: fateyan/action-discord-notifier@v1
-        with:
-          webhook: ${{ secrets.DISCORD_WEBHOOK_URL }}
-          message-title: |
-            🏷️ PR #${{ github.event.pull_request.number }} labeled with "${{ github.event.label.name }}"
-
-  pr-review:
-    if: github.event_name == 'pull_request_review'
-    runs-on: ubuntu-latest
-    steps:
-      - uses: fateyan/action-discord-notifier@v1
-        with:
-          webhook: ${{ secrets.DISCORD_WEBHOOK_URL }}
-          message-title: |
-            🔍 PR Review on #${{ github.event.pull_request.number }} by ${{ github.event.review.user.login }}
-            State: ${{ github.event.review.state }}
-            🔗 ${{ github.event.pull_request.html_url }}
-
-  push-main:
-    if: github.event_name == 'push'
-    runs-on: ubuntu-latest
-    steps:
-      - uses: fateyan/action-discord-notifier@v1
-        with:
-          webhook: ${{ secrets.DISCORD_WEBHOOK_URL }}
-          message-title: |
-            📌 Push to main by ${{ github.actor }}
-            Commit: ${{ github.event.head_commit && github.event.head_commit.message || 'No commit message found.' }}
