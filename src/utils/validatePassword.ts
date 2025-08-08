@@ -34,3 +34,9 @@ export function validatePassword(password: string): string | null {
 
   return null;
 }
+
+export function isPasswordValid(password: string): boolean {
+  const strongRegex =
+    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_])[A-Za-z\d\W_]{8,128}$/;
+  return strongRegex.test(password);
+}
