@@ -1,10 +1,10 @@
 "use client";
 import { useState } from "react";
 
-export interface TextInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
+export interface TextInputProps
+  extends React.InputHTMLAttributes<HTMLInputElement> {
   label: string;
   icon?: React.ReactNode;
-  required?: boolean;
   error?: string;
   helperText?: string;
   touched?: boolean;
@@ -17,7 +17,6 @@ export interface TextInputProps extends React.InputHTMLAttributes<HTMLInputEleme
 export default function TextInput({
   label,
   error,
-  required,
   touched,
   helperText,
   showIconButton = false,
@@ -28,7 +27,6 @@ export default function TextInput({
   onBlur,
   ...rest
 }: TextInputProps) {
-
   const [isFocused, setIsFocused] = useState(false);
 
   const handleFocus = () => {
@@ -45,15 +43,16 @@ export default function TextInput({
 
   return (
     <div className="flex flex-col gap-1.5">
-      <label className="font-karla font-normal text-base text-gray-700">{label}
-        {required && <span className="ml-1 text-error-500">*</span>}
+      <label className="font-karla font-normal text-base text-gray-900">
+        {label}
+        {/* {required && <span className="ml-1 text-error-500">*</span>} */}
       </label>
       <div className="relative">
         <input
           type={type}
           onFocus={handleFocus}
           onBlur={handleBlur}
-          className={`w-full rounded-lg border px-4 py-3 bg-white focus:outline-none focus:ring-3
+          className={`w-full h-11 rounded-lg border px-4 py-3 bg-white placeholder-gray-500 text-gray-900 font-medium focus:outline-none focus:ring-3
             ${
               touched && error
                 ? "border-error-500 focus:ring-error-100 focus:shadow-error-sm"
@@ -72,12 +71,14 @@ export default function TextInput({
           </button>
         )}
       </div>
-       {error && !isFocused && (
+      {error && !isFocused && (
         <p className="mt-1 font-karla text-sm text-error-500">{error}</p>
       )}
 
       {showHelper && (
-        <p className="mt-1 font-karla text-sm text-gray-500 max-w-lg">{helperText}</p>
+        <p className="mt-1 font-karla text-sm text-gray-500 max-w-lg">
+          {helperText}
+        </p>
       )}
     </div>
   );

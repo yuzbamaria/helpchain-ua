@@ -2,16 +2,15 @@ import React from "react";
 
 const CheckMark: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
   <svg
-    width="12"
-    height="9"
-    viewBox="0 0 12 9"
+    width="16"
+    height="12"
+    viewBox="0 0 16 12"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
-    {...props}
   >
     <path
-      d="M10.6654 1.5L4.2487 7.91667L1.33203 5"
-      stroke="#FCFCFD"
+      d="M14.6663 1L5.49967 10.1667L1.33301 6"
+      stroke="#487E92"
       strokeWidth="2"
       strokeLinecap="round"
       strokeLinejoin="round"

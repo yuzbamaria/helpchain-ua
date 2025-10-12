@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import DownArrow from "@/icons/DownArrow";
+import DownArrow from "@/icons/ChevronDown";
 import LocationIcon from "@/icons/LocationIcon";
 
 interface CitySelectProps {

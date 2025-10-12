@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
-import DownArrowIcon from "@/icons/DownArrow";
-import UpArrowIcon from "@/icons/UpArrow";
+import DownArrowIcon from "@/icons/ChevronDown";
+import UpArrowIcon from "@/icons/ChevronUp";
 
 interface Option {
   label: string;
