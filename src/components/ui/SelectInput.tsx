@@ -36,14 +36,14 @@ export default function SelectInput({
       </label>
 
       {/* Hidden input for form submission */}
-      <input type="hidden" name={name} value={selected} />
+      <input type="hidden" name={name} value={selected} className="shadow-xs" />
 
       {/* Input-like button */}
       <div className="flex">
         <button
           type="button"
           {...rest}
-          className={`flex items-center justify-between appearance-none w-full bg-white h-11 border rounded-lg px-4 py-3 font-medium focus:outline-none focus:ring-3 border-gray-300 focus:ring-primary-100 focus:shadow-input focus:border-primary-300
+          className={`flex items-center justify-between appearance-none w-full bg-white h-11 border rounded-lg px-4 py-3 font-medium focus:outline-none focus:ring-3 border-gray-300 focus:ring-primary-100 focus:shadow-input focus:border-primary-300 shadow-xs
             ${selected ? "text-gray-900" : "text-gray-500"}`}
           onClick={handleDropdownOpen}
         >

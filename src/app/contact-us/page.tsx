@@ -3,6 +3,7 @@
 import { Phone, Mail, Help, ArrowRightWhite, CheckMark } from "@/icons";
 import TextInput from "@/components/ui/TextInput";
 import SelectInput from "@/components/ui/SelectInput";
+import MessageInput from "@/components/ui/MessageInput";
 import { useState } from "react";
 
 const selectReasons = [
@@ -15,13 +16,8 @@ const selectReasons = [
 
 export default function ContactUs() {
   const [name, setName] = useState("");
-  const [nameFocused, setNameFocused] = useState(false);
-
   const [email, setEmail] = useState("");
-  const [emailFocused, setEmailFocused] = useState(false);
-
   const [message, setMessage] = useState("");
-  const [messageFocused, setMessageFocused] = useState(false);
 
   return (
     <main className="p-6 font-karla">
@@ -88,7 +84,6 @@ export default function ContactUs() {
             placeholder="e.g. Jane Smith"
             required
             onChange={(e) => setName(e.target.value)}
-            onFocus={() => setNameFocused(true)}
           />
 
           {/* Email input */}
@@ -99,7 +94,6 @@ export default function ContactUs() {
             placeholder="e.g. jane@email.com"
             required
             onChange={(e) => setEmail(e.target.value)}
-            onFocus={() => setEmailFocused(true)}
           />
 
           {/* Reason  dropdown input */}
@@ -111,24 +105,25 @@ export default function ContactUs() {
           />
 
           {/* Message input */}
-          <div className="flex flex-col gap-1.5">
-            <label htmlFor="" className="flex items-center gap-1.5">
-              Your Message (required) <Help />
-            </label>
-            <input
-              type="text"
-              value={message}
-              onChange={(e) => setMessage(e.target.value)}
-              className="w-full h-11 border border-gray-300 rounded-lg py-3 px-4 text-gray-500 font-medium bg-white"
-              placeholder="Tell us a bit more about how we can help"
-            />
+          <MessageInput
+            label="Your Message (required)"
+            name="text"
+            icon={<Help />}
+            value={message}
+            rows={5}
+            cols={50}
+            onChange={(e) => setMessage(e.target.value)}
+            required
+            placeholder="Tell us a bit more about how we can help"
+          />
+          <div className="flex items-center justify-center">
+            <button
+              type="submit"
+              className="flex items-center h-11 w-48 gap-2 py-2 px-6 mt-4 bg-primary-500 rounded-lg text-white text-lg"
+            >
+              Send Message <ArrowRightWhite />
+            </button>
           </div>
-          <button
-            type="submit"
-            className="flex items-center h-11 w-48 gap-2 py-2 px-6 mt-4 bg-primary-500 rounded-lg text-white text-lg"
-          >
-            Send Message <ArrowRightWhite />
-          </button>
         </form>
       </div>
     </main>

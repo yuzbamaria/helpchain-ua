@@ -52,7 +52,7 @@ export default function TextInput({
           type={type}
           onFocus={handleFocus}
           onBlur={handleBlur}
-          className={`w-full h-11 rounded-lg border px-4 py-3 bg-white placeholder-gray-500 text-gray-900 font-medium focus:outline-none focus:ring-3
+          className={`w-full h-11 rounded-lg border px-4 py-3 bg-white placeholder-gray-500 text-gray-900 font-medium focus:outline-none focus:ring-3 shadow-xs
             ${
               touched && error
                 ? "border-error-500 focus:ring-error-100 focus:shadow-error-sm"
