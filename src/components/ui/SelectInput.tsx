@@ -4,6 +4,7 @@ import { useState } from "react";
 import { ChevronDown, ChevronUp, CheckMark } from "@/icons";
 
 interface SelectInputProps {
+  id?: string;
   label?: string;
   name?: string;
   placeholder?: string;
@@ -13,6 +14,7 @@ interface SelectInputProps {
 }
 
 export default function SelectInput({
+  id,
   label,
   options,
   name,
@@ -35,7 +37,10 @@ export default function SelectInput({
 
   return (
     <div className="flex flex-col gap-1.5">
-      <label className="font-karla font-normal text-base text-gray-900">
+      <label
+        htmlFor={id}
+        className="font-karla font-normal text-base text-gray-900"
+      >
         {label}
       </label>
 
@@ -45,9 +50,10 @@ export default function SelectInput({
       {/* Input-like button */}
       <div className="flex">
         <button
+          id={id}
           type="button"
           {...rest}
-          className={`flex items-center justify-between appearance-none w-full bg-white h-11 border rounded-lg px-4 py-3 font-medium focus:outline-none focus:ring-3 border-gray-300 focus:ring-primary-100 focus:shadow-input focus:border-primary-300 shadow-xs
+          className={`flex items-center justify-between appearance-none w-full bg-white h-11 border rounded-lg px-4 py-3 font-medium cursor-pointer focus:outline-none focus:ring-3 border-gray-300 focus:ring-primary-100 focus:shadow-input focus:border-primary-300 shadow-xs
             ${selected ? "text-gray-900" : "text-gray-500"}`}
           onClick={handleDropdownOpen}
         >

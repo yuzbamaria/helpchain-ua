@@ -10,12 +10,13 @@ import { linkedin } from "@/icons/Linkedin";
 import Link from "next/link";
 
 const usefulLinks = [
-  "About Us",
-  "Contact Us",
-  "Careers",
-  "Blog Posts",
-  "Support Center",
+  { name: "Contact Us", href: "/contact-us", },
+  { name: "About Us", href: "/some-where", },
+  { name: "Careers", href: "/some-where", },
+  { name: "Blog Posts", href: "/some-where", },
+  { name: "Support Center", href: "/some-where", },
 ];
+
 const connectWithUs = [
   "Newsletter",
   "Events",
@@ -23,6 +24,7 @@ const connectWithUs = [
   "Community",
   "FAQs",
 ];
+
 const socialLinks = [
   {
     name: "YouTube",
@@ -49,6 +51,7 @@ const socialLinks = [
 export default function Footer() {
   return (
     <section className="text-white font-roboto">
+      
       {/* Desktop Layout (xl and up) */}
       <div className="hidden xl:flex justify-center">
         <div className="flex flex-col gap-20 bg-primary-800 w-full py-10 px-48 xl:px-20">
@@ -85,7 +88,7 @@ export default function Footer() {
                 <ul className="flex flex-col gap-3">
                   {usefulLinks.map((link, index) => (
                     <li key={index} className="font-normal text-sm py-2">
-                      <Link href="/some-where">{link}</Link>
+                      <Link href={link.href}>{link.name}</Link>
                     </li>
                   ))}
                 </ul>
@@ -173,7 +176,7 @@ export default function Footer() {
                 <ul className="flex flex-col gap-3">
                   {usefulLinks.map((link, index) => (
                     <li key={index} className="font-normal text-sm py-2">
-                      <Link href="/some-where">{link}</Link>
+                      <Link href={link.href}>{link.name}</Link>
                     </li>
                   ))}
                 </ul>
@@ -263,7 +266,7 @@ export default function Footer() {
                     <Link href="/some-where">About Us</Link>
                   </li>
                   <li className="py-1">
-                    <Link href="/some-where">Contact Us</Link>
+                    <Link href="/contact-us">Contact Us</Link>
                   </li>
                   <li className="py-1">
                     <Link href="/some-where">Careers</Link>
@@ -352,7 +355,7 @@ export default function Footer() {
                     <Link href="/some-where">About Us</Link>
                   </li>
                   <li className="py-1">
-                    <Link href="/some-where">Contact Us</Link>
+                    <Link href="/contact-us">Contact Us</Link>
                   </li>
                   <li className="py-1">
                     <Link href="/some-where">Careers</Link>

@@ -101,7 +101,7 @@ export default function Header() {
                   Projects
                 </li>
                 <li className="cursor-pointer p-4 active:text-primary-700">
-                  Contact
+                  <Link href="/contact-us" onClick={() => setIsMenuOpen(false)}>Contact</Link>
                 </li>
               </ul>
             </div>
@@ -225,14 +225,17 @@ export default function Header() {
                 {status === "authenticated" ? logoDark : logoLight}
               </Link>
               <ul
-                className={`flex items-center gap-4 h-12 font-karla font-bold ${
+                className={`flex items-center gap-4 h-12 font-karla font-bold cursor-pointer ${
                   status === "authenticated" ? "text-primary-500" : "text-white"
                 }`}
               >
                 <li className="cursor-pointer p-2.5">Find a job</li>
                 <li className="cursor-pointer p-2.5">Hire Talent</li>
                 <li className="cursor-pointer p-2.5">Projects</li>
-                <li className="cursor-pointer p-2.5">Contact</li>
+                <li className="cursor-pointer p-2.5">
+                  {" "}
+                  <Link href="/contact-us">Contact</Link>
+                </li>
               </ul>
             </div>
 

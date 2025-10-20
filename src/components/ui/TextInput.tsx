@@ -15,6 +15,7 @@ export interface TextInputProps
 }
 
 export default function TextInput({
+  id,
   label,
   error,
   touched,
@@ -43,12 +44,15 @@ export default function TextInput({
 
   return (
     <div className="flex flex-col gap-1.5">
-      <label className="font-karla font-normal text-base text-gray-900">
+      <label
+        htmlFor={id}
+        className="font-karla font-normal text-base text-gray-900"
+      >
         {label}
-        {/* {required && <span className="ml-1 text-error-500">*</span>} */}
       </label>
       <div className="relative">
         <input
+          id={id}
           type={type}
           onFocus={handleFocus}
           onBlur={handleBlur}

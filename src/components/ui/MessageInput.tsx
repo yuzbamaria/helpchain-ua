@@ -1,6 +1,7 @@
 interface MessageInputProps
   extends React.TextareaHTMLAttributes<HTMLTextAreaElement> {
   label: string;
+  id?: string;
   value: string;
   icon?: React.ReactNode;
   name?: string;
@@ -11,6 +12,7 @@ interface MessageInputProps
 
 export default function MessageInput({
   label,
+  id,
   value,
   icon,
   error,
@@ -22,10 +24,11 @@ export default function MessageInput({
   return (
     <div>
       <div className="flex flex-col gap-1.5">
-        <label htmlFor="" className="flex items-center gap-1.5">
-          {label} {icon}
+        <label htmlFor={id} className="flex items-center gap-1.5">
+          {label} {icon && <span className="cursor-pointer">{icon}</span>}
         </label>
         <textarea
+          id={id}
           name={name}
           value={value}
           className={`w-full rounded-lg border px-4 py-3 bg-white placeholder-gray-500 text-gray-900 font-medium focus:outline-none focus:ring-3 shadow-xs
