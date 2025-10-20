@@ -27,7 +27,6 @@ export default function ContactUs() {
   const [email, setEmail] = useState("");
   const [reason, setReason] = useState("");
   const [message, setMessage] = useState("");
-  
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -39,7 +38,10 @@ export default function ContactUs() {
       body: JSON.stringify({ name, email, reason, message }),
     });
     await res.json();
-    // console.log(data);
+  }
+
+  function handleSelect(val: string) {
+    setReason(val);
   }
 
   return (
@@ -127,7 +129,8 @@ export default function ContactUs() {
                 {/* Reason  dropdown input */}
                 <SelectInput
                   label="What is this about? (required)"
-                  // value={reason}
+                  value={reason}
+                  onChange={handleSelect}
                   placeholder="Select a reason"
                   options={selectReasons}
                   name="reason"

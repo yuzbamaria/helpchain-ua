@@ -8,6 +8,8 @@ interface SelectInputProps {
   name?: string;
   placeholder?: string;
   options?: string[];
+  value?: string;
+  onChange?: (value: string) => void;
 }
 
 export default function SelectInput({
@@ -15,17 +17,19 @@ export default function SelectInput({
   options,
   name,
   placeholder,
+  value,
+  onChange,
   ...rest
 }: SelectInputProps) {
   const [isOpen, setIsOpen] = useState(false);
-  const [selected, setSelected] = useState("");
+  const selected = value || "";
 
   function handleDropdownOpen() {
     setIsOpen(!isOpen);
   }
 
   function handleSelectReason(option: string) {
-    setSelected(option);
+    if (onChange) onChange(option);
     setIsOpen(!isOpen);
   }
 

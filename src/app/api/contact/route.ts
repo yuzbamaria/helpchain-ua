@@ -22,6 +22,7 @@ export async function POST(req: Request) {
       html: `
       <p>You received a new message from: ${name}</p> 
       <p>User's email: ${email}</p>
+      <p>Reason of the message: ${reason}</p>
       <p>Message is the following:</p>
       <p>${message}</p>
       `,
