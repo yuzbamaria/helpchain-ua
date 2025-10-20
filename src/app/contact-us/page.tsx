@@ -15,10 +15,32 @@ const selectReasons = [
   "Press / Media enquiry",
 ];
 
+interface Message {
+  name: string;
+  email: string;
+  reason: string;
+  message: string;
+}
+
 export default function ContactUs() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
+  const [reason, setReason] = useState("");
   const [message, setMessage] = useState("");
+  
+
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+
+    const url = "/api/contact";
+    const res = await fetch(url, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ name, email, reason, message }),
+    });
+    await res.json();
+    // console.log(data);
+  }
 
   return (
     <>
@@ -77,7 +99,11 @@ export default function ContactUs() {
                 OR, send us a message
               </p>
               <p>For companies, volunteers, or general enquiries</p>
-              <form action="" className="flex flex-col gap-4">
+              <form
+                action=""
+                onSubmit={handleSubmit}
+                className="flex flex-col gap-4"
+              >
                 {/* Name input */}
                 <TextInput
                   label="Your Name (required)"
@@ -101,6 +127,7 @@ export default function ContactUs() {
                 {/* Reason  dropdown input */}
                 <SelectInput
                   label="What is this about? (required)"
+                  // value={reason}
                   placeholder="Select a reason"
                   options={selectReasons}
                   name="reason"
