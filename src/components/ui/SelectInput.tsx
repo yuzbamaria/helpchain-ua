@@ -45,7 +45,13 @@ export default function SelectInput({
       </label>
 
       {/* Hidden input for form submission */}
-      <input type="hidden" name={name} value={selected} className="shadow-xs" />
+      <input
+        type="hidden"
+        name={name}
+        value={selected}
+        required={true}
+        className="shadow-xs"
+      />
 
       {/* Input-like button */}
       <div className="flex">

@@ -104,7 +104,10 @@ export default function SignInPage() {
           error={
             emailTouched && !email && !emailFocused
               ? "Required field." // shows error only when blurred and empty
-              : emailTouched && email && !validator.isEmail(email) && !emailFocused
+              : emailTouched &&
+                email &&
+                !validator.isEmail(email) &&
+                !emailFocused
               ? "Invalid email format."
               : undefined
           }

@@ -5,6 +5,7 @@ import TextInput from "@/components/ui/TextInput";
 import SelectInput from "@/components/ui/SelectInput";
 import MessageInput from "@/components/ui/MessageInput";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 const selectReasons = [
   "I want to hire or collaborate",
@@ -19,9 +20,16 @@ export default function ContactForm() {
   const [email, setEmail] = useState("");
   const [reason, setReason] = useState("");
   const [message, setMessage] = useState("");
+  const [error, setError] = useState("");
+  const router = useRouter();
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
+
+    if (!name || !email || !reason || !message) {
+      setError("Please fill in all required fields.");
+      return;
+    }
 
     const url = "/api/contact";
     const res = await fetch(url, {
@@ -31,7 +39,9 @@ export default function ContactForm() {
     });
     await res.json();
 
-
+    if (res.ok) {
+      router.push("/thank-you");
+    }
   }
 
   function handleSelect(val: string) {
@@ -45,7 +55,6 @@ export default function ContactForm() {
       </h2>
       <p>For companies, volunteers, or general enquiries</p>
       <form action="" onSubmit={handleSubmit} className="flex flex-col gap-4">
-        
         {/* Name input */}
         <TextInput
           label="Your Name (required)"
@@ -91,6 +100,11 @@ export default function ContactForm() {
           required
           placeholder="Tell us a bit more about how we can help"
         />
+        {error && (
+          <p className="rounded-md bg-red-100 p-2 text-center text-red-500">
+            {error}
+          </p>
+        )}
         <div className="flex items-center justify-center">
           <button
             type="submit"
