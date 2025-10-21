@@ -1,21 +1,21 @@
-name: Discord Notification on PR Merge to Main
+# name: Discord Notification on PR Merge to Main
 
-on:
-  pull_request:
-    types: [closed]
-    branches:
-      - main
+# on:
+#   pull_request:
+#     types: [closed]
+#     branches:
+#       - main
 
-jobs:
-  notify-on-merge:
-    if: github.event.pull_request.merged == true
-    runs-on: ubuntu-latest
-    steps:
-      - uses: fateyan/action-discord-notifier@v1
-        with:
-          webhook: ${{ secrets.DISCORD_WEBHOOK_URL }}
-          message-title: |
-            ✅ PR #${{ github.event.pull_request.number }} merged into `main` by ${{ github.actor }}
-            📄 Title: ${{ github.event.pull_request.title }}
-            🔗 URL: ${{ github.event.pull_request.html_url }}
+# jobs:
+#   notify-on-merge:
+#     if: github.event.pull_request.merged == true
+#     runs-on: ubuntu-latest
+#     steps:
+#       - uses: fateyan/action-discord-notifier@v1
+#         with:
+#           webhook: ${{ secrets.DISCORD_WEBHOOK_URL }}
+#           message-title: |
+#             ✅ PR #${{ github.event.pull_request.number }} merged into `main` by ${{ github.actor }}
+#             📄 Title: ${{ github.event.pull_request.title }}
+#             🔗 URL: ${{ github.event.pull_request.html_url }}
 
