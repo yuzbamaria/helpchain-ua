@@ -1,3 +1,11 @@
 export { default as EyeOn } from "./EyeOn";
 export { default as EyeOff } from "./EyeOff";
 export { default as CheckMark } from "./CheckMark";
+export { default as Phone } from "./Phone";
+export { default as Mail } from "./Mail";
+export { default as Help } from "./Help";
+export { default as HelpIcon } from "./HelpIcon";
+export { default as ArrowRightWhite } from "./ArrowRightWhite";
+export { default as CheckIcon } from "./CheckIcon";
+export { default as ChevronDown } from "./ChevronDown";
+export { default as ChevronUp } from "./ChevronUp";
