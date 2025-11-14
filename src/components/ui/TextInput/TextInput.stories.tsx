@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import TextInput, { TextInputProps } from "@/components/ui/TextInput";
+import TextInput, { TextInputProps } from "@/components/ui/TextInput/TextInput";
 import { StoryFn } from "@storybook/nextjs-vite";
 import { EyeOn, EyeOff } from "@/icons/index";
 

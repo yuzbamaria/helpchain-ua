@@ -4,7 +4,7 @@
 import { useState } from "react";
 import axios from "axios";
 import validator from "validator";
-import TextInput from "@/components/ui/TextInput";
+import TextInput from "@/components/ui/TextInput/TextInput";
 
 export default function ForgotPasswordPage() {
   const [email, setEmail] = useState("");
