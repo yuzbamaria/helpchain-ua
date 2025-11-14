@@ -56,9 +56,9 @@ export default function LinkButton({
       className={baseClasses}
       {...props}
     >
-      {iconLeft && <span>{iconLeft}</span>}
+      {iconLeft && <span data-testid="left-icon">{iconLeft}</span>}
       {children}
-      {iconRight && <span>{iconRight}</span>}
+      {iconRight && <span data-testid="right-icon">{iconRight}</span>}
     </button>
   );
 }
