@@ -8,6 +8,11 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum EmailStatus {
+  not_verified
+  verified
+}
+
 model Language {
   id       Int    @id @default(autoincrement())
   name     String
@@ -36,6 +41,7 @@ model User {
   id                 Int       @id @default(autoincrement())
   name               String?
   email              String    @unique
+  email_status       EmailStatus @default(not_verified)
   emailVerified      DateTime?
   password           String?
   city               String?
