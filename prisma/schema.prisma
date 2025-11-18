@@ -50,6 +50,8 @@ model User {
   createdAt          DateTime  @default(now())
   resetPasswordToken String?  @unique
   resetPasswordTokenExpiry DateTime?
+  emailVerificationToken String?   @unique
+  emailVerificationExpiry DateTime?
 
   // Profile fields
   firstName          String?
