@@ -32,6 +32,7 @@ export default function RegisterPage() {
     useState(false);
 
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const passwordError = validatePassword(password);
 
@@ -44,6 +45,8 @@ export default function RegisterPage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setLoading(true);
+
     setEmailTouched(true);
     setPasswordTouched(true);
     setPasswordConfirmedTouched(true);
@@ -51,6 +54,7 @@ export default function RegisterPage() {
 
     if (!email || !password || !passwordConfirmed) {
       setError("Please fill in all required fields.");
+      setLoading(false);
       return;
     }
 
@@ -60,6 +64,7 @@ export default function RegisterPage() {
 
     if (passwordError) {
       setError(passwordError);
+      setLoading(false);
       return;
     }
 
@@ -74,10 +79,11 @@ export default function RegisterPage() {
     });
 
     if (res.status === 201) {
-      router.push("/signin");
+      router.push("/verify-email");
     } else {
       const data = await res.json(); // Error comes from backend route
       setError(data.message || "Something went wrong");
+      setLoading(false);
     }
   };
 
@@ -100,7 +106,7 @@ export default function RegisterPage() {
   return (
     <div className="min-h-[calc(100vh-100px)] flex flex-col bg-primary-50">
       <ProgressBar percent={10} stepInfo="Step 1 of 10" />
-      <div className="flex flex-col py-20 px-4 items-center justify-center">
+      <main className="flex-1 flex flex-col py-20 px-4 items-center justify-center">
         <div className="flex flex-col gap-4 pb-12">
           <h1 className="text-2xl font-extrabold font-montserrat text-center tracking-[0.1em]">
             Create Your Account
@@ -235,7 +241,7 @@ export default function RegisterPage() {
 
           <SocialAuthButtons />
         </form>
-      </div>
+      </main>
 
       <OnboardingFooter>
         <LinkButton
@@ -243,20 +249,20 @@ export default function RegisterPage() {
           variant="left"
           type="button"
           state="normal"
-          iconLeft={<ArrowLeft className="w-6 h-6"/>}
+          iconLeft={<ArrowLeft className="w-6 h-6" />}
           onClick={() => router.back()}
         >
           Back
         </LinkButton>
         <MainButton
           variant="primary"
-          state={formValid ? "normal" : "disabled"}
+          state={loading ? "loading" : formValid ? "normal" : "disabled"}
           size="lg"
           type="submit"
           form="signup-form"
           aria-label="main button"
         >
-          Continue
+          {loading ? "Sending link" : "Continue"}
           <ArrowRight className="w-6 h-6" />
         </MainButton>
       </OnboardingFooter>

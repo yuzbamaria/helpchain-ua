@@ -4,7 +4,7 @@ import { dropDownIcon } from "@/icons/DropDownIcon";
 import { ukFlag, uaFlag } from "../icons/Flags";
 import DownArrowIcon from "@/icons/ChevronDown";
 import UpArrowIcon from "@/icons/ChevronUp";
-import { checkIcon2 } from "@/icons/CheckIcon2";
+import { checkIcon2 } from "@/icons/CheckMark2";
 import { crossCloseIcon } from "@/icons/Cross";
 import { hamburger } from "@/icons/Hamburger";
 import { logoDark } from "@/icons/LogoDark";
