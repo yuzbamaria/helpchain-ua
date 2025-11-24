@@ -49,14 +49,14 @@ export async function POST(req: Request) {
       password: hashedPassword,
       emailVerificationToken: token,
       emailVerificationExpiry: emailVerificationExpiry,
-      // onboardingStep: 4, // Assuming the user starts at step 4 after registration
+      onboardingStep: 4, // Assuming the user starts at step 4 after registration
     },
   });
 
   const baseUrl = process.env.NEXTAUTH_URL || "http://localhost:3000";
-  const emailVerificationUrl = `${baseUrl}/verify-email?token=${token}`;
-  
-  await sendEmailVerificationUrl(email, emailVerificationUrl)
+  const emailVerificationUrl = `${baseUrl}/verify-email/${token}`;
+
+  await sendEmailVerificationUrl(email, emailVerificationUrl);
 
   return NextResponse.json({ message: "User created", user }, { status: 201 });
 }

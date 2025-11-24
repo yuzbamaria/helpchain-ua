@@ -135,7 +135,6 @@ export async function sendEmailVerificationUrl(
                       <table role="presentation" border="0" cellspacing="0" cellpadding="0">
                         <tr>
                           <td style="background:#487E92; border-radius:4px;">
-                          <p style="font-size:16px;">👉 Confirm your email:</p>
                             <a href="${emailVerificationUrl}" style="display:inline-block; padding:12px 24px; color:#ffffff; text-decoration:none; font-size:16px; font-weight:bold;">
                             Confirm Your Email
                             </a>

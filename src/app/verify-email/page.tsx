@@ -1,21 +1,23 @@
 "use client";
-
 import { useRouter } from "next/navigation";
+import { use, useEffect } from "react";
 import Email from "@/icons/Email";
 import { ChevronUp, ArrowRight, ArrowLeft, CheckMark } from "@/icons/index";
 import ProgressBar from "@/components/ProgressBar";
 import OnboardingFooter from "@/components/OnboardingFooter";
 import MainButton from "@/components/ui/MainButton/MainButton";
 import LinkButton from "@/components/ui/LinkButton/LinkButton";
-import CheckMark2 from "@/icons/CheckMark2";
 import CheckMark3 from "@/icons/CheckMark3";
+
+// import CheckMark2 from "@/icons/CheckMark2"; import CheckMark3 from "@/icons/CheckMark3";
 
 export default function VerifyEmail() {
   const router = useRouter();
+  //   const { token } = use(params);
 
   return (
     <div className="min-h-[calc(100vh-100px)] flex flex-col bg-primary-50">
-      <ProgressBar percent={20} stepInfo="Step 2 of 10" />
+      <ProgressBar percent={20} stepInfo="Step 2 of 10" />{" "}
       <main className="flex-1 flex flex-col gap-4 items-center justify-center px-6">
         <div className="flex flex-col gap-12 pb-12">
           <h1 className="text-2xl font-extrabold font-montserrat text-center tracking-[0.1em]">
@@ -48,10 +50,11 @@ export default function VerifyEmail() {
           type="button"
           aria-label="main button"
         >
-          Link sent
-          <CheckMark3 className="w-4 h-4" />
+          Link sent <CheckMark3 className="w-4 h-4" />
         </MainButton>
       </OnboardingFooter>
     </div>
   );
 }
+
+
