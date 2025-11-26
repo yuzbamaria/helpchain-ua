@@ -30,7 +30,7 @@ model UserLangLevel {
   languageId Int
   levelId    Int
 
-  user       User          @relation(fields: [userId], references: [id])
+  user       User          @relation(fields: [userId], references: [id], onDelete: Cascade)
   language   Language      @relation(fields: [languageId], references: [id])
   level      LanguageLevel @relation(fields: [levelId], references: [id])
 
