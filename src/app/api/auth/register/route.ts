@@ -9,7 +9,7 @@ import { sendEmailVerificationUrl } from "@/lib/mail";
 export async function POST(req: Request) {
   try {
     const { email, password } = await req.json();
-    
+
     if (!email || !password) {
       return NextResponse.json(
         { message: "Email and password are required." },
@@ -17,11 +17,9 @@ export async function POST(req: Request) {
       );
     }
 
-    const existingUser = await prisma.user.findUnique({ where: { email } });
-
-    if (existingUser) {
+    if (!validator.isEmail(email)) {
       return NextResponse.json(
-        { message: "User already exists." },
+        { message: "Invalid email format" },
         { status: 400 }
       );
     }
@@ -33,9 +31,10 @@ export async function POST(req: Request) {
       );
     }
 
-    if (!validator.isEmail(email)) {
+    const existingUser = await prisma.user.findUnique({ where: { email } });
+    if (existingUser) {
       return NextResponse.json(
-        { message: "Invalid email format" },
+        { message: "User already exists." },
         { status: 400 }
       );
     }
