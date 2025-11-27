@@ -22,8 +22,6 @@ export default function JobSeekerProfile() {
     fetchUser();
   }, []);
 
-  console.log(user);
-
   return (
     <main>
       <div className="flex p-25 bg-gray-100 shadow-xl rounded-2xl">

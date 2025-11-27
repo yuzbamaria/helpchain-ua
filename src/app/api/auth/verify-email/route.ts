@@ -1,11 +1,14 @@
 import { NextResponse } from "next/server";
+import { type NextRequest } from "next/server";
 import { prisma } from "@/lib/prisma";
 
-export async function GET(
-  _: Request,
-  { params }: { params: Promise<{ token: string }> }
-) {
-  const { token } = await params;
+export async function GET(request: NextRequest) {
+  const searchParams = request.nextUrl.searchParams;
+  const token = searchParams.get("token");
+
+  if (!token) {
+    return NextResponse.json({ error: "Token is required." }, { status: 400 });
+  }
 
   const user = await prisma.user.findUnique({
     where: { emailVerificationToken: token },

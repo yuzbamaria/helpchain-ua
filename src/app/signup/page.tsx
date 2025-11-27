@@ -77,11 +77,13 @@ export default function RegisterPage() {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ email, password }),
     });
-
+    
     if (res.status === 201) {
-      router.push("/verify-email");
+      const data = await res.json(); 
+      const userId = data.userId; 
+      router.push(`/email-verification?userId=${userId}`);
     } else {
-      const data = await res.json(); // Error comes from backend route
+      const data = await res.json(); 
       setError(data.message || "Something went wrong");
       setLoading(false);
     }
