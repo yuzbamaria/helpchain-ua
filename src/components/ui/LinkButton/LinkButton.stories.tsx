@@ -1,7 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { fn } from "storybook/test";
-// add tests
-import { expect } from "storybook/test";
 import LinkButton from "@/components/ui/LinkButton/LinkButton";
 import { ArrowLeft, ArrowRight } from "@/icons";
 
