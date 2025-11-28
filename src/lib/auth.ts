@@ -40,7 +40,6 @@ export const authOptions: NextAuthOptions = {
           await prisma.user.update({
             where: { id: user.id },
             data: {
-              email_status: "verified",
               emailVerified: new Date(),
               emailVerificationToken: null,
             },
