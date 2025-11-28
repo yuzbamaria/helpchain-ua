@@ -5,7 +5,7 @@
 import { useState } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import { EyeOn, EyeOff } from "@/icons/index";
-import TextInput from "@/components/ui/TextInput";
+import TextInput from "@/components/ui/TextInput/TextInput";
 import { validatePassword } from "@/utils/validatePassword";
 import { resetPasswordRequest } from "@/utils/resetPassword";
 

@@ -7,7 +7,7 @@ import Link from "next/link";
 import validator from "validator";
 import { EyeOn, EyeOff } from "@/icons/index";
 import SocialAuthButtons from "@/components/SocialAuthButtons";
-import TextInput from "@/components/ui/TextInput";
+import TextInput from "@/components/ui/TextInput/TextInput";
 import ResetSuccessMessage from "@/components/auth/ResetSuccessMessage";
 
 export default function SignInPage() {

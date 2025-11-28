@@ -14,7 +14,7 @@ import type { NextAuthOptions } from "next-auth";
 
 if (!process.env.GOOGLE_CLIENT_ID || !process.env.GOOGLE_CLIENT_SECRET) {
   throw new Error("Missing Google OAuth environment variables");
-};
+}
 
 export const authOptions: NextAuthOptions = {
   adapter: PrismaAdapter(prisma),
@@ -24,8 +24,39 @@ export const authOptions: NextAuthOptions = {
       credentials: {
         email: { label: "Email", type: "text" },
         password: { label: "Password", type: "password" },
+        token: { label: "Token", type: "text" },
       },
       async authorize(credentials) {
+        if (!credentials) return null;
+
+        // If token is provided (email verification link)
+        if (credentials.token) {
+          const user = await prisma.user.findUnique({
+            where: { emailVerificationToken: credentials.token },
+          });
+
+          if (!user) return null;
+
+          await prisma.user.update({
+            where: { id: user.id },
+            data: {
+              emailVerified: new Date(),
+              emailVerificationToken: null,
+            },
+          });
+
+          return {
+            ...user,
+            id: String(user.id),
+          } satisfies {
+            id: string;
+            name: string | null;
+            email: string;
+            image: string | null;
+            onboardingStep: number;
+          };
+        }
+
         if (!credentials?.email || !credentials?.password) return null;
 
         const user = await prisma.user.findUnique({
@@ -33,6 +64,9 @@ export const authOptions: NextAuthOptions = {
         });
 
         if (!user || !user.password) return null;
+
+        if (!user.emailVerified)
+          throw new Error("Please verify your email first.");
 
         const isValid = await bcrypt.compare(
           credentials.password,

@@ -1,7 +1,7 @@
 "use client";
 
 import { Help, ArrowRightWhite } from "@/icons";
-import TextInput from "@/components/ui/TextInput";
+import TextInput from "@/components/ui/TextInput/TextInput";
 import SelectInput from "@/components/ui/SelectInput";
 import MessageInput from "@/components/ui/MessageInput";
 import { useState } from "react";

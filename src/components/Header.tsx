@@ -4,7 +4,7 @@ import { dropDownIcon } from "@/icons/DropDownIcon";
 import { ukFlag, uaFlag } from "../icons/Flags";
 import DownArrowIcon from "@/icons/ChevronDown";
 import UpArrowIcon from "@/icons/ChevronUp";
-import { checkIcon2 } from "@/icons/CheckIcon2";
+import CheckMark2 from "@/icons/CheckMark2";
 import { crossCloseIcon } from "@/icons/Cross";
 import { hamburger } from "@/icons/Hamburger";
 import { logoDark } from "@/icons/LogoDark";
@@ -134,7 +134,7 @@ export default function Header() {
                       {ukFlag}
                       En
                     </div>
-                    {selectedLang === "en" && checkIcon2}
+                    {selectedLang === "en" && <CheckMark2 />}
                   </button>
 
                   {/* ======= Ukrainian lang button ======= */}
@@ -146,7 +146,7 @@ export default function Header() {
                       {uaFlag}
                       Укр
                     </div>
-                    {selectedLang === "ukr" && checkIcon2}
+                    {selectedLang === "ukr" && <CheckMark2 />}
                   </button>
                 </div>
               )}
@@ -272,7 +272,7 @@ export default function Header() {
                           {ukFlag}
                           En
                         </div>
-                        {selectedLang === "en" && checkIcon2}
+                        {selectedLang === "en" && <CheckMark2 />}
                       </button>
                       <button
                         className="cursor-pointer flex items-center p-2.5 gap-2"
@@ -282,7 +282,7 @@ export default function Header() {
                           {uaFlag}
                           Укр
                         </div>
-                        {selectedLang === "ukr" && checkIcon2}
+                        {selectedLang === "ukr" && <CheckMark2 />}
                       </button>
                     </div>
                   </div>

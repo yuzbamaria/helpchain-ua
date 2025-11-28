@@ -7,6 +7,7 @@ const CheckMark: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
     viewBox="0 0 16 12"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
+    {...props}
   >
     <path
       d="M14.6663 1L5.49967 10.1667L1.33301 6"
