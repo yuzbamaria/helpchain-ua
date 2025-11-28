@@ -4,7 +4,7 @@ import { useEffect } from "react";
 import { useSearchParams } from "next/navigation";
 import { signIn } from "next-auth/react";
 
-export default function VerifyEmailPage() {
+export default function VerifyEmailInner() {
   const searchParams = useSearchParams();
   const token = searchParams.get("token");
 
